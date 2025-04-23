@@ -15,8 +15,8 @@
             </ul>
 
             <div class="d-block d-lg-none">
-                <img src="../assets/images/logos/logo-light.svg" class="dark-logo" alt="Logo-Dark" />
-                <img src="../assets/images/logos/logo-dark.svg" class="light-logo" alt="Logo-light" />
+                <img src="{{ asset('assets/images/logos/logo-light.svg') }}" class="dark-logo" alt="Logo-Dark" />
+                <img src="{{ asset('assets/images/logos/logo-dark.svg') }}" class="light-logo" alt="Logo-light" />
             </div>
 
 
@@ -47,7 +47,7 @@
                                 data-bs-toggle="dropdown" aria-expanded="false">
                                 <div class="d-flex align-items-center flex-shrink-0">
                                     <div class="user-profile me-sm-3 me-2">
-                                        <img src="../assets/images/profile/user-default.jpg" width="45" class="rounded-circle"
+                                        <img src="{{ asset('assets/images/profile/user-default.jpg') }}" width="45" class="rounded-circle"
                                             alt="">
                                     </div>
                                     <span class="d-sm-none d-block"><iconify-icon
@@ -75,7 +75,7 @@
                                     </div>
 
                                     <div class="d-flex align-items-center mx-7 py-9">
-                                        <img src="../assets/images/profile/user-default.jpg" alt="user" width="90"
+                                        <img src="{{ asset('assets/images/profile/user-default.jpg') }}" alt="user" width="90"
                                             class="rounded-circle" />
                                         <div class="ms-4">
                                             <h4 class="mb-0 fs-5 fw-normal">Admin</h4>
