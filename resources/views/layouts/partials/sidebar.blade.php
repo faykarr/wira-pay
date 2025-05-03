@@ -55,7 +55,7 @@
                     </a>
                     <ul aria-expanded="false" class="collapse first-level">
                         <li class="sidebar-item">
-                            <a href="#" class="sidebar-link">
+                            <a href="{{ route('siswa.index') }}" class="sidebar-link">
                                 <span class="sidebar-icon"></span>
                                 <span class="hide-menu">Daftar Siswa</span>
                             </a>
