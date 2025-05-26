@@ -27,7 +27,7 @@ $(".validation-wizard").steps({
     return (form.validate().settings.ignore = ":disabled"), form.valid();
   },
   onFinished: function (event, currentIndex) {
-    Swal.fire("Form Submitted!", "Data siswa baru berhasil dikirim.", "info").then(function () {
+    Swal.fire("Form Submitted!", "Data siswa berhasil dikirim.", "info").then(function () {
       form.submit();
     });;
   },

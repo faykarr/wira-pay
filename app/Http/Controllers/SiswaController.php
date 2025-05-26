@@ -45,7 +45,8 @@ class SiswaController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        // Go to view siswa.edit and send the data from model.
+        return view("siswa.edit");
     }
 
     /**
@@ -53,7 +54,7 @@ class SiswaController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        return redirect()->route('siswa.index')->with('success', 'Data siswa berhasil diupdate!');
     }
 
     /**
