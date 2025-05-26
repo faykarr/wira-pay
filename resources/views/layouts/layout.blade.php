@@ -13,15 +13,19 @@
                     <!--  Header Start -->
                     @include('layouts.partials.header')
                     <!--  Header End -->
+                    {{-- Main Content Start --}}
                     @yield('main-content')
+                    {{-- Main Content End --}}
+                    {{-- Footer Start --}}
+                    <div class="text-center text-md-start">
+                        <p>Made with ❤ by <a href="https://faykarr.vercel.app" class="text-primary">faykarr</a></p>
+                    </div>
+                    {{-- Footer End --}}
                 </div>
             </div>
             {{-- Theme Customizer --}}
             @include('layouts.partials.theme-customizer')
             {{-- Theme Customizer --}}
-            <div class="mx-4 text-center text-md-start">
-                <p>Made with ❤ by <a href="https://faykarr.vercel.app" class="text-primary">faykarr</a></p>
-            </div>
         </div>
         <div class="dark-transparent sidebartoggler"></div>
     </div>

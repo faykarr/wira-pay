@@ -43,15 +43,29 @@
                     <span class="hide-menu">Master Data</span>
                 </li>
                 <!-- =================== -->
-                <!-- Master Akademik -->
+                <!-- Students -->
                 <!-- =================== -->
                 <li class="sidebar-item">
-                    <a class="sidebar-link sidebar-link indigo-hover-bg" href="#" aria-expanded="false">
-                        <span class="aside-icon p-2 bg-primary-subtle rounded-1">
+                    <a class="sidebar-link has-arrow indigo-hover-bg" href="#" aria-expanded="false">
+                        <span class="aside-icon p-2 bg-indigo-subtle rounded-1">
                             <iconify-icon icon="solar:calendar-date-line-duotone" class="fs-6"></iconify-icon>
                         </span>
                         <span class="hide-menu ps-1">Master Akademik</span>
                     </a>
+                    <ul aria-expanded="false" class="collapse first-level">
+                        <li class="sidebar-item">
+                            <a href="#" class="sidebar-link">
+                                <span class="sidebar-icon"></span>
+                                <span class="hide-menu">Tahun Akademik</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="#" class="sidebar-link">
+                                <span class="sidebar-icon"></span>
+                                <span class="hide-menu">Jurusan</span>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
 
                 <!-- =================== -->

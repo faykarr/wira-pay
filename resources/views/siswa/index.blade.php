@@ -10,11 +10,11 @@
         <div class="card-body d-flex flex-wrap align-items-center justify-content-between p-4">
             <h4 class="fw-semibold mb-0">Daftar Siswa</h4>
             <div class="d-flex my-1 my-md-0 align-items-center justify-content-between gap-2">
-                <button type="button"
+                <a href="{{ route('siswa.create') }}"
                     class="justify-content-center w-100 btn btn-sm btn-rounded btn-success d-flex align-items-center">
                     <i class="ti ti-plus fs-4 me-2"></i>
                     Siswa
-                </button>
+                </a>
                 <button type="button"
                     class="justify-content-center w-100 btn btn-sm btn-rounded btn-danger d-flex align-items-center">
                     <i class="ti ti-download fs-4 me-2"></i>

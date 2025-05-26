@@ -11,7 +11,7 @@ class SiswaController extends Controller
      */
     public function index()
     {
-        // Go to view siswa.index and send the models.
+        // Go to view siswa.index and send the data from model.
         return view("siswa.index");
     }
 
@@ -29,7 +29,7 @@ class SiswaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return redirect()->route('siswa.index')->with('success', 'Data siswa baru berhasil ditambahkan!');
     }
 
     /**
