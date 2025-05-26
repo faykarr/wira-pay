@@ -21,7 +21,7 @@ class SiswaController extends Controller
     public function create()
     {
         // Go to view siswa.add
-        return view("siswa.add");
+        return view("siswa.create");
     }
 
     /**

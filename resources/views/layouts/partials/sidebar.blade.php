@@ -50,11 +50,11 @@
                         <span class="aside-icon p-2 bg-indigo-subtle rounded-1">
                             <iconify-icon icon="solar:calendar-date-line-duotone" class="fs-6"></iconify-icon>
                         </span>
-                        <span class="hide-menu ps-1">Master Akademik</span>
+                        <span class="hide-menu ps-1">Akademik</span>
                     </a>
                     <ul aria-expanded="false" class="collapse first-level">
                         <li class="sidebar-item">
-                            <a href="#" class="sidebar-link">
+                            <a href="{{ route('akademik.index') }}" class="sidebar-link">
                                 <span class="sidebar-icon"></span>
                                 <span class="hide-menu">Tahun Akademik</span>
                             </a>
@@ -76,7 +76,7 @@
                         <span class="aside-icon p-2 bg-primary-subtle rounded-1">
                             <iconify-icon icon="solar:hand-money-line-duotone" class="fs-6"></iconify-icon>
                         </span>
-                        <span class="hide-menu ps-1">Master Pembayaran</span>
+                        <span class="hide-menu ps-1">Pembayaran</span>
                     </a>
                 </li>
 

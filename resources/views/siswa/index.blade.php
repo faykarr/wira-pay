@@ -99,16 +99,16 @@
                     class="table w-100 table-outer-border table-hover rounded-3 text-nowrap align-middle">
                     <thead class="align-middle text-center">
                         <tr>
-                            <th rowspan="2" scope="col">#</th>
-                            <th rowspan="2" scope="col">NIT</th>
-                            <th rowspan="2" scope="col">Nama Siswa</th>
-                            <th rowspan="2" scope="col">Jurusan</th>
-                            <th colspan="2" scope="colgroup">Status</th>
-                            <th rowspan="2" scope="col">Action</th>
+                            <th rowspan="2" scope="col" class="text-center">#</th>
+                            <th rowspan="2" scope="col" class="text-center">NIT</th>
+                            <th rowspan="2" scope="col" class="text-center">Nama Siswa</th>
+                            <th rowspan="2" scope="col" class="text-center">Jurusan</th>
+                            <th colspan="2" scope="colgroup" class="text-center">Status</th>
+                            <th rowspan="2" scope="col" class="text-center">Action</th>
                         </tr>
                         <tr>
-                            <th>Registrasi</th>
-                            <th>SPI</th>
+                            <th class="text-center">Registrasi</th>
+                            <th class="text-center">SPI</th>
                         </tr>
                     </thead>
                     <tbody class="text-center">

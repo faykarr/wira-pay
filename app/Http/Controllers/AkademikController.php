@@ -12,7 +12,8 @@ class AkademikController extends Controller
      */
     public function index()
     {
-        //
+        // Go to view with all akademik data
+        return view('akademik.index');
     }
 
     /**
@@ -20,7 +21,8 @@ class AkademikController extends Controller
      */
     public function create()
     {
-        //
+        // Go to view to create a new akademik entry
+        return view('akademik.create');
     }
 
     /**

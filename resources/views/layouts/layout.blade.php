@@ -18,7 +18,7 @@
                     {{-- Main Content End --}}
                     {{-- Footer Start --}}
                     <div class="text-center text-md-start">
-                        <p>Made with ❤ by <a href="https://faykarr.vercel.app" class="text-primary">faykarr</a></p>
+                        <p>Made with ❤ by <a href="https://faykarr.vercel.app" target="_blank" class="text-primary">faykarr</a></p>
                     </div>
                     {{-- Footer End --}}
                 </div>
