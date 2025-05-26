@@ -42,6 +42,29 @@
                     <iconify-icon icon="solar:menu-dots-bold-duotone" class="nav-small-cap-icon fs-5"></iconify-icon>
                     <span class="hide-menu">Master Data</span>
                 </li>
+                <!-- =================== -->
+                <!-- Master Akademik -->
+                <!-- =================== -->
+                <li class="sidebar-item">
+                    <a class="sidebar-link sidebar-link indigo-hover-bg" href="#" aria-expanded="false">
+                        <span class="aside-icon p-2 bg-primary-subtle rounded-1">
+                            <iconify-icon icon="solar:calendar-date-line-duotone" class="fs-6"></iconify-icon>
+                        </span>
+                        <span class="hide-menu ps-1">Master Akademik</span>
+                    </a>
+                </li>
+
+                <!-- =================== -->
+                <!-- Master Pembayaran -->
+                <!-- =================== -->
+                <li class="sidebar-item">
+                    <a class="sidebar-link sidebar-link warning-hover-bg" href="#" aria-expanded="false">
+                        <span class="aside-icon p-2 bg-primary-subtle rounded-1">
+                            <iconify-icon icon="solar:hand-money-line-duotone" class="fs-6"></iconify-icon>
+                        </span>
+                        <span class="hide-menu ps-1">Master Pembayaran</span>
+                    </a>
+                </li>
 
                 <!-- =================== -->
                 <!-- Students -->
@@ -61,24 +84,12 @@
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a href="#" class="sidebar-link">
+                            <a href="{{ route('siswa.create') }}" class="sidebar-link">
                                 <span class="sidebar-icon"></span>
                                 <span class="hide-menu">Siswa Baru</span>
                             </a>
                         </li>
                     </ul>
-                </li>
-
-                <!-- =================== -->
-                <!-- Master Pembayaran -->
-                <!-- =================== -->
-                <li class="sidebar-item">
-                    <a class="sidebar-link sidebar-link warning-hover-bg" href="#" aria-expanded="false">
-                        <span class="aside-icon p-2 bg-primary-subtle rounded-1">
-                            <iconify-icon icon="solar:hand-money-line-duotone" class="fs-6"></iconify-icon>
-                        </span>
-                        <span class="hide-menu ps-1">Master Pembayaran</span>
-                    </a>
                 </li>
 
                 <!-- ============================= -->

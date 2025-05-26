@@ -19,6 +19,9 @@
             {{-- Theme Customizer --}}
             @include('layouts.partials.theme-customizer')
             {{-- Theme Customizer --}}
+            <div class="mx-4 text-center text-md-start">
+                <p>Made with ❤ by <a href="https://faykarr.vercel.app" class="text-primary">faykarr</a></p>
+            </div>
         </div>
         <div class="dark-transparent sidebartoggler"></div>
     </div>

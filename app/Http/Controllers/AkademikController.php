@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Akademik;
 use Illuminate\Http\Request;
 
-class SiswaController extends Controller
+class AkademikController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        // Go to view siswa.index and send the models.
-        return view("siswa.index");
+        //
     }
 
     /**
@@ -20,8 +20,7 @@ class SiswaController extends Controller
      */
     public function create()
     {
-        // Go to view siswa.add
-        return view("siswa.add");
+        //
     }
 
     /**
@@ -35,7 +34,7 @@ class SiswaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Akademik $akademik)
     {
         //
     }
@@ -43,7 +42,7 @@ class SiswaController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Akademik $akademik)
     {
         //
     }
@@ -51,7 +50,7 @@ class SiswaController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Akademik $akademik)
     {
         //
     }
@@ -59,7 +58,7 @@ class SiswaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Akademik $akademik)
     {
         //
     }

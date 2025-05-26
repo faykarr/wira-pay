@@ -12,5 +12,5 @@
 
     @yield('css-links')
 
-    <title>@yield('title', 'App') - {{ config('app.name') }}</title>
+    <title>@yield('title', 'Wira App') - {{ config('app.name') }}</title>
 </head>
