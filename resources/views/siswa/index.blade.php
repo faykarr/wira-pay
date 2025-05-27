@@ -123,7 +123,10 @@
                                 <div class="btn-group">
                                     <button class="btn btn-sm btn-success">Lihat</button>
                                     <button class="btn btn-sm btn-warning">Edit</button>
-                                    <button class="btn btn-sm btn-danger">Hapus</button>
+                                    <button class="btn btn-sm btn-danger btn-delete"
+                                        data-url="{{ route('siswa.destroy', 1) }}">
+                                        Hapus
+                                    </button>
                                 </div>
                             </td>
                         </tr>
@@ -135,7 +138,6 @@
 @endsection
 
 @section('js-links')
-    <script src="{{ asset('assets/js/vendor.min.js') }}"></script>
     <script src="{{ asset('assets/libs/datatables.net/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('assets/js/datatable/datatable.init.js') }}"></script>
 @endsection

@@ -41,19 +41,29 @@
                         </tr>
                     </thead>
                     <tbody class="text-center">
-                        <tr>
-                            <td>1.</td>
-                            <td>2022/2023</td>
-                            <td>25</td>
-                            <td><span class="badge bg-success">Sudah Lunas Semua</span></td>
-                            <td>
-                                <div class="btn-group">
-                                    <button class="btn btn-sm btn-success">Lihat</button>
-                                    <button class="btn btn-sm btn-warning">Edit</button>
-                                    <button class="btn btn-sm btn-danger">Hapus</button>
-                                </div>
-                            </td>
-                        </tr>
+                        @foreach ($data as $row)
+                            <tr>
+                                <td>
+                                    {{ $loop->iteration }}
+                                </td>
+                                <td>
+                                    {{ $row->tahun_akademik }}
+                                </td>
+                                <td>0 Siswa</td>
+                                <td><span class="badge bg-success">Sudah Lunas Semua</span></td>
+                                <td>
+                                    <div class="btn-group">
+                                        <a href="{{ route('akademik.show', $row->id) }}"
+                                            class="btn btn-sm btn-success">Lihat</a>
+                                        <a href="{{ route('akademik.edit', $row->id) }}" class="btn btn-sm btn-warning">Edit</a>
+                                        <button class="btn btn-sm btn-danger btn-delete"
+                                            data-url="{{ route('akademik.destroy', $row->id) }}">
+                                            Hapus
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
@@ -62,7 +72,6 @@
 @endsection
 
 @section('js-links')
-    <script src="{{ asset('assets/js/vendor.min.js') }}"></script>
     <script src="{{ asset('assets/libs/datatables.net/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('assets/js/datatable/datatable.init.js') }}"></script>
 @endsection
