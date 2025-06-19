@@ -1,6 +1,6 @@
 @extends('layouts.layout')
 
-@section('title', 'Tambah Tahun Akademik')
+@section('title', 'Detail Tahun Akademik')
 
 @section('main-content')
     <div class="card shadow-none position-relative overflow-hidden mb-2">

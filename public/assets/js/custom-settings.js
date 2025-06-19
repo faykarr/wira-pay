@@ -1,4 +1,3 @@
-// public/assets/js/delete-handler.js
 $(document).ready(function () {
     $(document).on('click', '.btn-delete', function (e) {
         e.preventDefault();
