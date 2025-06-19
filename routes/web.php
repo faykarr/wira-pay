@@ -13,6 +13,7 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard
 // Siswa Management
 Route::resource('siswa', SiswaController::class);
 // Akademik Management
+Route::get('akademik/data', [AkademikController::class, 'data'])->name('akademik.data');
 Route::resource('akademik', AkademikController::class);
 // Jurusan Management
 Route::resource('jurusan', JurusanController::class);

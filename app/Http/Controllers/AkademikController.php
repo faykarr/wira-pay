@@ -77,4 +77,30 @@ class AkademikController extends Controller
         // Delete the specified akademik entry
         $akademik->delete();
     }
+
+    /**
+     * Get data for DataTables.
+     */
+    public function data(Akademik $akademik)
+    {
+        $data = $akademik->orderBy('tahun_akademik')->get();
+        return datatables()->of($data)
+            ->addIndexColumn()
+            ->addColumn('jumlah_siswa', fn($row) => '0 Siswa')
+            ->addColumn('status_pembayaran', fn($row) => '<span class="badge bg-success">Sudah Lunas Semua</span>')
+            ->addColumn('action', function ($row) {
+                $editUrl = route('akademik.edit', $row->id);
+                $showUrl = route('akademik.show', $row->id);
+                $deleteUrl = route('akademik.destroy', $row->id);
+                return '
+                <div class="btn-group">
+                    <a href="' . $showUrl . '" class="btn btn-sm btn-success">Lihat</a>
+                    <a href="' . $editUrl . '" class="btn btn-sm btn-warning">Edit</a>
+                    <button class="btn btn-sm btn-danger btn-delete" data-url="' . $deleteUrl . '">Hapus</button>
+                </div>
+            ';
+            })
+            ->rawColumns(['status_pembayaran', 'action'])
+            ->make(true);
+    }
 }

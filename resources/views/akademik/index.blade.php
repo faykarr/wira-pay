@@ -30,7 +30,8 @@
         <div class="card-body">
             <div class="table-responsive pb-4 w-100">
                 <table id="all-akademik"
-                    class="table w-100 table-outer-border table-hover rounded-3 text-nowrap align-middle">
+                    class="table w-100 table-outer-border table-hover rounded-3 text-nowrap align-middle"
+                    data-url="{{ route('akademik.data') }}">
                     <thead class="align-middle text-center">
                         <tr>
                             <th scope="col" class="text-center">#</th>
@@ -40,31 +41,7 @@
                             <th scope="col" class="text-center">Action</th>
                         </tr>
                     </thead>
-                    <tbody class="text-center">
-                        @foreach ($data as $row)
-                            <tr>
-                                <td>
-                                    {{ $loop->iteration }}
-                                </td>
-                                <td>
-                                    {{ $row->tahun_akademik }}
-                                </td>
-                                <td>0 Siswa</td>
-                                <td><span class="badge bg-success">Sudah Lunas Semua</span></td>
-                                <td>
-                                    <div class="btn-group">
-                                        <a href="{{ route('akademik.show', $row->id) }}"
-                                            class="btn btn-sm btn-success">Lihat</a>
-                                        <a href="{{ route('akademik.edit', $row->id) }}" class="btn btn-sm btn-warning">Edit</a>
-                                        <button class="btn btn-sm btn-danger btn-delete"
-                                            data-url="{{ route('akademik.destroy', $row->id) }}">
-                                            Hapus
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
+                    <tbody class="text-center"></tbody>
                 </table>
             </div>
         </div>
