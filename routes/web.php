@@ -11,6 +11,7 @@ Route::get('/', [DashboardController::class, 'index'])->name('index');
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 // Siswa Management
+Route::get('siswa/data', [SiswaController::class, 'data'])->name('siswa.data');
 Route::resource('siswa', SiswaController::class);
 // Akademik Management
 Route::get('akademik/data', [AkademikController::class, 'data'])->name('akademik.data');

@@ -9,7 +9,7 @@
     <div class="card shadow-none position-relative overflow-hidden mb-2">
         <div class="card-body d-flex flex-wrap align-items-center justify-content-between p-4">
             <h4 class="fw-semibold mb-0">Daftar Siswa</h4>
-            <div class="d-flex my-1 my-md-0 align-items-center justify-content-between gap-2">
+            <div class="d-flex flex-wrap flex-lg-nowrap my-1 my-md-0 align-items-center justify-content-between gap-2">
                 <a href="{{ route('siswa.create') }}"
                     class="justify-content-center w-100 btn btn-sm btn-rounded btn-success d-flex align-items-center">
                     <i class="ti ti-plus fs-4 me-2"></i>
@@ -24,6 +24,11 @@
                     class="justify-content-center w-100 btn btn-sm btn-rounded btn-secondary d-flex align-items-center">
                     <i class="ti ti-upload fs-4 me-2"></i>
                     Export
+                </button>
+                <button type="button"
+                    class="justify-content-center w-100 btn btn-sm btn-rounded btn-primary d-flex align-items-center">
+                    <i class="ti ti-folder fs-4 me-2"></i>
+                    Template
                 </button>
             </div>
             <nav aria-label="breadcrumb">
@@ -96,12 +101,14 @@
         <div class="card-body">
             <div class="table-responsive pb-4 w-100">
                 <table id="all-student"
-                    class="table w-100 table-outer-border table-hover rounded-3 text-nowrap align-middle">
+                    class="table w-100 table-outer-border table-hover rounded-3 text-nowrap align-middle"
+                    data-url="{{ route('siswa.data') }}">
                     <thead class="align-middle text-center">
                         <tr>
                             <th rowspan="2" scope="col" class="text-center">#</th>
                             <th rowspan="2" scope="col" class="text-center">NIT</th>
                             <th rowspan="2" scope="col" class="text-center">Nama Siswa</th>
+                            <th rowspan="2" scope="col" class="text-center">Tahun Akademik</th>
                             <th rowspan="2" scope="col" class="text-center">Jurusan</th>
                             <th colspan="2" scope="colgroup" class="text-center">Status</th>
                             <th rowspan="2" scope="col" class="text-center">Action</th>
@@ -111,26 +118,7 @@
                             <th class="text-center">SPI</th>
                         </tr>
                     </thead>
-                    <tbody class="text-center">
-                        <tr>
-                            <td>1.</td>
-                            <td>21.230.0194</td>
-                            <td>Nasyath Faykar</td>
-                            <td>Perhotelan</td>
-                            <td><span class="badge bg-danger">Belum Lunas</span></td>
-                            <td><span class="badge bg-success">Lunas</span></td>
-                            <td>
-                                <div class="btn-group">
-                                    <button class="btn btn-sm btn-success">Lihat</button>
-                                    <button class="btn btn-sm btn-warning">Edit</button>
-                                    <button class="btn btn-sm btn-danger btn-delete"
-                                        data-url="{{ route('siswa.destroy', 1) }}">
-                                        Hapus
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
+                    <tbody class="text-center"></tbody>
                 </table>
             </div>
         </div>

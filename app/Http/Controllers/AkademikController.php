@@ -81,10 +81,10 @@ class AkademikController extends Controller
      */
     public function data(Akademik $akademik)
     {
-        $data = $akademik->orderBy('tahun_akademik')->get();
+        $data = $akademik->orderBy('tahun_akademik')->withCount('siswa')->get();
         return datatables()->of($data)
             ->addIndexColumn()
-            ->addColumn('jumlah_siswa', fn($row) => '0 Siswa')
+            ->addColumn('jumlah_siswa', fn($row) => $row->siswa_count . ' Siswa')
             ->addColumn('status_pembayaran', fn($row) => '<span class="badge bg-success">Sudah Lunas Semua</span>')
             ->addColumn('action', function ($row) {
                 $editUrl = route('akademik.edit', $row->id);
@@ -92,9 +92,9 @@ class AkademikController extends Controller
                 $deleteUrl = route('akademik.destroy', $row->id);
                 return '
                 <div class="btn-group">
-                    <a href="' . $showUrl . '" class="btn btn-sm btn-success">Lihat</a>
-                    <a href="' . $editUrl . '" class="btn btn-sm btn-warning">Edit</a>
-                    <button class="btn btn-sm btn-danger btn-delete" data-url="' . $deleteUrl . '">Hapus</button>
+                    <a href="' . $showUrl . '" class="btn btn-sm btn-success"><i class="ti ti-eye fs-4"></i></a>
+                    <a href="' . $editUrl . '" class="btn btn-sm btn-warning text-white"><i class="ti ti-pencil fs-4"></i></a>
+                    <button class="btn btn-sm btn-danger btn-delete" data-url="' . $deleteUrl . '"><i class="ti ti-trash fs-4"></i></button>
                 </div>
             ';
             })

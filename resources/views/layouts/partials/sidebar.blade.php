@@ -69,18 +69,6 @@
                 </li>
 
                 <!-- =================== -->
-                <!-- Master Pembayaran -->
-                <!-- =================== -->
-                <li class="sidebar-item">
-                    <a class="sidebar-link sidebar-link warning-hover-bg" href="#" aria-expanded="false">
-                        <span class="aside-icon p-2 bg-primary-subtle rounded-1">
-                            <iconify-icon icon="solar:hand-money-line-duotone" class="fs-6"></iconify-icon>
-                        </span>
-                        <span class="hide-menu ps-1">Pembayaran</span>
-                    </a>
-                </li>
-
-                <!-- =================== -->
                 <!-- Students -->
                 <!-- =================== -->
                 <li class="sidebar-item">
@@ -104,6 +92,18 @@
                             </a>
                         </li>
                     </ul>
+                </li>
+
+                <!-- =================== -->
+                <!-- Master Pembayaran -->
+                <!-- =================== -->
+                <li class="sidebar-item">
+                    <a class="sidebar-link sidebar-link warning-hover-bg" href="#" aria-expanded="false">
+                        <span class="aside-icon p-2 bg-primary-subtle rounded-1">
+                            <iconify-icon icon="solar:hand-money-line-duotone" class="fs-6"></iconify-icon>
+                        </span>
+                        <span class="hide-menu ps-1">Pembayaran</span>
+                    </a>
                 </li>
 
                 <!-- ============================= -->

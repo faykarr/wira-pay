@@ -72,10 +72,10 @@ class JurusanController extends Controller
      */
     public function data(Jurusan $jurusan)
     {
-        $data = $jurusan->orderBy('id')->get();
+        $data = $jurusan->orderBy('id')->withCount('siswa')->get();
         return datatables()->of($data)
             ->addIndexColumn()
-            ->addColumn('jumlah_siswa', fn($row) => '0 Siswa')
+            ->addColumn('jumlah_siswa', fn($row) => $row->siswa_count . ' Siswa')
             ->addColumn('action', function ($row) {
                 $editUrl = route('jurusan.edit', $row->id);
                 $showUrl = route('jurusan.show', $row->id);

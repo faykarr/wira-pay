@@ -4,6 +4,7 @@ $(document).ready(function () {
 
         let button = $(this);
         let url = button.data('url');
+        let urlLoad = button.data('load') || window.location.href;
 
         Swal.fire({
             title: 'Yakin ingin menghapus?',
@@ -25,7 +26,11 @@ $(document).ready(function () {
                     },
                     success: function (response) {
                         Swal.fire('Berhasil!', 'Data berhasil dihapus.', 'success').then(() => {
-                            location.reload();
+                            if (urlLoad) {
+                                window.location.href = urlLoad;
+                            } else {
+                                location.reload();
+                            }
                         });
                     },
                     error: function () {
