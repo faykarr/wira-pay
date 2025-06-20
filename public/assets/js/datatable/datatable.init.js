@@ -26,8 +26,8 @@ $(function () {
     columns: [
       { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
       { data: 'tahun_akademik', name: 'tahun_akademik' },
-      { data: 'jumlah_siswa', name: 'jumlah_siswa' },
-      { data: 'status_pembayaran', name: 'status_pembayaran' },
+      { data: 'jumlah_siswa', name: 'jumlah_siswa', searchable: false },
+      { data: 'status_pembayaran', name: 'status_pembayaran', searchable: false },
       { data: 'action', name: 'action', orderable: false, searchable: false }
     ]
   });
@@ -41,7 +41,7 @@ $(function () {
     columns: [
       { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
       { data: 'nama_jurusan', name: 'nama_jurusan' },
-      { data: 'jumlah_siswa', name: 'jumlah_siswa' },
+      { data: 'jumlah_siswa', name: 'jumlah_siswa', searchable: false },
       { data: 'action', name: 'action', orderable: false, searchable: false }
     ]
   });

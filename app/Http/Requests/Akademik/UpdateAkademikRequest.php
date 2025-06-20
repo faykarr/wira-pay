@@ -21,13 +21,12 @@ class UpdateAkademikRequest extends FormRequest
      */
     public function rules(): array
     {
-        $id = $this->akademik->id;
         return [
             'tahun_akademik' => [
                 'required',
                 'string',
                 'max:20',
-                'unique:akademik,tahun_akademik,' . $id,
+                'unique:akademik,tahun_akademik,' . $this->route('akademik')->id,
                 function ($attribute, $value, $fail) {
                     [$tahun_awal, $tahun_akhir] = explode('/', $value);
 

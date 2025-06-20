@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Jurusan\StoreJurusanRequest;
+use App\Http\Requests\Jurusan\UpdateJurusanRequest;
 use App\Models\Jurusan;
 use Illuminate\Http\Request;
 
@@ -10,7 +12,7 @@ class JurusanController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Jurusan $jurusan)
+    public function index()
     {
         return view('jurusan.index');
     }
@@ -20,15 +22,16 @@ class JurusanController extends Controller
      */
     public function create()
     {
-        //
+        return view('jurusan.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreJurusanRequest $request, Jurusan $jurusan)
     {
-        //
+        $jurusan->create($request->validated());
+        return redirect()->route('jurusan.index')->with('success', 'Jurusan berhasil ditambahkan.');
     }
 
     /**
@@ -36,7 +39,7 @@ class JurusanController extends Controller
      */
     public function show(Jurusan $jurusan)
     {
-        //
+        return view('jurusan.show', compact('jurusan'));
     }
 
     /**
@@ -44,15 +47,16 @@ class JurusanController extends Controller
      */
     public function edit(Jurusan $jurusan)
     {
-        //
+        return view('jurusan.edit', compact('jurusan'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Jurusan $jurusan)
+    public function update(UpdateJurusanRequest $request, Jurusan $jurusan)
     {
-        //
+        $jurusan->update($request->validated());
+        return redirect()->route('jurusan.index')->with('success', 'Jurusan berhasil diperbarui.');
     }
 
     /**
@@ -60,7 +64,7 @@ class JurusanController extends Controller
      */
     public function destroy(Jurusan $jurusan)
     {
-        //
+        $jurusan->delete();
     }
 
     /**
