@@ -16,4 +16,5 @@ Route::resource('siswa', SiswaController::class);
 Route::get('akademik/data', [AkademikController::class, 'data'])->name('akademik.data');
 Route::resource('akademik', AkademikController::class);
 // Jurusan Management
+Route::get('jurusan/data', [JurusanController::class, 'data'])->name('jurusan.data');
 Route::resource('jurusan', JurusanController::class);

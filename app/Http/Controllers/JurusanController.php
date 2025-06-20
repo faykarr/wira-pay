@@ -10,11 +10,9 @@ class JurusanController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Jurusan $jurusan)
     {
-        // Go to the view with the list of jurusan
-        $jurusan = Jurusan::all();
-        return view('jurusan.index', compact('jurusan'));
+        return view('jurusan.index');
     }
 
     /**
@@ -63,5 +61,30 @@ class JurusanController extends Controller
     public function destroy(Jurusan $jurusan)
     {
         //
+    }
+
+    /**
+     * Get data for DataTables.
+     */
+    public function data(Jurusan $jurusan)
+    {
+        $data = $jurusan->orderBy('id')->get();
+        return datatables()->of($data)
+            ->addIndexColumn()
+            ->addColumn('jumlah_siswa', fn($row) => '0 Siswa')
+            ->addColumn('action', function ($row) {
+                $editUrl = route('jurusan.edit', $row->id);
+                $showUrl = route('jurusan.show', $row->id);
+                $deleteUrl = route('jurusan.destroy', $row->id);
+                return '
+                <div class="btn-group">
+                    <a href="' . $showUrl . '" class="btn btn-sm btn-success">Lihat</a>
+                    <a href="' . $editUrl . '" class="btn btn-sm btn-warning">Edit</a>
+                    <button class="btn btn-sm btn-danger btn-delete" data-url="' . $deleteUrl . '">Hapus</button>
+                </div>
+            ';
+            })
+            ->rawColumns(['action'])
+            ->make(true);
     }
 }

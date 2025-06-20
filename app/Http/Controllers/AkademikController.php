@@ -12,11 +12,9 @@ class AkademikController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Akademik $akademik)
+    public function index()
     {
-        $data = $akademik->orderBy('tahun_akademik')->get();
-        // Go to view with all akademik data
-        return view('akademik.index', compact('data'));
+        return view('akademik.index');
     }
 
     /**

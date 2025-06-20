@@ -60,7 +60,7 @@
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a href="#" class="sidebar-link">
+                            <a href="{{ route('jurusan.index') }}" class="sidebar-link">
                                 <span class="sidebar-icon"></span>
                                 <span class="hide-menu">Jurusan</span>
                             </a>
