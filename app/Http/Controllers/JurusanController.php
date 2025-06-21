@@ -82,9 +82,9 @@ class JurusanController extends Controller
                 $deleteUrl = route('jurusan.destroy', $row->id);
                 return '
                 <div class="btn-group">
-                    <a href="' . $showUrl . '" class="btn btn-sm btn-success">Lihat</a>
-                    <a href="' . $editUrl . '" class="btn btn-sm btn-warning">Edit</a>
-                    <button class="btn btn-sm btn-danger btn-delete" data-url="' . $deleteUrl . '">Hapus</button>
+                    <a href="' . $showUrl . '" class="btn btn-sm btn-primary"><i class="ti ti-eye fs-4"></i> Lihat</a>
+                    <a href="' . $editUrl . '" class="btn btn-sm btn-success"><i class="ti ti-pencil fs-4"> Edit</i></a>
+                    <button class="btn btn-sm btn-danger btn-delete" data-url="' . $deleteUrl . '"><i class="ti ti-trash fs-4"></i> Hapus</button>
                 </div>
             ';
             })

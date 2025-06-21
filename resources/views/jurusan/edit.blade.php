@@ -11,6 +11,10 @@
                     <li class="breadcrumb-item">
                         <a class="text-muted text-decoration-none" href="{{ route('index') }}">Beranda</a>
                     </li>
+                    <li class="breadcrumb-item">
+                        <a class="text-muted text-decoration-none" href="{{ route('jurusan.index') }}">Daftar Jurusan
+                            Akademik</a>
+                    </li>
                     <li class="breadcrumb-item" aria-current="page">Edit Jurusan Akademik</li>
                 </ol>
             </nav>
@@ -26,8 +30,8 @@
                 @method('PUT')
                 <div class="mb-3">
                     <label for="nama_jurusan" class="form-label">Jurusan Akademik</label>
-                    <input type="text" class="form-control @error('nama_jurusan') is-invalid @enderror"
-                        id="nama_jurusan" name="nama_jurusan" placeholder="Contoh: Teknik Informatika"
+                    <input type="text" class="form-control @error('nama_jurusan') is-invalid @enderror" id="nama_jurusan"
+                        name="nama_jurusan" placeholder="Contoh: Teknik Informatika"
                         value="{{ old('nama_jurusan', $jurusan->nama_jurusan) }}">
                     @error('nama_jurusan')
                         <div class="invalid-feedback">

@@ -11,6 +11,10 @@
                     <li class="breadcrumb-item">
                         <a class="text-muted text-decoration-none" href="{{ route('index') }}">Beranda</a>
                     </li>
+                    <li class="breadcrumb-item">
+                        <a class="text-muted text-decoration-none" href="{{ route('akademik.index') }}">Daftar Tahun
+                            Akademik</a>
+                    </li>
                     <li class="breadcrumb-item" aria-current="page">Edit Tahun Akademik</li>
                 </ol>
             </nav>

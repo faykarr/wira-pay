@@ -11,6 +11,9 @@
                 <li class="breadcrumb-item">
                     <a class="text-muted text-decoration-none" href="{{ route('index') }}">Beranda</a>
                 </li>
+                <li class="breadcrumb-item">
+                    <a class="text-muted text-decoration-none" href="{{ route('siswa.index') }}">Daftar Siswa</a>
+                </li>
                 <li class="breadcrumb-item" aria-current="page">Edit Siswa</li>
             </ol>
         </nav>

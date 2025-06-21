@@ -92,9 +92,9 @@ class AkademikController extends Controller
                 $deleteUrl = route('akademik.destroy', $row->id);
                 return '
                 <div class="btn-group">
-                    <a href="' . $showUrl . '" class="btn btn-sm btn-success"><i class="ti ti-eye fs-4"></i></a>
-                    <a href="' . $editUrl . '" class="btn btn-sm btn-warning text-white"><i class="ti ti-pencil fs-4"></i></a>
-                    <button class="btn btn-sm btn-danger btn-delete" data-url="' . $deleteUrl . '"><i class="ti ti-trash fs-4"></i></button>
+                    <a href="' . $showUrl . '" class="btn btn-sm btn-primary"><i class="ti ti-eye fs-4 me-1"></i>Lihat</a>
+                    <a href="' . $editUrl . '" class="btn btn-sm btn-success text-white"><i class="ti ti-pencil fs-4 me-1"></i>Edit</a>
+                    <button class="btn btn-sm btn-danger btn-delete" data-url="' . $deleteUrl . '"><i class="ti ti-trash fs-4 me-1"></i>Hapus</button>
                 </div>
             ';
             })

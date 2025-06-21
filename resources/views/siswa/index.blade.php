@@ -42,13 +42,19 @@
         </div>
     </div>
     <div class="card shadow-none position-relative overflow-hidden mb-2">
-        <div class="card-body d-flex flex-wrap align-items-center justify-content-between gap-2 p-4">
+        <div class="card-body d-flex flex-wrap align-items-center justify-content-center gap-2 p-4">
             <div>
-                <label for="search" class="mb-1 ms-2">Search</label>
+                <label for="tahun_akademik" class="mb-1 ms-2">Tahun Akademik</label>
                 <div class="position-relative">
-                    <input id="search" type="text" class="form-control rounded-3 py-2 ps-5"
-                        placeholder="Cari nama atau nit ...">
-                    <iconify-icon icon="solar:magnifer-linear"
+                    <select name="tahun_akademik" id="tahun_akademik" class="form-control rounded-3 py-2 ps-5">
+                        <option value="">-- Pilih Tahun --</option>
+                        @foreach ($data['akademik'] as $row)
+                            <option value="{{ $row->id }}" {{ old('akademik') == $row->id ? 'selected' : '' }}>
+                                {{ $row->tahun_akademik }}
+                            </option>
+                        @endforeach
+                    </select>
+                    <iconify-icon icon="solar:settings-minimalistic-linear"
                         class="text-dark position-absolute top-50 start-0 translate-middle-y text-dark ms-3"></iconify-icon>
                 </div>
             </div>
@@ -57,8 +63,11 @@
                 <div class="position-relative">
                     <select name="jurusan" id="jurusan" class="form-control rounded-3 py-2 ps-5">
                         <option value="">-- Pilih Jurusan --</option>
-                        <option value="nkpi">NKPI</option>
-                        <option value="perhotelan">Perhotelan</option>
+                        @foreach ($data['jurusan'] as $row)
+                            <option value="{{ $row->id }}" {{ old('jurusan') == $row->id ? 'selected' : '' }}>
+                                {{ $row->nama_jurusan }}
+                            </option>
+                        @endforeach
                     </select>
                     <iconify-icon icon="solar:settings-minimalistic-linear"
                         class="text-dark position-absolute top-50 start-0 translate-middle-y text-dark ms-3"></iconify-icon>
@@ -91,8 +100,8 @@
             <div>
                 <button type="button"
                     class="justify-content-center w-100 mt-4 btn py-2 btn-rounded btn-primary d-flex align-items-center">
-                    <i class="ti ti-search fs-4 me-2"></i>
-                    Search
+                    <i class="ti ti-filter fs-5 me-2"></i>
+                    Filter
                 </button>
             </div>
         </div>

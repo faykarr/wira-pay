@@ -16,8 +16,12 @@ class SiswaController extends Controller
      */
     public function index()
     {
+        $data = [
+            'akademik' => Akademik::all(),
+            'jurusan' => Jurusan::all()
+        ];
         // Go to view siswa.index and send the data from model.
-        return view("siswa.index");
+        return view("siswa.index", compact('data'));
     }
 
     /**
@@ -114,8 +118,8 @@ class SiswaController extends Controller
                 $deleteUrl = route('siswa.destroy', $row->id);
                 return '
                 <div class="btn-group">
-                    <a href="' . $showUrl . '" class="btn btn-sm btn-success"><i class="ti ti-eye fs-4"></i></a>
-                    <a href="' . $editUrl . '" class="btn btn-sm btn-warning text-white"><i class="ti ti-pencil fs-4"></i></a>
+                    <a href="' . $showUrl . '" class="btn btn-sm btn-primary"><i class="ti ti-eye fs-4"></i></a>
+                    <a href="' . $editUrl . '" class="btn btn-sm btn-success text-white"><i class="ti ti-pencil fs-4"></i></a>
                     <button class="btn btn-sm btn-danger btn-delete" data-url="' . $deleteUrl . '"><i class="ti ti-trash fs-4"></i></button>
                 </div>
             ';
