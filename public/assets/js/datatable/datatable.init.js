@@ -132,5 +132,19 @@ $(function () {
     ]
   });
 
+  // Initialize DataTable for all pembayaran
+  const urlPembayaran = $('#all-pembayaran').data('url');
 
+  $("#all-pembayaran").DataTable({
+    processing: true,
+    serverSide: true,
+    ajax: urlPembayaran,
+    columns: [
+      { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: true, searchable: false },
+      { data: 'tahun_akademik', name: 'tahun_akademik' },
+      { data: 'registration_fee', name: 'registration_fee', searchable: false },
+      { data: 'spi_fee', name: 'spi_fee', searchable: false },
+      { data: 'action', name: 'action', orderable: false, searchable: false }
+    ]
+  });
 });

@@ -12,7 +12,7 @@ class PembayaranController extends Controller
      */
     public function index()
     {
-        //
+        return view('pembayaran.index');
     }
 
     /**
@@ -61,5 +61,34 @@ class PembayaranController extends Controller
     public function destroy(Pembayaran $pembayaran)
     {
         //
+    }
+
+    /**
+     * Get data for the datatable.
+     */
+    public function data()
+    {
+        $pembayaran = Pembayaran::with('akademik')->get();
+        return datatables()->of($pembayaran)
+            ->addIndexColumn()
+            ->addColumn('tahun_akademik', function ($pembayaran) {
+                return $pembayaran->akademik->tahun_akademik;
+            })
+            ->addColumn('registration_fee', function ($pembayaran) {
+                return '<span class="badge bg-success-subtle rounded-pill text-success border-success border fs-2">Rp ' . number_format($pembayaran->registration_fee, 0, ',', '.') . '</span>';
+            })
+            ->addColumn('spi_fee', function ($pembayaran) {
+                return '<span class="badge bg-success-subtle rounded-pill text-success border-success border fs-2">Rp ' . number_format($pembayaran->spi_fee, 0, ',', '.') . '</span>';
+            })
+            ->addColumn('action', function ($pembayaran) {
+                $editUrl = route('pembayaran.edit', $pembayaran->id);
+                return '
+                <div class="btn-group">
+                    <a href="' . $editUrl . '" class="btn btn-sm btn-primary text-white"><i class="ti ti-settings fs-4 me-1"></i>Pengaturan</a>
+                </div>
+            ';
+            })
+            ->rawColumns(['registration_fee', 'spi_fee', 'action'])
+            ->make(true);
     }
 }

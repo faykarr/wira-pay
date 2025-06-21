@@ -131,7 +131,7 @@
 
                                     <div>
                                         <button class="btn btn-primary rounded-pill">
-                                            Lihar Riwayat Transaksi
+                                            Lihat Riwayat Transaksi
                                         </button>
                                     </div>
                                 </div>
@@ -323,7 +323,7 @@
 
                         <div class="table-responsive" data-simplebar>
                             <table class="table table-borderless align-middle text-nowrap">
-                                <thead>
+                                <thead class="text-center">
                                     <tr>
                                         <th scope="col">Siswa</th>
                                         <th scope="col">Tahun Akademik</th>

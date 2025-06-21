@@ -6,5 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Pembayaran extends Model
 {
-    //
+    protected $table = 'master_pembayaran';
+    protected $primaryKey = 'id';
+    protected $fillable = [
+        'akademik_id',
+        'registration_fee',
+        'spi_fee',
+    ];
+
+    public function akademik()
+    {
+        return $this->belongsTo(Akademik::class);
+    }
 }

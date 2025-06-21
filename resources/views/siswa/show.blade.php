@@ -114,7 +114,7 @@
                             <div class="d-flex justify-content-between align-items-start">
                                 <span class="badge text-bg-danger">Belum Lunas</span>
                                 <div class="d-flex justify-content-center">
-                                    <sup class="h5 mt-3 mb-0 me-1 text-primary">Rp.</sup>
+                                    <sup class="h5 mt-3 mb-0 me-1 text-primary">Rp</sup>
                                     <h1 class="display-5 mb-0 text-primary">1.500.000</h1>
                                     <sub class="fs-6 pricing-duration mt-auto mb-3">/3.000.000</sub>
                                 </div>
@@ -148,7 +148,7 @@
                             <div class="d-flex justify-content-between align-items-start">
                                 <span class="badge text-bg-success">Sudah Lunas</span>
                                 <div class="d-flex justify-content-center">
-                                    <sup class="h5 mt-3 mb-0 me-1 text-primary">Rp.</sup>
+                                    <sup class="h5 mt-3 mb-0 me-1 text-primary">Rp</sup>
                                     <h1 class="display-5 mb-0 text-primary">1.200.000</h1>
                                     <sub class="fs-6 pricing-duration mt-auto mb-3">/1.200.000</sub>
                                 </div>

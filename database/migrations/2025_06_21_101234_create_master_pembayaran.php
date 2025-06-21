@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -13,6 +12,9 @@ return new class extends Migration
     {
         Schema::create('master_pembayaran', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('akademik_id')->constrained('akademik')->onDelete('cascade');
+            $table->bigInteger('registration_fee')->default(null)->nullable();
+            $table->bigInteger('spi_fee')->default(null)->nullable();
             $table->timestamps();
         });
     }

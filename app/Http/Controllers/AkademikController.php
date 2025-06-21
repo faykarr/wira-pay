@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Akademik\StoreAkademikRequest;
 use App\Http\Requests\Akademik\UpdateAkademikRequest;
 use App\Models\Akademik;
+use App\Models\Pembayaran;
 use Illuminate\Http\Request;
 
 class AkademikController extends Controller
@@ -29,9 +30,14 @@ class AkademikController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreAkademikRequest $request, Akademik $akademik)
+    public function store(StoreAkademikRequest $request, Akademik $akademik, Pembayaran $pembayaran)
     {
         $akademik->create($request->validated());
+        $pembayaran->create([
+            'akademik_id' => $akademik->latest()->first()->id,
+            'registration_fee' => 0,
+            'spi_fee' => 0,
+        ]);
         return redirect()->route('akademik.index')->with('success', 'Data akademik berhasil ditambahkan.');
     }
 
