@@ -1,6 +1,6 @@
 @extends('layouts.layout')
 
-@section('title', 'Tambah Siswa')
+@section('title', 'Edit Data Siswa')
 
 @section('main-content')
 <div class="card shadow-none position-relative overflow-hidden mb-2">

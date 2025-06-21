@@ -17,6 +17,82 @@ $(function () {
     ]
   });
 
+  // Initialize DataTable for import student (hanya sekali)
+  const importTable = $('#import-student').DataTable({
+    searching: false,
+    lengthChange: false,
+    info: false,
+    columns: [
+      { title: "#" },
+      { title: "NIT" },
+      { title: "Nama Siswa" },
+      { title: "Tahun Akademik" },
+      { title: "Jurusan" }
+    ]
+  });
+
+  $('#wfile').on('change', function () {
+    const fileInput = this.files[0];
+    const akademik = $('#wakademik').val();
+    const jurusan = $('#wjurusan').val();
+    const urlImport = $('#import-student').data('url');
+
+    if (!fileInput || !akademik || !jurusan) {
+      alert("Lengkapi dulu file + tahun akademik + jurusan");
+      return;
+    }
+
+    // Show loading indicator inside tbody
+    const $tbody = $('#import-student tbody');
+    $tbody.html(`
+      <tr id="import-loading">
+        <td colspan="5" class="text-center py-4">
+          <span class="spinner-border spinner-border-sm me-2"></span>
+          Memproses data, mohon tunggu...
+        </td>
+      </tr>
+    `);
+
+    const formData = new FormData();
+    formData.append('file', fileInput);
+    formData.append('akademik', akademik);
+    formData.append('jurusan', jurusan);
+    formData.append('_token', $('meta[name="csrf-token"]').attr('content'));
+
+    $.ajax({
+      url: urlImport,
+      method: 'POST',
+      data: formData,
+      contentType: false,
+      processData: false,
+      success: function (res) {
+        importTable.clear().draw();
+
+        res.data.forEach((row, i) => {
+          importTable.row.add([
+            i + 1,
+            row.nit,
+            row.nama_lengkap,
+            $('#wakademik option:selected').text(),
+            $('#wjurusan option:selected').text()
+          ]).draw(false);
+        });
+      },
+      error: function (err) {
+        $tbody.html(`
+          <tr>
+            <td colspan="5" class="text-center text-danger py-4">
+              Gagal memuat data, cek kembali file dan inputan.
+            </td>
+          </tr>
+        `);
+      },
+      complete: function () {
+        $('#import-loading').remove();
+      }
+    });
+  });
+
   // Initialize DataTable for all akademik
   const urlAkademik = $('#all-akademik').data('url');
 
@@ -46,4 +122,6 @@ $(function () {
       { data: 'action', name: 'action', orderable: false, searchable: false }
     ]
   });
+
+
 });

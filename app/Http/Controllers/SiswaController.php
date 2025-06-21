@@ -8,6 +8,7 @@ use App\Models\Akademik;
 use App\Models\Jurusan;
 use App\Models\Siswa;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class SiswaController extends Controller
 {
@@ -126,5 +127,59 @@ class SiswaController extends Controller
             })
             ->rawColumns(['status_registrasi', 'status_spi', 'action'])
             ->make(true);
+    }
+
+    // Function to show import view
+    public function import()
+    {
+        $data = [
+            'akademik' => Akademik::all(),
+            'jurusan' => Jurusan::all()
+        ];
+        // Go to view siswa.import and send the data from model.
+        return view("siswa.import", compact('data'));
+    }
+
+    // Function to sendImport data to database
+    public function importStore(Request $request)
+    {
+        // Validate the request
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls,csv'
+        ]);
+
+        // Handle the import logic here (e.g., using a service or a job)
+        // ...
+
+        return redirect()->route('siswa.index')->with('success', 'Data siswa berhasil diimport!');
+    }
+
+    // Function to sendImport data to preview in datatable
+    public function importPreview(Request $request)
+    {
+        $file = $request->file('file');
+
+        // Validasi file
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls,csv',
+        ]);
+
+        $data = Excel::toCollection(null, $file)[0];
+
+        $rows = [];
+        foreach ($data as $index => $row) {
+            // skip header
+            if ($index === 0)
+                continue;
+
+            $rows[] = [
+                'nit' => $row[0],
+                'nama_lengkap' => ucwords(strtolower($row[1])),
+                'tahun_akademik' => $request->akademik, // bisa ambil nama juga nanti
+                'jurusan' => $request->jurusan,         // sama
+            ];
+        }
+
+        return response()->json(['data' => $rows]);
     }
 }

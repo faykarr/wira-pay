@@ -12,6 +12,10 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard
 
 // Siswa Management
 Route::get('siswa/data', [SiswaController::class, 'data'])->name('siswa.data');
+// Import Siswa
+Route::get('siswa/import', [SiswaController::class, 'import'])->name('siswa.import');
+Route::post('siswa/import', [SiswaController::class, 'importStore'])->name('siswa.import.store');
+Route::post('siswa/import/preview', [SiswaController::class, 'importPreview'])->name('siswa.import.preview');
 Route::resource('siswa', SiswaController::class);
 // Akademik Management
 Route::get('akademik/data', [AkademikController::class, 'data'])->name('akademik.data');

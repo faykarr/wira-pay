@@ -11,6 +11,9 @@
                     <li class="breadcrumb-item">
                         <a class="text-muted text-decoration-none" href="{{ route('index') }}">Beranda</a>
                     </li>
+                    <li class="breadcrumb-item">
+                        <a class="text-muted text-decoration-none" href="{{ route('jurusan.index') }}">Daftar Jurusan Akademik</a>
+                    </li>
                     <li class="breadcrumb-item" aria-current="page">Tambah Jurusan Akademik</li>
                 </ol>
             </nav>
@@ -25,9 +28,9 @@
                 @csrf
                 <div class="mb-3">
                     <label for="tahun_akademik" class="form-label">Nama Jurusan Akademik</label>
-                    <input type="text" class="form-control @error('nama_jurusan') is-invalid @enderror"
-                        id="nama_jurusan" name="nama_jurusan" placeholder="Contoh: Teknik Informatika"
-                        value="{{ old('nama_jurusan') }}" required>
+                    <input type="text" class="form-control @error('nama_jurusan') is-invalid @enderror" id="nama_jurusan"
+                        name="nama_jurusan" placeholder="Contoh: Teknik Informatika" value="{{ old('nama_jurusan') }}"
+                        required>
                     @error('nama_jurusan')
                         <div class="invalid-feedback">
                             {{ $message }}

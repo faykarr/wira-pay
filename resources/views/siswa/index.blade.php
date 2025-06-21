@@ -3,7 +3,7 @@
 @section('css-links')
     <link rel="stylesheet" href="{{ asset('assets/libs/datatables.net-bs5/css/dataTables.bootstrap5.min.css') }}">
 @endsection
-@section('title', 'Daftar Siswa')
+@section('title', 'Daftar Data Siswa')
 
 @section('main-content')
     <div class="card shadow-none position-relative overflow-hidden mb-2">
@@ -15,21 +15,22 @@
                     <i class="ti ti-plus fs-4 me-2"></i>
                     Siswa
                 </a>
-                <button type="button"
+                <a href="{{ route('siswa.import') }}"
                     class="justify-content-center w-100 btn btn-sm btn-rounded btn-danger d-flex align-items-center">
                     <i class="ti ti-download fs-4 me-2"></i>
                     Import
-                </button>
+                </a>
                 <button type="button"
                     class="justify-content-center w-100 btn btn-sm btn-rounded btn-secondary d-flex align-items-center">
                     <i class="ti ti-upload fs-4 me-2"></i>
                     Export
                 </button>
-                <button type="button"
-                    class="justify-content-center w-100 btn btn-sm btn-rounded btn-primary d-flex align-items-center">
+                <a href="{{ asset('assets/docs/Format Daftar NIT - Sistem Pembayaran Wira Bahari.xlsx') }}"
+                    class="justify-content-center w-100 btn btn-sm btn-rounded btn-primary d-flex align-items-center"
+                    download="Format Daftar NIT - Sistem Pembayaran Wira Bahari.xlsx">
                     <i class="ti ti-folder fs-4 me-2"></i>
                     Template
-                </button>
+                </a>
             </div>
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb mb-0">

@@ -1,5 +1,5 @@
 @extends('layouts.layout')
-@section('title', 'Detail Siswa')
+@section('title', 'Detail Data Siswa')
 @section('main-content')
     <div class="card shadow-none position-relative overflow-hidden mb-4">
         <div class="card-body d-flex align-items-center justify-content-between p-4">
