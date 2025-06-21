@@ -141,15 +141,35 @@ class SiswaController extends Controller
     }
 
     // Function to sendImport data to database
-    public function importStore(Request $request)
+    public function importStore(Request $request, Siswa $siswa)
     {
         // Validate the request
         $request->validate([
-            'file' => 'required|mimes:xlsx,xls,csv'
+            'file' => 'required|mimes:xlsx,xls,csv',
+            'akademik' => 'required|exists:akademik,id',
+            'jurusan' => 'required|exists:jurusan,id',
         ]);
 
         // Handle the import logic here (e.g., using a service or a job)
-        // ...
+        $file = $request->file('file');
+        $data = Excel::toCollection(null, $file)[0];
+        $siswaData = [];
+        foreach ($data as $index => $row) {
+            // skip header
+            if ($index === 0)
+                continue;
+
+            $siswaData[] = [
+                'nit' => $row[0],
+                'nama_lengkap' => strtoupper($row[1]),
+                'akademik_id' => $request->akademik,
+                'jurusan_id' => $request->jurusan,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ];
+        }
+        // Insert the data into the siswa table
+        $siswa->insert($siswaData);
 
         return redirect()->route('siswa.index')->with('success', 'Data siswa berhasil diimport!');
     }
@@ -175,8 +195,8 @@ class SiswaController extends Controller
             $rows[] = [
                 'nit' => $row[0],
                 'nama_lengkap' => ucwords(strtolower($row[1])),
-                'tahun_akademik' => $request->akademik, // bisa ambil nama juga nanti
-                'jurusan' => $request->jurusan,         // sama
+                'tahun_akademik' => $request->akademik,
+                'jurusan' => $request->jurusan,
             ];
         }
 

@@ -1,6 +1,10 @@
 $(function () {
   // Initialize DataTable for all siswa
   const urlSiswa = $('#all-student').data('url');
+  function ucwords(str) {
+    return str.toLowerCase().replace(/\b\w/g, function (l) { return l.toUpperCase(); });
+  }
+
   $("#all-student").DataTable({
     processing: true,
     serverSide: true,
@@ -8,9 +12,15 @@ $(function () {
     columns: [
       { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
       { data: 'nit', name: 'nit' },
-      { data: 'nama_lengkap', name: 'nama_lengkap' },
+      {
+        data: 'nama_lengkap', name: 'nama_lengkap', render: function (data) {
+          return ucwords(data);
+        }
+      },
       { data: 'tahun_akademik', name: 'tahun_akademik', searchable: false },
-      { data: 'nama_jurusan', name: 'nama_jurusan', searchable: false },
+      {
+        data: 'nama_jurusan', name: 'nama_jurusan', searchable: false
+      },
       { data: 'status_registrasi', name: 'status_registrasi', searchable: false },
       { data: 'status_spi', name: 'status_spi', searchable: false },
       { data: 'action', name: 'action', orderable: false, searchable: false }
