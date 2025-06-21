@@ -17912,7 +17912,8 @@ html[data-layout="horizontal"] .body-wrapper > .container-xxl {
   top: 0px;
   position: fixed;
   z-index: 99999;
-  background: #111c2d;
+  /* background: #111c2d; */
+  background: #fff;
 }
 
 .lds-ripple {

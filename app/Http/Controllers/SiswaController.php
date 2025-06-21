@@ -140,7 +140,7 @@ class SiswaController extends Controller
         return view("siswa.import", compact('data'));
     }
 
-    // Function to sendImport data to database
+    // Function to send import data siswa to database
     public function importStore(Request $request, Siswa $siswa)
     {
         // Validate the request
@@ -150,17 +150,25 @@ class SiswaController extends Controller
             'jurusan' => 'required|exists:jurusan,id',
         ]);
 
-        // Handle the import logic here (e.g., using a service or a job)
         $file = $request->file('file');
         $data = Excel::toCollection(null, $file)[0];
         $siswaData = [];
+        $duplicateNITs = [];
+        $existingNITs = Siswa::pluck('nit')->toArray();
+
         foreach ($data as $index => $row) {
             // skip header
-            if ($index === 0)
+            if ($index < 4)
                 continue;
 
+            $nit = $row[0];
+            if (in_array($nit, $existingNITs) || in_array($nit, array_column($siswaData, 'nit'))) {
+                $duplicateNITs[] = $nit;
+                continue;
+            }
+
             $siswaData[] = [
-                'nit' => $row[0],
+                'nit' => $nit,
                 'nama_lengkap' => strtoupper($row[1]),
                 'akademik_id' => $request->akademik,
                 'jurusan_id' => $request->jurusan,
@@ -168,13 +176,28 @@ class SiswaController extends Controller
                 'updated_at' => now(),
             ];
         }
+
+        foreach ($siswaData as $row) {
+            if (empty($row['nit']) || empty($row['nama_lengkap'])) {
+                return redirect()->back()->withInput()->withErrors([
+                    'file' => 'Import gagal. Pastikan format file sesuai dan kolom NIT serta Nama Lengkap tidak kosong.'
+                ])->with('error', 'Format file tidak sesuai. Silakan periksa kembali file yang diupload.');
+            }
+        }
+
+        if (!empty($duplicateNITs)) {
+            return redirect()->back()->withInput()->withErrors([
+                'file' => 'Import gagal. NIT berikut sudah ada: ' . implode(', ', $duplicateNITs)
+            ])->with('error', 'Beberapa NIT sudah ada dalam database, silakan periksa kembali file yang diupload.');
+        }
+
         // Insert the data into the siswa table
         $siswa->insert($siswaData);
 
         return redirect()->route('siswa.index')->with('success', 'Data siswa berhasil diimport!');
     }
 
-    // Function to sendImport data to preview in datatable
+    // Function to preview imported data siswa in datatable
     public function importPreview(Request $request)
     {
         $file = $request->file('file');
@@ -188,8 +211,8 @@ class SiswaController extends Controller
 
         $rows = [];
         foreach ($data as $index => $row) {
-            // skip header
-            if ($index === 0)
+            // skip header (first 4 rows)
+            if ($index < 4)
                 continue;
 
             $rows[] = [

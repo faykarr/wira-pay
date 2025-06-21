@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr" data-bs-theme="dark" data-color-theme="Blue_Theme" data-layout="vertical">
+<html lang="en" dir="ltr" data-bs-theme="dark" data-color-theme="Blue_Theme" data-layout="vertical"
+    data-boxed-layout="full" data-card="border">
 
 @include('layouts.partials.head')
 
@@ -18,7 +19,8 @@
                     {{-- Main Content End --}}
                     {{-- Footer Start --}}
                     <div class="text-center text-md-start">
-                        <p>Made with ❤ by <a href="https://faykarr.vercel.app" target="_blank" class="text-primary">faykarr</a></p>
+                        <p>Made with ❤ by <a href="https://faykarr.vercel.app" target="_blank"
+                                class="text-primary">faykarr</a></p>
                     </div>
                     {{-- Footer End --}}
                 </div>

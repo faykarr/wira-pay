@@ -36,6 +36,37 @@
                 </li>
 
                 <!-- ============================= -->
+                <!-- Transaksi Pembayaran -->
+                <!-- ============================= -->
+                <li class="nav-small-cap">
+                    <iconify-icon icon="solar:menu-dots-bold-duotone" class="nav-small-cap-icon fs-5"></iconify-icon>
+                    <span class="hide-menu">Transaksi Pembayaran</span>
+                </li>
+
+                <li class="sidebar-item">
+                    <a class="sidebar-link has-arrow success-hover-bg" href="#" aria-expanded="false">
+                        <span class="aside-icon p-2 bg-danger-subtle rounded-1">
+                            <iconify-icon icon="solar:wallet-money-line-duotone" class="fs-6"></iconify-icon>
+                        </span>
+                        <span class="hide-menu ps-1">Transaksi</span>
+                    </a>
+                    <ul aria-expanded="false" class="collapse first-level">
+                        <li class="sidebar-item">
+                            <a href="#" class="sidebar-link">
+                                <span class="sidebar-icon"></span>
+                                <span class="hide-menu">Transaksi Baru</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="#" class="sidebar-link">
+                                <span class="sidebar-icon"></span>
+                                <span class="hide-menu">Riwayat Transaksi</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <!-- ============================= -->
                 <!-- Master Data -->
                 <!-- ============================= -->
                 <li class="nav-small-cap">
@@ -106,36 +137,7 @@
                     </a>
                 </li>
 
-                <!-- ============================= -->
-                <!-- Transaksi Pembayaran -->
-                <!-- ============================= -->
-                <li class="nav-small-cap">
-                    <iconify-icon icon="solar:menu-dots-bold-duotone" class="nav-small-cap-icon fs-5"></iconify-icon>
-                    <span class="hide-menu">Transaksi Pembayaran</span>
-                </li>
 
-                <li class="sidebar-item">
-                    <a class="sidebar-link has-arrow success-hover-bg" href="#" aria-expanded="false">
-                        <span class="aside-icon p-2 bg-danger-subtle rounded-1">
-                            <iconify-icon icon="solar:wallet-money-line-duotone" class="fs-6"></iconify-icon>
-                        </span>
-                        <span class="hide-menu ps-1">Manajemen Transaksi</span>
-                    </a>
-                    <ul aria-expanded="false" class="collapse first-level">
-                        <li class="sidebar-item">
-                            <a href="#" class="sidebar-link">
-                                <span class="sidebar-icon"></span>
-                                <span class="hide-menu">Transaksi Baru</span>
-                            </a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="#" class="sidebar-link">
-                                <span class="sidebar-icon"></span>
-                                <span class="hide-menu">Riwayat Transaksi</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
             </ul>
 
         </nav>

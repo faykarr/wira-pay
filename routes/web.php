@@ -23,3 +23,4 @@ Route::resource('akademik', AkademikController::class);
 // Jurusan Management
 Route::get('jurusan/data', [JurusanController::class, 'data'])->name('jurusan.data');
 Route::resource('jurusan', JurusanController::class);
+// Pembayaran Management

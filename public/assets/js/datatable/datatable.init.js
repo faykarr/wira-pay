@@ -10,7 +10,7 @@ $(function () {
     serverSide: true,
     ajax: urlSiswa,
     columns: [
-      { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
+      { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: true, searchable: false },
       { data: 'nit', name: 'nit' },
       {
         data: 'nama_lengkap', name: 'nama_lengkap', render: function (data) {
@@ -31,7 +31,6 @@ $(function () {
   const importTable = $('#import-student').DataTable({
     searching: false,
     lengthChange: false,
-    info: false,
     columns: [
       { title: "#" },
       { title: "NIT" },
@@ -111,7 +110,7 @@ $(function () {
     serverSide: true,
     ajax: urlAkademik,
     columns: [
-      { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
+      { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: true, searchable: false },
       { data: 'tahun_akademik', name: 'tahun_akademik' },
       { data: 'jumlah_siswa', name: 'jumlah_siswa', searchable: false },
       { data: 'status_pembayaran', name: 'status_pembayaran', searchable: false },
@@ -126,7 +125,7 @@ $(function () {
     serverSide: true,
     ajax: urlJurusan,
     columns: [
-      { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
+      { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: true, searchable: false },
       { data: 'nama_jurusan', name: 'nama_jurusan' },
       { data: 'jumlah_siswa', name: 'jumlah_siswa', searchable: false },
       { data: 'action', name: 'action', orderable: false, searchable: false }

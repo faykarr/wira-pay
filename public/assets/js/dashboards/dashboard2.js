@@ -4,12 +4,12 @@
 var profit = {
   series: [
     {
-      name: "Profit",
-      data: [60, 40, 37, 35, 35, 20, 30],
+      name: "SPI",
+      data: [1000000, 1200000, 800000, 500000, 1000000, 900000, 1500000, 1200000, 1800000, 2000000, 1700000, 2500000],
     },
     {
-      name: "Expenses",
-      data: [15, 30, 15, 35, 25, 30, 30],
+      name: "Registrasi",
+      data: [2700000, 2500000, 1500000, 700000, 1700000, 1400000, 2800000, 2500000, 3000000, 3200000, 2800000, 3500000],
     },
   ],
   colors: ["var(--bs-primary)", "#fb977d"],
@@ -42,12 +42,17 @@ var profit = {
   },
   tooltip: {
     theme: "dark",
+    y: {
+      formatter: function (val) {
+        return "Rp " + val.toLocaleString("id-ID");
+      },
+    },
   },
   toolbar: {
     show: false,
   },
   xaxis: {
-    categories: ["Aug", "Sep", "Oct", "Nov", "Dec", "Jan", "Feb"],
+    categories: ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Des"],
     axisBorder: {
       show: false,
     },
@@ -61,6 +66,14 @@ var profit = {
   fill: {
     opacity: 1,
   },
+  yaxis: {
+    labels: {
+      formatter: function (val) {
+        // Show in millions with "Jt" suffix
+        return "Rp " + (val / 1000000).toLocaleString("id-ID", { maximumFractionDigits: 1 }) + " Jt";
+      },
+    },
+  },
 };
 
 var chart = new ApexCharts(document.querySelector("#profit"), profit);
@@ -73,12 +86,20 @@ chart.render();
 // =====================================
 // Test Start
 // =====================================
+
+// Generate last 5 years including current year
+var currentYear = new Date().getFullYear();
+var categories = [];
+for (var i = 4; i >= 0; i--) {
+  categories.push((currentYear - i).toString());
+}
+
 var test = {
   series: [
     {
       color: "var(--bs-primary)",
-      name: "Test Results",
-      data: [13, 15, 14, 17, 16, 19, 17],
+      name: "Total",
+      data: [87000000, 15000000, 90000000, 170000000, 160000000],
     },
   ],
   chart: {
@@ -119,7 +140,7 @@ var test = {
     width: "2",
   },
   xaxis: {
-    categories: ["2016", "2017", "2018", "2019", "2020", "2021", "2022"],
+    categories: categories,
     axisBorder: {
       show: false,
     },
@@ -129,11 +150,16 @@ var test = {
   },
   yaxis: {
     labels: {
-      show: false,
-    },
+      show: false
+    }
   },
   tooltip: {
     theme: "dark",
+    y: {
+      formatter: function (val) {
+        return "Rp " + val.toLocaleString("id-ID");
+      },
+    },
   },
 };
 
@@ -147,8 +173,8 @@ chart.render();
 // Grade End
 // =====================================
 var grade = {
-  series: [5368, 3319, 3500, 4106],
-  labels: ["5368", "Direct Traffic", "Refferal Traffic", "Oragnic Traffic"],
+  series: [100, 150],
+  labels: ["Belum Lunas", "Sudah Lunas"],
   chart: {
     height: 250,
     type: "donut",
@@ -162,9 +188,9 @@ var grade = {
     fillSeriesColor: false,
   },
 
-  colors: ["#e7ecf0", "#f8c076", "#fb977d", "var(--bs-primary)"],
+  colors: ["#fb977d", "var(--bs-primary)"],
   dataLabels: {
-    enabled: false,
+    enabled: true,
   },
 
   grid: {
