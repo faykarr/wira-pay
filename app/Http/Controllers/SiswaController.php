@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Siswa\StoreSiswaRequest;
 use App\Http\Requests\Siswa\UpdateSiswaRequest;
 use App\Models\Akademik;
-use App\Models\Jurusan;
+use App\Models\Pembayaran;
 use App\Models\Siswa;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
@@ -18,8 +18,7 @@ class SiswaController extends Controller
     public function index()
     {
         $data = [
-            'akademik' => Akademik::all(),
-            'jurusan' => Jurusan::all()
+            'akademik' => Akademik::orderBy('tahun_akademik', 'desc')->get(),
         ];
         // Go to view siswa.index and send the data from model.
         return view("siswa.index", compact('data'));
@@ -31,8 +30,7 @@ class SiswaController extends Controller
     public function create()
     {
         $data = [
-            'akademik' => Akademik::all(),
-            'jurusan' => Jurusan::all()
+            'akademik' => Akademik::orderBy('tahun_akademik', 'desc')->get(),
         ];
         // Go to view siswa.add
         return view("siswa.create", compact('data'));
@@ -47,8 +45,7 @@ class SiswaController extends Controller
         $siswa->create([
             'nit' => $request->NIT,
             'nama_lengkap' => strtoupper($request->fullName),
-            'akademik_id' => $request->akademik,
-            'jurusan_id' => $request->jurusan,
+            'akademik_id' => $request->akademik
         ]);
         return redirect()->route('siswa.index')->with('success', 'Data siswa baru berhasil ditambahkan!');
     }
@@ -56,10 +53,16 @@ class SiswaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Siswa $siswa)
+    public function show(Siswa $siswa, Pembayaran $pembayaran)
     {
-        $siswa->load(['akademik', 'jurusan']);
-        return view("siswa.show", compact('siswa'));
+        // Load the akademik relationship and get master pembayaran via akademik
+        $siswa->load('akademik');
+        $pembayaran = $pembayaran->where('akademik_id', $siswa->akademik_id)->first();
+        $data = [
+            'pembayaran' => $pembayaran,
+            'siswa' => $siswa
+        ];
+        return view("siswa.show", compact('data'));
     }
 
     /**
@@ -69,7 +72,6 @@ class SiswaController extends Controller
     {
         $data = [
             'akademik' => Akademik::all(),
-            'jurusan' => Jurusan::all(),
             'siswa' => $siswa
         ];
         // Go to view siswa.edit and send the data from model.
@@ -85,8 +87,7 @@ class SiswaController extends Controller
         $siswa->update([
             'nit' => $request->NIT,
             'nama_lengkap' => strtoupper($request->fullName),
-            'akademik_id' => $request->akademik,
-            'jurusan_id' => $request->jurusan,
+            'akademik_id' => $request->akademik
         ]);
         return redirect()->route('siswa.index')->with('success', 'Data siswa berhasil diupdate!');
     }
@@ -102,14 +103,11 @@ class SiswaController extends Controller
     // Function to get data for datatables
     public function data(Siswa $siswa)
     {
-        $data = $siswa->with(['akademik', 'jurusan'])->orderBy('nit', 'asc')->get();
+        $data = $siswa->with(['akademik'])->orderBy('nit', 'desc')->get();
         return datatables()->of($data)
             ->addIndexColumn()
             ->addColumn('tahun_akademik', function ($row) {
                 return $row->akademik ? $row->akademik->tahun_akademik : '-';
-            })
-            ->addColumn('nama_jurusan', function ($row) {
-                return $row->jurusan ? $row->jurusan->nama_jurusan : '-';
             })
             ->addColumn('status_registrasi', fn($row) => '<span class="badge bg-success">Sudah Lunas</span>')
             ->addColumn('status_spi', fn($row) => '<span class="badge bg-danger">Belum Lunas</span>')
@@ -130,11 +128,10 @@ class SiswaController extends Controller
     }
 
     // Function to show import view
-    public function import()
+    public function import(Akademik $akademik)
     {
         $data = [
-            'akademik' => Akademik::all(),
-            'jurusan' => Jurusan::all()
+            'akademik' => $akademik->orderBy('tahun_akademik', 'desc')->get(),
         ];
         // Go to view siswa.import and send the data from model.
         return view("siswa.import", compact('data'));
@@ -146,8 +143,7 @@ class SiswaController extends Controller
         // Validate the request
         $request->validate([
             'file' => 'required|mimes:xlsx,xls,csv',
-            'akademik' => 'required|exists:akademik,id',
-            'jurusan' => 'required|exists:jurusan,id',
+            'akademik' => 'required|exists:akademik,id'
         ]);
 
         $file = $request->file('file');
@@ -158,7 +154,7 @@ class SiswaController extends Controller
 
         foreach ($data as $index => $row) {
             // skip header
-            if ($index < 4)
+            if ($index < 3)
                 continue;
 
             $nit = $row[0];
@@ -171,7 +167,6 @@ class SiswaController extends Controller
                 'nit' => $nit,
                 'nama_lengkap' => strtoupper($row[1]),
                 'akademik_id' => $request->akademik,
-                'jurusan_id' => $request->jurusan,
                 'created_at' => now(),
                 'updated_at' => now(),
             ];
@@ -211,15 +206,14 @@ class SiswaController extends Controller
 
         $rows = [];
         foreach ($data as $index => $row) {
-            // skip header (first 4 rows)
-            if ($index < 4)
+            // skip header (first 3 rows)
+            if ($index < 3)
                 continue;
 
             $rows[] = [
                 'nit' => $row[0],
                 'nama_lengkap' => ucwords(strtolower($row[1])),
                 'tahun_akademik' => $request->akademik,
-                'jurusan' => $request->jurusan,
             ];
         }
 

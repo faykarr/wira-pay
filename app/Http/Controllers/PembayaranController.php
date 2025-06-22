@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Pembayaran\UpdatePembayaranRequest;
 use App\Models\Pembayaran;
 use Illuminate\Http\Request;
 
@@ -44,15 +45,17 @@ class PembayaranController extends Controller
      */
     public function edit(Pembayaran $pembayaran)
     {
-        //
+        $data = $pembayaran->load('akademik');
+        return view('pembayaran.edit', compact('data'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Pembayaran $pembayaran)
+    public function update(UpdatePembayaranRequest $request, Pembayaran $pembayaran)
     {
-        //
+        $pembayaran->update($request->validated());
+        return redirect()->route('pembayaran.index')->with('success', 'Data pembayaran berhasil diperbarui.');
     }
 
     /**
@@ -68,7 +71,9 @@ class PembayaranController extends Controller
      */
     public function data()
     {
-        $pembayaran = Pembayaran::with('akademik')->get();
+        $pembayaran = Pembayaran::with('akademik')->join('akademik', 'master_pembayaran.akademik_id', '=', 'akademik.id')
+            ->orderBy('akademik.tahun_akademik', 'asc')
+            ->get();
         return datatables()->of($pembayaran)
             ->addIndexColumn()
             ->addColumn('tahun_akademik', function ($pembayaran) {

@@ -3,7 +3,7 @@
 @section('css-links')
     <link rel="stylesheet" href="{{ asset('assets/libs/datatables.net-bs5/css/dataTables.bootstrap5.min.css') }}">
 @endsection
-@section('title', 'Daftar Tahun Akademik')
+@section('title', 'Master Data Pembayaran')
 
 @section('main-content')
     <div class="card shadow-none position-relative overflow-hidden mb-2">

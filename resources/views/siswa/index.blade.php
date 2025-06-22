@@ -60,21 +60,6 @@
                 </div>
             </div>
             <div>
-                <label for="jurusan" class="mb-1 ms-2">Jurusan</label>
-                <div class="position-relative">
-                    <select name="jurusan" id="jurusan" class="form-control rounded-3 py-2 ps-5">
-                        <option value="">-- Pilih Jurusan --</option>
-                        @foreach ($data['jurusan'] as $row)
-                            <option value="{{ $row->id }}" {{ old('jurusan') == $row->id ? 'selected' : '' }}>
-                                {{ $row->nama_jurusan }}
-                            </option>
-                        @endforeach
-                    </select>
-                    <iconify-icon icon="solar:settings-minimalistic-linear"
-                        class="text-dark position-absolute top-50 start-0 translate-middle-y text-dark ms-3"></iconify-icon>
-                </div>
-            </div>
-            <div>
                 <label for="registrasi" class="mb-1 ms-2">Status Registrasi</label>
                 <div class="position-relative">
                     <select name="registrasi" id="registrasi" class="form-control rounded-3 py-2 ps-5">
@@ -119,7 +104,6 @@
                             <th rowspan="2" scope="col" class="text-center">NIT</th>
                             <th rowspan="2" scope="col" class="text-center">Nama Siswa</th>
                             <th rowspan="2" scope="col" class="text-center">Tahun Akademik</th>
-                            <th rowspan="2" scope="col" class="text-center">Jurusan</th>
                             <th colspan="2" scope="colgroup" class="text-center">Status</th>
                             <th rowspan="2" scope="col" class="text-center">Action</th>
                         </tr>

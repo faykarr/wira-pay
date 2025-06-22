@@ -327,7 +327,6 @@
                                     <tr>
                                         <th scope="col">Siswa</th>
                                         <th scope="col">Tahun Akademik</th>
-                                        <th scope="col">Jurusan</th>
                                         <th scope="col">Jenis Pembayaran</th>
                                         <th scope="col">Nominal</th>
                                         <th scope="col">Waktu Pembayaran</th>
@@ -350,11 +349,6 @@
                                         </td>
                                         <td>
                                             <p class="fs-3 fw-normal mb-0">2025/2026</p>
-                                        </td>
-                                        <td>
-                                            <p class="fs-3 mb-0">
-                                                Teknik Informatika
-                                            </p>
                                         </td>
                                         <td>
                                             <span
@@ -396,11 +390,6 @@
                                         </td>
                                         <td>
                                             <p class="fs-3 mb-0">
-                                                Teknik Informatika
-                                            </p>
-                                        </td>
-                                        <td>
-                                            <p class="fs-3 mb-0">
                                                 <span
                                                     class="badge bg-danger-subtle rounded-pill text-danger border-danger border fs-2">
                                                     Pembayaran Registrasi
@@ -438,11 +427,6 @@
                                         </td>
                                         <td>
                                             <p class="fs-3 fw-normal mb-0">2025/2026</p>
-                                        </td>
-                                        <td>
-                                            <p class="fs-3 mb-0">
-                                                Teknik Informatika
-                                            </p>
                                         </td>
                                         <td>
                                             <p class="fs-3 mb-0">
@@ -486,11 +470,6 @@
                                         </td>
                                         <td>
                                             <p class="fs-3 mb-0">
-                                                Teknik Informatika
-                                            </p>
-                                        </td>
-                                        <td>
-                                            <p class="fs-3 mb-0">
                                                 <span
                                                     class="badge bg-danger-subtle rounded-pill text-danger border-danger border fs-2">
                                                     Pembayaran Registrasi
@@ -528,11 +507,6 @@
                                         </td>
                                         <td>
                                             <p class="fs-3 fw-normal mb-0">2025/2026</p>
-                                        </td>
-                                        <td>
-                                            <p class="fs-3 mb-0">
-                                                Teknik Informatika
-                                            </p>
                                         </td>
                                         <td>
                                             <p class="fs-3 mb-0">

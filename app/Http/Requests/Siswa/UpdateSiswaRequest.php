@@ -24,8 +24,7 @@ class UpdateSiswaRequest extends FormRequest
         return [
             'NIT' => 'required|string|max:20|unique:siswa,nit,' . $this->route('siswa')->id,
             'fullName' => 'required|string|max:100',
-            'akademik' => 'required|exists:akademik,id',
-            'jurusan' => 'required|exists:jurusan,id',
+            'akademik' => 'required|exists:akademik,id'
         ];
     }
 
@@ -43,9 +42,7 @@ class UpdateSiswaRequest extends FormRequest
             'fullName.string' => 'Nama lengkap harus berupa string.',
             'fullName.max' => 'Nama lengkap tidak boleh lebih dari 100 karakter.',
             'akademik.required' => 'Akademik harus dipilih.',
-            'akademik.exists' => 'Akademik yang dipilih tidak valid.',
-            'jurusan.required' => 'Jurusan harus dipilih.',
-            'jurusan.exists' => 'Jurusan yang dipilih tidak valid.',
+            'akademik.exists' => 'Akademik yang dipilih tidak valid.'
         ];
     }
 }

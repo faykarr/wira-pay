@@ -34,7 +34,7 @@
         <p class="card-subtitle mb-3">
             Pastikan untuk impor data siswa dengan valid sesuai dengan template format.
             <br>
-            <span class="text-danger">1 file excel untuk 1 tahun akademik dan 1 jurusan.</span>
+            <span class="text-danger">1 file excel untuk 1 tahun akademik.</span>
         </p>
         <form action="{{ route('siswa.import.store') }}" method="post" class="validation-wizard wizard-circle mt-5"
             enctype="multipart/form-data">
@@ -42,8 +42,8 @@
             <!-- Step 1 -->
             <h6>Step 1</h6>
             <section>
-                <div class="row">
-                    <div class="col-md-6">
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
                         <div class="mb-3">
                             <label class="form-label" for="wakademik"> Tahun Akademik : <span class="danger">*</span>
                             </label>
@@ -56,25 +56,6 @@
                                 @endforeach
                             </select>
                             @error('akademik')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label class="form-label" for="wjurusan"> Pilih Jurusan : <span class="danger">*</span>
-                            </label>
-                            <select class="form-select @error('jurusan') is-invalid @enderror required" id="wjurusan"
-                                name="jurusan">
-                                @foreach ($data['jurusan'] as $row)
-                                    <option value="{{ $row->id }}" {{ old('jurusan') == $row->id ? 'selected' : '' }}>
-                                        {{ $row->nama_jurusan }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            @error('jurusan')
                                 <div class="invalid-feedback">
                                     {{ $message }}
                                 </div>
@@ -122,7 +103,6 @@
                         <th scope="col" class="text-center">NIT</th>
                         <th scope="col" class="text-center">Nama Siswa</th>
                         <th scope="col" class="text-center">Tahun Akademik</th>
-                        <th scope="col" class="text-center">Jurusan</th>
                     </tr>
                 </thead>
                 <tbody class="text-center"></tbody>

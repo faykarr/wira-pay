@@ -77,32 +77,6 @@
                 <!-- Students -->
                 <!-- =================== -->
                 <li class="sidebar-item">
-                    <a class="sidebar-link has-arrow indigo-hover-bg" href="#" aria-expanded="false">
-                        <span class="aside-icon p-2 bg-indigo-subtle rounded-1">
-                            <iconify-icon icon="solar:calendar-date-line-duotone" class="fs-6"></iconify-icon>
-                        </span>
-                        <span class="hide-menu ps-1">Akademik</span>
-                    </a>
-                    <ul aria-expanded="false" class="collapse first-level">
-                        <li class="sidebar-item">
-                            <a href="{{ route('akademik.index') }}" class="sidebar-link">
-                                <span class="sidebar-icon"></span>
-                                <span class="hide-menu">Tahun Akademik</span>
-                            </a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="{{ route('jurusan.index') }}" class="sidebar-link">
-                                <span class="sidebar-icon"></span>
-                                <span class="hide-menu">Jurusan</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-
-                <!-- =================== -->
-                <!-- Students -->
-                <!-- =================== -->
-                <li class="sidebar-item">
                     <a class="sidebar-link has-arrow danger-hover-bg" href="#" aria-expanded="false">
                         <span class="aside-icon p-2 bg-danger-subtle rounded-1">
                             <iconify-icon icon="solar:square-academic-cap-line-duotone" class="fs-6"></iconify-icon>
@@ -126,10 +100,37 @@
                 </li>
 
                 <!-- =================== -->
+                <!-- Akademik -->
+                <!-- =================== -->
+                <li class="sidebar-item">
+                    <a class="sidebar-link has-arrow indigo-hover-bg" href="#" aria-expanded="false">
+                        <span class="aside-icon p-2 bg-indigo-subtle rounded-1">
+                            <iconify-icon icon="solar:calendar-date-line-duotone" class="fs-6"></iconify-icon>
+                        </span>
+                        <span class="hide-menu ps-1">Akademik</span>
+                    </a>
+                    <ul aria-expanded="false" class="collapse first-level">
+                        <li class="sidebar-item">
+                            <a href="{{ route('akademik.index') }}" class="sidebar-link">
+                                <span class="sidebar-icon"></span>
+                                <span class="hide-menu">Tahun Akademik</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="{{ route('akademik.create') }}" class="sidebar-link">
+                                <span class="sidebar-icon"></span>
+                                <span class="hide-menu">Akademik Baru</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <!-- =================== -->
                 <!-- Master Pembayaran -->
                 <!-- =================== -->
                 <li class="sidebar-item">
-                    <a class="sidebar-link sidebar-link warning-hover-bg" href="{{ route('pembayaran.index') }}" aria-expanded="false">
+                    <a class="sidebar-link sidebar-link warning-hover-bg" href="{{ route('pembayaran.index') }}"
+                        aria-expanded="false">
                         <span class="aside-icon p-2 bg-primary-subtle rounded-1">
                             <iconify-icon icon="solar:hand-money-line-duotone" class="fs-6"></iconify-icon>
                         </span>

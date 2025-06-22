@@ -66,7 +66,7 @@
             <h6>Step 2</h6>
             <section>
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-8">
                         <div class="mb-3">
                             <label class="form-label" for="wakademik"> Tahun Akademik : <span class="danger">*</span>
                             </label>
@@ -79,25 +79,6 @@
                                 @endforeach
                             </select>
                             @error('akademik')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label class="form-label" for="wjurusan"> Pilih Jurusan : <span class="danger">*</span>
-                            </label>
-                            <select class="form-select @error('jurusan') is-invalid @enderror required" id="wjurusan"
-                                name="jurusan">
-                                @foreach ($data['jurusan'] as $row)
-                                    <option value="{{ $row->id }}" {{ $data['siswa']->jurusan_id == $row->id ? 'selected' : '' }}>
-                                        {{ $row->nama_jurusan }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            @error('jurusan')
                                 <div class="invalid-feedback">
                                     {{ $message }}
                                 </div>

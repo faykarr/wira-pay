@@ -15,7 +15,6 @@ return new class extends Migration {
             $table->string('nit')->unique()->comment('Nomor Induk Siswa');
             $table->string('nama_lengkap')->comment('Nama Lengkap Siswa');
             $table->foreignId('akademik_id')->constrained('akademik')->onDelete('cascade')->comment('ID Tahun Akademik');
-            $table->foreignId('jurusan_id')->constrained('jurusan')->onDelete('cascade')->comment('ID Jurusan');
             $table->timestamps();
         });
     }

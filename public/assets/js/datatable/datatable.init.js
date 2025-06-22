@@ -18,9 +18,6 @@ $(function () {
         }
       },
       { data: 'tahun_akademik', name: 'tahun_akademik', searchable: false },
-      {
-        data: 'nama_jurusan', name: 'nama_jurusan', searchable: false
-      },
       { data: 'status_registrasi', name: 'status_registrasi', searchable: false },
       { data: 'status_spi', name: 'status_spi', searchable: false },
       { data: 'action', name: 'action', orderable: false, searchable: false }
@@ -35,18 +32,16 @@ $(function () {
       { title: "#" },
       { title: "NIT" },
       { title: "Nama Siswa" },
-      { title: "Tahun Akademik" },
-      { title: "Jurusan" }
+      { title: "Tahun Akademik" }
     ]
   });
 
   $('#wfile').on('change', function () {
     const fileInput = this.files[0];
     const akademik = $('#wakademik').val();
-    const jurusan = $('#wjurusan').val();
     const urlImport = $('#import-student').data('url');
 
-    if (!fileInput || !akademik || !jurusan) {
+    if (!fileInput || !akademik) {
       alert("Lengkapi dulu file + tahun akademik + jurusan");
       return;
     }
@@ -65,7 +60,6 @@ $(function () {
     const formData = new FormData();
     formData.append('file', fileInput);
     formData.append('akademik', akademik);
-    formData.append('jurusan', jurusan);
     formData.append('_token', $('meta[name="csrf-token"]').attr('content'));
 
     $.ajax({
@@ -82,8 +76,7 @@ $(function () {
             i + 1,
             row.nit,
             row.nama_lengkap,
-            $('#wakademik option:selected').text(),
-            $('#wjurusan option:selected').text()
+            $('#wakademik option:selected').text()
           ]).draw(false);
         });
       },
@@ -114,20 +107,6 @@ $(function () {
       { data: 'tahun_akademik', name: 'tahun_akademik' },
       { data: 'jumlah_siswa', name: 'jumlah_siswa', searchable: false },
       { data: 'status_pembayaran', name: 'status_pembayaran', searchable: false },
-      { data: 'action', name: 'action', orderable: false, searchable: false }
-    ]
-  });
-
-  const urlJurusan = $('#all-jurusan').data('url');
-
-  $("#all-jurusan").DataTable({
-    processing: true,
-    serverSide: true,
-    ajax: urlJurusan,
-    columns: [
-      { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: true, searchable: false },
-      { data: 'nama_jurusan', name: 'nama_jurusan' },
-      { data: 'jumlah_siswa', name: 'jumlah_siswa', searchable: false },
       { data: 'action', name: 'action', orderable: false, searchable: false }
     ]
   });
