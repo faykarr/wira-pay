@@ -65,7 +65,7 @@
             <!-- Step 2 -->
             <h6>Step 2</h6>
             <section>
-                <div class="row">
+                <div class="row justify-content-center">
                     <div class="col-md-8">
                         <div class="mb-3">
                             <label class="form-label" for="wakademik"> Tahun Akademik : <span class="danger">*</span>

@@ -152,7 +152,7 @@ $(function () {
           function (data) {
             if (data.jenis_pembayaran === 'SPI') {
               return `<span class="badge bg-warning-subtle rounded-pill text-warning border-warning border fs-2">
-                                    ${data.jenis_pembayaran}
+                                    Bayar ${data.jenis_pembayaran}
                                 </span>`;
             }
             return `<span class="badge bg-danger-subtle rounded-pill text-danger border-danger border fs-2">
