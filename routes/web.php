@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AkademikController;
+use App\Http\Controllers\PaymentsController;
 use App\Http\Controllers\PembayaranController;
 use App\Http\Controllers\SiswaController;
 use Illuminate\Support\Facades\Route;
@@ -23,3 +24,6 @@ Route::resource('akademik', AkademikController::class);
 // Pembayaran Management
 Route::get('pembayaran/data', [PembayaranController::class, 'data'])->name('pembayaran.data');
 Route::resource('pembayaran', PembayaranController::class);
+// Payments Management
+Route::get('payments/data', [PaymentsController::class, 'data'])->name('payments.data');
+Route::resource('payments', PaymentsController::class);

@@ -29,12 +29,13 @@
                         <tr>
                             <th rowspan="2" scope="col" class="text-center">#</th>
                             <th rowspan="2" scope="col" class="text-center">Tahun Akademik</th>
-                            <th colspan="2" scope="colgroup" class="text-center">Jenis Pembayaran</th>
+                            <th colspan="3" scope="colgroup" class="text-center">Jenis Pembayaran</th>
                             <th rowspan="2" scope="col" class="text-center">Action</th>
                         </tr>
                         <tr>
-                            <th class="text-center">Registrasi</th>
-                            <th class="text-center">SPI</th>
+                            <th class="text-center">Total Registrasi</th>
+                            <th class="text-center">Total SPI</th>
+                            <th class="text-center">SPI Per Semester</th>
                         </tr>
                     </thead>
                     <tbody class="text-center"></tbody>

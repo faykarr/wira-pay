@@ -90,7 +90,10 @@
             <p class="card-subtitle mb-3">
                 Tabel ini menampilkan data siswa yang akan diimpor. Pastikan data yang ditampilkan sudah sesuai.
                 <br>
-                <span class="text-danger">Jika ada data yang tidak sesuai, silakan perbaiki file excel, refresh halaman
+                <span class="text-danger">Jika ada data yang tidak sesuai, silakan perbaiki file excel dan sesuaikan
+                    dengan <a
+                        href="{{ asset('assets/docs/Format Daftar NIT - Sistem Pembayaran Wira Bahari.xlsx') }}">template</a>,
+                    refresh halaman
                     dan unggah ulang.</span>
             </p>
             {{-- Table --}}

@@ -109,6 +109,8 @@ class SiswaController extends Controller
             ->addColumn('tahun_akademik', function ($row) {
                 return $row->akademik ? $row->akademik->tahun_akademik : '-';
             })
+            ->editColumn('nit', fn($row) => '<h6 class="fw-bolder">' . $row->nit . '</h6>')
+            ->editColumn('nama_lengkap', fn($row) => '<h6 class="fw-bolder">' . $row->nama_lengkap . '</h6>')
             ->addColumn('status_registrasi', fn($row) => '<span class="badge bg-success">Sudah Lunas</span>')
             ->addColumn('status_spi', fn($row) => '<span class="badge bg-danger">Belum Lunas</span>')
             ->addColumn('action', function ($row) {
@@ -123,7 +125,7 @@ class SiswaController extends Controller
                 </div>
             ';
             })
-            ->rawColumns(['status_registrasi', 'status_spi', 'action'])
+            ->rawColumns(['nit', 'nama_lengkap', 'status_registrasi', 'status_spi', 'action'])
             ->make(true);
     }
 

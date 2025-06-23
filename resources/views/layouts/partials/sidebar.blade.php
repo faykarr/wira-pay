@@ -58,7 +58,7 @@
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a href="#" class="sidebar-link">
+                            <a href="{{ route('payments.index') }}" class="sidebar-link">
                                 <span class="sidebar-icon"></span>
                                 <span class="hide-menu">Riwayat Transaksi</span>
                             </a>

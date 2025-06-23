@@ -115,7 +115,7 @@
                             </div>
                             <ul class="g-2 my-4">
                                 <li class="mb-2 align-middle">
-                                    <i class="ti ti-circle-check fs-5 me-2 text-success"></i>
+                                    <i class="ti ti-circle-check fs-5 me-2 text-danger"></i>
                                     4x Angsuran
                                 </li>
                             </ul>
@@ -151,7 +151,7 @@
                             <ul class="g-2 my-4">
                                 <li class="mb-2 align-middle">
                                     <i class="ti ti-circle-check fs-5 me-2 text-success"></i>
-                                    4 Semester Dibayar
+                                    Lunas Di Semester 3
                                 </li>
                             </ul>
                             <div class="d-flex justify-content-between align-items-center mb-1">

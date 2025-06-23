@@ -12,6 +12,7 @@ class Pembayaran extends Model
         'akademik_id',
         'registration_fee',
         'spi_fee',
+        'spi_fee_per_semester',
     ];
 
     public function akademik()

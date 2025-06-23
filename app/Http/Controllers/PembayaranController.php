@@ -54,7 +54,11 @@ class PembayaranController extends Controller
      */
     public function update(UpdatePembayaranRequest $request, Pembayaran $pembayaran)
     {
-        $pembayaran->update($request->validated());
+        $pembayaran->update([
+            'registration_fee' => $request->registration_fee,
+            'spi_fee' => $request->spi_fee,
+            'spi_fee_per_semester' => $request->spi_fee / 4, // Assuming SPI fee is divided by 4 for semester calculation
+        ]);
         return redirect()->route('pembayaran.index')->with('success', 'Data pembayaran berhasil diperbarui.');
     }
 
@@ -85,6 +89,9 @@ class PembayaranController extends Controller
             ->addColumn('spi_fee', function ($pembayaran) {
                 return '<span class="badge bg-success-subtle rounded-pill text-success border-success border fs-2">Rp ' . number_format($pembayaran->spi_fee, 0, ',', '.') . '</span>';
             })
+            ->addColumn('spi_fee_per_semester', function ($pembayaran) {
+                return '<span class="badge bg-success-subtle rounded-pill text-success border-success border fs-2">Rp ' . number_format($pembayaran->spi_fee_per_semester, 0, ',', '.') . '</span>';
+            })
             ->addColumn('action', function ($pembayaran) {
                 $editUrl = route('pembayaran.edit', $pembayaran->id);
                 return '
@@ -93,7 +100,7 @@ class PembayaranController extends Controller
                 </div>
             ';
             })
-            ->rawColumns(['registration_fee', 'spi_fee', 'action'])
+            ->rawColumns(['registration_fee', 'spi_fee', 'spi_fee_per_semester', 'action'])
             ->make(true);
     }
 }

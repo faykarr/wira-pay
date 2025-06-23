@@ -123,6 +123,57 @@ $(function () {
       { data: 'tahun_akademik', name: 'tahun_akademik' },
       { data: 'registration_fee', name: 'registration_fee', searchable: false },
       { data: 'spi_fee', name: 'spi_fee', searchable: false },
+      { data: 'spi_fee_per_semester', name: 'spi_fee_per_semester', searchable: false },
+      { data: 'action', name: 'action', orderable: false, searchable: false }
+    ]
+  });
+
+  // Initialize DataTable for transaksi payments
+  const urlTransaksi = $('#all-payments').data('url');
+  $("#all-payments").DataTable({
+    processing: true,
+    serverSide: true,
+    ajax: urlTransaksi,
+    columns: [
+      { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: true, searchable: false },
+      { data: 'kode_transaksi', name: 'kode_transaksi', orderable: true, searchable: true },
+      {
+        data: 'siswa.nit',
+        name: 'siswa.nit',
+        orderable: true, searchable: true,
+      },
+      {
+        data: 'siswa.nama_lengkap',
+        name: 'siswa.nama_lengkap',
+        orderable: true, searchable: true,
+      },
+      {
+        data: null, name: 'jenis_pembayaran', searchable: false, render:
+          function (data) {
+            if (data.jenis_pembayaran === 'SPI') {
+              return `<span class="badge bg-warning-subtle rounded-pill text-warning border-warning border fs-2">
+                                    ${data.jenis_pembayaran}
+                                </span>`;
+            }
+            return `<span class="badge bg-danger-subtle rounded-pill text-danger border-danger border fs-2">
+                                    ${data.jenis_pembayaran}
+                                </span>`;
+          }
+      },
+      { data: 'nominal', name: 'nominal', orderable: false, searchable: false },
+      {
+        data: null, name: 'angsuran', orderable: false, searchable: false, render: function (data) {
+          if (data.jenis_pembayaran === 'SPI') {
+            return `<span class="badge bg-warning-subtle rounded-pill text-warning border-warning border fs-2">
+                                    Semester ${data.angsuran}
+                                </span>`;
+          }
+          return `<span class="badge bg-danger-subtle rounded-pill text-danger border-danger border fs-2">
+                                    Angsuran ${data.angsuran}
+                                </span>`;
+        }
+      },
+      { data: 'created_at', name: 'created_at', orderable: true, searchable: false },
       { data: 'action', name: 'action', orderable: false, searchable: false }
     ]
   });

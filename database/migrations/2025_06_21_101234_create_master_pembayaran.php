@@ -15,6 +15,7 @@ return new class extends Migration {
             $table->foreignId('akademik_id')->constrained('akademik')->onDelete('cascade');
             $table->bigInteger('registration_fee')->default(null)->nullable();
             $table->bigInteger('spi_fee')->default(null)->nullable();
+            $table->bigInteger('spi_fee_per_semester')->default(null)->nullable();
             $table->timestamps();
         });
     }

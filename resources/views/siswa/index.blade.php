@@ -42,7 +42,7 @@
             </nav>
         </div>
     </div>
-    <div class="card shadow-none position-relative overflow-hidden mb-2">
+    {{-- <div class="card shadow-none position-relative overflow-hidden mb-2">
         <div class="card-body d-flex flex-wrap align-items-center justify-content-center gap-2 p-4">
             <div>
                 <label for="tahun_akademik" class="mb-1 ms-2">Tahun Akademik</label>
@@ -50,9 +50,9 @@
                     <select name="tahun_akademik" id="tahun_akademik" class="form-control rounded-3 py-2 ps-5">
                         <option value="">-- Pilih Tahun --</option>
                         @foreach ($data['akademik'] as $row)
-                            <option value="{{ $row->id }}" {{ old('akademik') == $row->id ? 'selected' : '' }}>
-                                {{ $row->tahun_akademik }}
-                            </option>
+                        <option value="{{ $row->id }}" {{ old('akademik')==$row->id ? 'selected' : '' }}>
+                            {{ $row->tahun_akademik }}
+                        </option>
                         @endforeach
                     </select>
                     <iconify-icon icon="solar:settings-minimalistic-linear"
@@ -91,6 +91,129 @@
                 </button>
             </div>
         </div>
+    </div> --}}
+    <div class="card mb-2">
+        <div class="card-body px-4 py-3">
+            <div class="d-flex align-items-center flex-wrap">
+                <p class="m-0 p-0">
+                    <i class="ti ti-filter fs-5"></i>
+                    Filter by :
+                </p>
+                <div class="dropdown border-end">
+                    <button class="btn dropdown-toggle shadow-none py-0 px-4 text-dark fw-bold border-0" type="button"
+                        data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
+                        Tahun Akademik
+                    </button>
+                    <ul class="dropdown-menu p-6">
+                        <li>
+                            <a class="dropdown-item px-6 py-2 rounded-1" href="javascript:void(0)">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="all-filter-akademik"
+                                        checked>
+                                    <label class="form-check-label d-block" for="all-filter-akademik">
+                                        All
+                                    </label>
+                                </div>
+                            </a>
+                        </li>
+                        @foreach ($data['akademik'] as $row)
+                            <li>
+                                <a class="dropdown-item px-6 py-2 rounded-1" href="javascript:void(0)">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="{{ $row->id }}"
+                                            id="{{ $row->tahun_akademik }}">
+                                        <label class="form-check-label d-block" for="{{ $row->tahun_akademik }}">
+                                            {{ $row->tahun_akademik }}
+                                        </label>
+                                    </div>
+                                </a>
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
+                <div class="dropdown border-end">
+                    <button class="btn dropdown-toggle shadow-none py-0 px-4 text-dark fw-bold border-0" type="button"
+                        data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
+                        Status Registrasi
+                    </button>
+                    <ul class="dropdown-menu p-6" style="">
+                        <li>
+                            <a class="dropdown-item px-6 py-2 rounded-1" href="javascript:void(0)">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="filter-registrasi"
+                                        id="all-filter-registrasi" checked>
+                                    <label class="form-check-label" for="all-filter-registrasi" checked>
+                                        All
+                                    </label>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item px-6 py-2 rounded-1" href="javascript:void(0)">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="filter-registrasi"
+                                        id="filter-registrasi-lunas">
+                                    <label class="form-check-label" for="filter-registrasi-lunas">
+                                        Lunas
+                                    </label>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item px-6 py-2 rounded-1" href="javascript:void(0)">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="filter-registrasi"
+                                        id="filter-registrasi-belum-lunas">
+                                    <label class="form-check-label" for="filter-registrasi-belum-lunas">
+                                        Belum Lunas
+                                    </label>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="dropdown border-end">
+                    <button class="btn dropdown-toggle shadow-none py-0 px-4 text-dark fw-bold border-0" type="button"
+                        data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
+                        Status SPI
+                    </button>
+                    <ul class="dropdown-menu p-6" style="">
+                        <li>
+                            <a class="dropdown-item px-6 py-2 rounded-1" href="javascript:void(0)">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="filter-spi" id="all-filter-spi"
+                                        checked>
+                                    <label class="form-check-label" for="all-filter-spi" checked>
+                                        All
+                                    </label>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item px-6 py-2 rounded-1" href="javascript:void(0)">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="filter-spi" id="filter-spi-lunas">
+                                    <label class="form-check-label" for="filter-spi-lunas">
+                                        Lunas
+                                    </label>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item px-6 py-2 rounded-1" href="javascript:void(0)">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="filter-spi"
+                                        id="filter-spi-belum-lunas">
+                                    <label class="form-check-label" for="filter-spi-belum-lunas">
+                                        Belum Lunas
+                                    </label>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="card shadow-none mb-4">
         <div class="card-body">
@@ -102,8 +225,8 @@
                         <tr>
                             <th rowspan="2" scope="col" class="text-center">#</th>
                             <th rowspan="2" scope="col" class="text-center">NIT</th>
-                            <th rowspan="2" scope="col" class="text-center">Nama Siswa</th>
-                            <th rowspan="2" scope="col" class="text-center">Tahun Akademik</th>
+                            <th rowspan="2" scope="col" class="text-start">Nama Siswa</th>
+                            <th rowspan="2" scope="col" class="text-start">Tahun Akademik</th>
                             <th colspan="2" scope="colgroup" class="text-center">Status</th>
                             <th rowspan="2" scope="col" class="text-center">Action</th>
                         </tr>
@@ -112,7 +235,7 @@
                             <th class="text-center">SPI</th>
                         </tr>
                     </thead>
-                    <tbody class="text-center"></tbody>
+                    <tbody class="text-start"></tbody>
                 </table>
             </div>
         </div>
