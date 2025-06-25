@@ -26,7 +26,7 @@ class PaymentsController extends Controller
      */
     public function create()
     {
-        //
+        return view('transaksi.create');
     }
 
     /**

@@ -12,7 +12,7 @@
             <div class="d-flex my-1 my-md-0 align-items-center justify-content-between gap-2">
                 <a href="{{ route('payments.create') }}"
                     class="justify-content-center w-100 btn btn-sm btn-rounded btn-primary d-flex align-items-center">
-                    <i class="ti ti-currency-dollar fs-4 me-2"></i>
+                    <i class="ti ti-currency-dollar fs-4 me-1"></i>
                     Transaksi Baru
                 </a>
             </div>

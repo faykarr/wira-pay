@@ -33,7 +33,7 @@
                 <div class="row justify-content-center">
                     <div class="col-md-6">
                         <div class="mb-3">
-                            <label class="form-label" for="wNIT"> NIT : <span class="danger">*</span>
+                            <label class="form-label" for="wNIT"> NIT : <span class="text-danger">*</span>
                             </label>
                             <input type="text" class="form-control @error('NIT') is-invalid @enderror required"
                                 id="wNIT" name="NIT" placeholder="Contoh : 22.24.785"
@@ -47,7 +47,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="mb-3">
-                            <label class="form-label" for="wfullName"> Nama Lengkap : <span class="danger">*</span>
+                            <label class="form-label" for="wfullName"> Nama Lengkap : <span class="text-danger">*</span>
                             </label>
                             <input type="text"
                                 class="form-control @error('fullName') is-invalid @enderror text-uppercase required"
@@ -68,7 +68,7 @@
                 <div class="row justify-content-center">
                     <div class="col-md-8">
                         <div class="mb-3">
-                            <label class="form-label" for="wakademik"> Tahun Akademik : <span class="danger">*</span>
+                            <label class="form-label" for="wakademik"> Tahun Akademik : <span class="text-danger">*</span>
                             </label>
                             <select class="form-select @error('akademik') is-invalid @enderror required" id="wakademik"
                                 name="akademik">
