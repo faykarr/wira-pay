@@ -94,7 +94,7 @@ class PaymentsController extends Controller
                 return '<span class="badge bg-primary-subtle rounded-pill text-primary border-primary border fs-2">' . $payment->created_at->locale('id')->isoFormat('D MMMM Y') . '</span>';
             })
             ->addColumn('action', function ($payments) {
-                $lihatUrl = route('payments.show', $payments->id);
+                $lihatUrl = route('siswa.show', $payments->siswa_id);
                 $cetakUrl = route('payments.show', $payments->id);
                 return '
                 <div class="btn-group">

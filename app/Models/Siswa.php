@@ -20,8 +20,8 @@ class Siswa extends Model
         return $this->belongsTo(Akademik::class, 'akademik_id');
     }
 
-    public function jurusan()
+    public function paymentsSummary()
     {
-        return $this->belongsTo(Jurusan::class, 'jurusan_id');
+        return $this->hasOne(PaymentsSummary::class, 'siswa_id');
     }
 }

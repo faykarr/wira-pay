@@ -29,11 +29,25 @@ return new class extends Migration {
                 ), 0) AS paid_registration,
 
                 COALESCE((
+                    SELECT COUNT(*)
+                    FROM payments
+                    WHERE payments.siswa_id = siswa.id
+                    AND payments.jenis_pembayaran = "Registrasi"
+                ), 0) AS angsuran_registration,
+
+                COALESCE((
                     SELECT SUM(payments.nominal)
                     FROM payments
                     WHERE payments.siswa_id = siswa.id
                     AND payments.jenis_pembayaran = "SPI"
                 ),0) AS paid_spi,
+
+                COALESCE((
+                    SELECT COUNT(*)
+                    FROM payments
+                    WHERE payments.siswa_id = siswa.id
+                    AND payments.jenis_pembayaran = "SPI"
+                ), 0) AS angsuran_spi,
 
                 (master_pembayaran.registration_fee - COALESCE((
                     SELECT SUM(payments.nominal)
@@ -55,9 +69,9 @@ return new class extends Migration {
                         FROM payments
                         WHERE payments.siswa_id = siswa.id
                         AND payments.jenis_pembayaran = "Registrasi"
-                    ), 0) >= master_pembayaran.registration_fee 
-                    THEN "Lunas"
-                    ELSE "Belum Lunas"
+                    ), 0) != master_pembayaran.registration_fee 
+                    THEN "Belum Lunas"
+                    ELSE "Lunas"
                 END AS status_registration,
 
                 CASE
@@ -66,10 +80,32 @@ return new class extends Migration {
                         FROM payments
                         WHERE payments.siswa_id = siswa.id
                         AND payments.jenis_pembayaran = "SPI"
-                    ), 0) >= master_pembayaran.spi_fee 
-                    THEN "Lunas"
-                    ELSE "Belum Lunas"
-                END AS status_spi
+                    ), 0) != master_pembayaran.spi_fee 
+                    THEN "Belum Lunas"
+                    ELSE "Lunas"
+                END AS status_spi,
+                
+                CASE 
+                    WHEN master_pembayaran.registration_fee = 0 THEN 0
+                    ELSE 
+                        COALESCE((
+                            SELECT SUM(payments.nominal)
+                            FROM payments
+                            WHERE payments.siswa_id = siswa.id
+                            AND payments.jenis_pembayaran = "Registrasi"
+                        ), 0) / master_pembayaran.registration_fee * 100
+                END AS progress_registration,
+
+                CASE 
+                    WHEN master_pembayaran.spi_fee = 0 THEN 0
+                    ELSE 
+                        COALESCE((
+                            SELECT SUM(payments.nominal)
+                            FROM payments
+                            WHERE payments.siswa_id = siswa.id
+                            AND payments.jenis_pembayaran = "SPI"
+                        ), 0) / master_pembayaran.spi_fee * 100
+                END AS progress_spi
 
             FROM siswa
             JOIN akademik ON akademik.id = siswa.akademik_id

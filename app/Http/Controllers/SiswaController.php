@@ -56,13 +56,8 @@ class SiswaController extends Controller
     public function show(Siswa $siswa, Pembayaran $pembayaran)
     {
         // Load the akademik relationship and get master pembayaran via akademik
-        $siswa->load('akademik');
-        $pembayaran = $pembayaran->where('akademik_id', $siswa->akademik_id)->first();
-        $data = [
-            'pembayaran' => $pembayaran,
-            'siswa' => $siswa
-        ];
-        return view("siswa.show", compact('data'));
+        $siswa->load('paymentsSummary');
+        return view("siswa.show", compact('siswa'));
     }
 
     /**
@@ -103,7 +98,7 @@ class SiswaController extends Controller
     // Function to get data for datatables
     public function data(Siswa $siswa)
     {
-        $data = $siswa->with(['akademik'])->orderBy('nit', 'desc')->get();
+        $data = $siswa->with(['paymentsSummary'])->orderBy('nit', 'desc')->get();
         return datatables()->of($data)
             ->addIndexColumn()
             ->addColumn('tahun_akademik', function ($row) {
@@ -111,8 +106,16 @@ class SiswaController extends Controller
             })
             ->editColumn('nit', fn($row) => '<h6 class="fw-bolder">' . $row->nit . '</h6>')
             ->editColumn('nama_lengkap', fn($row) => '<h6 class="fw-bolder">' . $row->nama_lengkap . '</h6>')
-            ->addColumn('status_registrasi', fn($row) => '<span class="badge bg-success">Sudah Lunas</span>')
-            ->addColumn('status_spi', fn($row) => '<span class="badge bg-danger">Belum Lunas</span>')
+            ->editColumn('status_registrasi', function ($row) {
+                return optional($row->paymentsSummary)->status_registration === 'Lunas'
+                    ? '<span class="badge bg-success">Sudah Lunas</span>'
+                    : '<span class="badge bg-danger">Belum Lunas</span>';
+            })
+            ->editColumn('status_spi', function ($row) {
+                return optional($row->paymentsSummary)->status_spi === 'Lunas'
+                    ? '<span class="badge bg-success">Sudah Lunas</span>'
+                    : '<span class="badge bg-danger">Belum Lunas</span>';
+            })
             ->addColumn('action', function ($row) {
                 $editUrl = route('siswa.edit', $row->id);
                 $showUrl = route('siswa.show', $row->id);

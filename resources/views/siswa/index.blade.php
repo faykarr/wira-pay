@@ -225,7 +225,7 @@
                         <tr>
                             <th rowspan="2" scope="col" class="text-center">#</th>
                             <th rowspan="2" scope="col" class="text-center">NIT</th>
-                            <th rowspan="2" scope="col" class="text-start">Nama Siswa</th>
+                            <th rowspan="2" scope="col" class="text-center">Nama Siswa</th>
                             <th rowspan="2" scope="col" class="text-start">Tahun Akademik</th>
                             <th colspan="2" scope="colgroup" class="text-center">Status</th>
                             <th rowspan="2" scope="col" class="text-center">Action</th>
@@ -235,7 +235,7 @@
                             <th class="text-center">SPI</th>
                         </tr>
                     </thead>
-                    <tbody class="text-start"></tbody>
+                    <tbody class="text-center"></tbody>
                 </table>
             </div>
         </div>
