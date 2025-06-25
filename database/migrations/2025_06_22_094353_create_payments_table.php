@@ -17,6 +17,7 @@ return new class extends Migration {
             $table->enum('jenis_pembayaran', ['Registrasi', 'SPI'])->comment('Jenis Pembayaran');
             $table->integer('angsuran')->default(null)->nullable()->comment('Angsuran Pembayaran');
             $table->bigInteger('nominal')->comment('Nominal Pembayaran');
+            $table->timestamp('tanggal_transaksi')->comment('Tanggal Transaksi');
             $table->timestamps();
         });
     }

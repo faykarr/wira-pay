@@ -64,6 +64,7 @@ return new class extends Migration {
                 ),0)) AS remaining_spi,
 
                 CASE
+                    WHEN master_pembayaran.registration_fee = 0 THEN "Belum Lunas"
                     WHEN COALESCE((
                         SELECT SUM(payments.nominal)
                         FROM payments
@@ -75,6 +76,7 @@ return new class extends Migration {
                 END AS status_registration,
 
                 CASE
+                    WHEN master_pembayaran.spi_fee = 0 THEN "Belum Lunas"
                     WHEN COALESCE((
                         SELECT SUM(payments.nominal)
                         FROM payments

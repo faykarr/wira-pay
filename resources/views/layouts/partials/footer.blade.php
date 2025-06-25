@@ -11,11 +11,12 @@
 <!-- solar icons -->
 <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
 
+{{-- Custom Scripts --}}
+<script src="{{ asset('assets/js/custom-settings.js') }}"></script>
+
 {{-- Pages Scripts --}}
 @yield('js-links')
 
-{{-- Custom Scripts --}}
-<script src="{{ asset('assets/js/custom-settings.js') }}"></script>
 
 {{-- Sweet Alert Scripts --}}
 @if (session('success'))

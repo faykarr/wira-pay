@@ -21,11 +21,24 @@
     </div>
 </div>
 
+{{-- List all error --}}
+@if ($errors->any())
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <h4 class="alert-heading">Ada kesalahan dalam pengisian data!</h4>
+        <ul class="mb-0">
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+@endif
+
 <div class="card shadow-none mb-4">
     <div class="card-body wizard-content">
         <h4 class="card-title">Validasi Transaksi Pembayaran Baru</h4>
-        <p class="card-subtitle mb-3"><span class="text-danger">Pastikan untuk mengisi data transaksi dengan valid &
-                benar,<br> karena data transaksi tidak bisa diedit & dihapus.</span> </p>
+        <p class="card-subtitle mb-3">Pastikan untuk mengisi data transaksi dengan valid &
+            benar,<br> <span class="text-danger">karena data transaksi tidak bisa diedit & dihapus.</span> </p>
         <form action="{{ route('payments.store') }}" method="post" class="validation-wizard wizard-circle mt-5">
             @csrf
             {{-- Step 1 --}}
@@ -61,10 +74,11 @@
                         <div class="mb-3">
                             <label class="form-label" for="wNIT"> NIT Siswa : <span class="text-danger">*</span>
                             </label>
-                            <input type="text" class="form-control @error('NIT') is-invalid @enderror required"
-                                id="wNIT" name="NIT" placeholder="Contoh : 22.24.785" value="{{ old('NIT') }}"
+                            <input type="text" class="form-control @error('nit') is-invalid @enderror required"
+                                id="wNIT" name="nit" placeholder="Contoh : 22.24.785" value="{{ old('nit') }}"
                                 autofocus />
-                            @error('NIT')
+                            <input type="hidden" name="siswa_id" id="siswa_id">
+                            @error('nit')
                                 <div class="invalid-feedback">
                                     {{ $message }}
                                 </div>
@@ -76,25 +90,33 @@
                             <label class="form-label" for="wfullName"> Nama Siswa :
                             </label>
                             <input type="text" class="form-control text-uppercase" id="wfullName"
-                                value="{{ old('fullName') }}" name="tahun_akademik" readonly />
+                                value="Silakan isi NIT Siswa" name="nama_lengkap" readonly disabled />
                         </div>
                     </div>
                 </div>
                 <div class="row justify-content-center">
-                    <div class="col-md-6">
+                    <div class="col-md-3">
                         <div class="mb-3">
                             <label class="form-label" for="wtahunAkademik"> Tahun Akademik :
                             </label>
                             <input type="text" class="form-control" name="tahun_akademik" id="wtahunAkademik"
-                                value="{{ old('tahun_akademik') }}" readonly />
+                                value="Silakan isi NIT Siswa" readonly disabled />
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-5">
                         <div class="mb-3">
                             <label class="form-label" for="wstatusPembayaran">Status Pembayaran :
                             </label>
                             <input type="text" class="form-control" id="wstatusPembayaran" name="status_pembayaran"
-                                value="Pembayaran Terakhir di Semester/Angsuran X" readonly />
+                                value="Silakan isi NIT Siswa" readonly disabled />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mb-3">
+                            <label class="form-label" for="wremaining">Kekurangan Pembayaran :
+                            </label>
+                            <input type="text" class="form-control" id="wremaining" name="remaining_payment"
+                                value="Silakan isi NIT Siswa" readonly disabled />
                         </div>
                     </div>
                 </div>
@@ -107,9 +129,10 @@
                         <div class="mb-3">
                             <label class="form-label" for="wkodeTransaksi">Kode Transaksi :
                             </label>
-                            <input type="text" class="form-control @error('kode_transaksi') is-invalid @enderror"
-                                id="wkodeTransaksi" name="kode_transaksi" placeholder="Contoh: TRX001-0625"
-                                value="{{ old('kode_transaksi') }}" />
+                            <input type="text"
+                                class="form-control wkodeTransaksi @error('kode_transaksi') is-invalid @enderror"
+                                id="wkodeTransaksi" value="{{ old('kode_transaksi') }}" readonly disabled />
+                            <input type="hidden" class="wkodeTransaksi" name="kode_transaksi">
                             @error('kode_transaksi')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -122,13 +145,13 @@
                             <label class="form-label" for="wtanggalTransaksi">Tanggal Transaksi : <span
                                     class="text-danger">*</span>
                             </label>
-                            <input type="text"
-                                class="form-control @error('tanggal_transaksi') is-invalid @enderror required"
-                                id="wtanggalTransaksi" name="tanggal_transaksi"
-                                value="{{ old('tanggal_transaksi', now()->format('Y-m-d')) }}" placeholder="YYYY-MM-DD"
-                                data-inputmask="'alias': 'datetime', 'inputFormat': 'yyyy-mm-dd'"
-                                data-inputmask-inputformat="yyyy-mm-dd" data-inputmask-placeholder="YYYY-MM-DD"
-                                data-inputmask-showmaskonhover="false" data-inputmask-showmaskonfocus="true" />
+                            <input type="date" class="form-control @error('created_at') is-invalid @enderror required"
+                                id="wtanggalTransaksi" name="created_at" value="{{ old('created_at') }}" />
+                            @error('created_at')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -138,11 +161,10 @@
                             </label>
                             <div class="input-group">
                                 <span class="input-group-text" id="wnominalPembayaran_rp" disabled>Rp</span>
-                                <input type="text"
-                                    class="form-control @error('nominal_pembayaran') is-invalid @enderror required"
-                                    id="wnominalPembayaran" name="nominal_pembayaran" placeholder="Contoh: 3.000.000"
-                                    value="{{ old('nominal_pembayaran') }}" aria-describedby="wnominalPembayaran_rp" />
-                                @error('nominal_pembayaran')
+                                <input type="text" class="form-control @error('nominal') is-invalid @enderror required"
+                                    id="wnominalPembayaran" name="nominal" placeholder="Contoh: 3.000.000"
+                                    value="{{ old('nominal') }}" aria-describedby="wnominalPembayaran_rp" />
+                                @error('nominal')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
@@ -154,14 +176,13 @@
                         <div class="mb-3">
                             <label class="form-label" for="wangsuranKe">Untuk Pembayaran Angsuran/Semester Ke :
                             </label>
-                            <input type="text" class="form-control @error('angsuran') is-invalid @enderror"
-                                id="wangsuranKe" name="angsuran" placeholder="Contoh: Semester 1"
-                                value="{{ old('angsuran') }}" />
+                            <input type="text" class="form-control wangsuranKe @error('angsuran') is-invalid @enderror"
+                                id="wangsuranKe" name="angsuran" value="{{ old('angsuran') }}" readonly disabled />
+                            <input type="hidden" name="angsuran" class="wangsuranKe">
                             @error('angsuran')
                                 <div class="invalid-feedback">
                                     {{ $message }}
-                                </div>
-                            @enderror
+                            </div> @enderror
                         </div>
                     </div>
                 </div>
@@ -195,6 +216,10 @@
                                     <td id="rekapTanggalTransaksi"></td>
                                 </tr>
                                 <tr>
+                                    <th>Jenis Pembayaran</th>
+                                    <td id="rekapJenisPembayaran"></td>
+                                </tr>
+                                <tr>
                                     <th>Nominal Pembayaran</th>
                                     <td id="rekapNominalPembayaran"></td>
                                 </tr>
@@ -226,4 +251,103 @@
     <script src="{{ asset('assets/libs/inputmask/dist/jquery.inputmask.min.js') }}"></script>
     <script src="{{ asset('assets/libs/jquery-validation/dist/jquery.validate.min.js') }}"></script>
     <script src="{{ asset('assets/js/forms/form-wizard.js') }}"></script>
+    <script>
+        $(document).ready(function () {
+            // Format input nominal as Rupiah
+            $('#wnominalPembayaran').inputmask('numeric', {
+                radixPoint: ',',
+                groupSeparator: '.',
+                digits: 0,
+                autoGroup: true,
+                rightAlign: false,
+                removeMaskOnSubmit: true,
+                placeholder: '0'
+            });
+
+            // Update rekap section on input change
+            $('#wkodeTransaksi').on('input', function () {
+                $('#rekapKodeTransaksi').text($(this).val());
+            });
+            $('#wNIT').on('input', function () {
+                $('#rekapNIT').text($(this).val());
+            });
+            $('#wfullName').on('input', function () {
+                $('#rekapNama').text($(this).val());
+            });
+            $('#wtahunAkademik').on('input', function () {
+                $('#rekapTahunAkademik').text($(this).val());
+            });
+            $('#wtanggalTransaksi').on('change', function () {
+                $('#rekapTanggalTransaksi').text($(this).val());
+            });
+            $('#wjenisPembayaran').on('change', function () {
+                $('#rekapJenisPembayaran').text($(this).val());
+            });
+            $('#wnominalPembayaran').on('input', function () {
+                var value = $(this).val();
+                var formatted = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+                $('#rekapNominalPembayaran').text('Rp ' + formatted);
+            });
+            $('#wangsuranKe').on('input', function () {
+                $('#rekapAngsuranKe').text($(this).val());
+            });
+
+            function fetchSiswaInfo() {
+                var nit = $('#wNIT').val();
+                var jenis = $('#wjenisPembayaran').val();
+                if (nit && jenis) {
+                    $.ajax({
+                        url: '{{ route('payments.fetch-info') }}',
+                        data: { nit: nit, jenis_pembayaran: jenis },
+                        success: function (res) {
+                            $('#siswa_id').val(res.siswa_id);
+                            $('#wfullName').val(res.nama_lengkap);
+                            $('#wtahunAkademik').val(res.tahun_akademik);
+                            $('#wstatusPembayaran').val(res.status_pembayaran);
+                            $('.wkodeTransaksi').val(res.kode_transaksi);
+                            $('.wangsuranKe').val(res.angsuran_ke);
+                            $('#wremaining').val(res.remaining);
+
+                            // Update rekap
+                            $('#rekapNama').text(res.nama_lengkap);
+                            $('#rekapTahunAkademik').text(res.tahun_akademik);
+                            $('#rekapKodeTransaksi').text(res.kode_transaksi);
+                            $('#rekapAngsuranKe').text(res.angsuran_ke);
+
+                            // Sembunyikan pesan error jika ada
+                            $('#siswaNotFound').remove();
+                        },
+                        error: function (xhr) {
+                            $('#wfullName').val('');
+                            $('#wtahunAkademik').val('');
+                            $('#wstatusPembayaran').val('');
+                            $('#wremaining').val('');
+                            $('.wkodeTransaksi').val('');
+                            $('.wangsuranKe').val('');
+                            $('#siswa_id').val('');
+                            // Tampilkan pesan error jika 404 atau 422
+                            if (xhr.status === 404) {
+                                if ($('#siswaNotFound').length === 0) {
+                                    $('#wNIT').after('<div id="siswaNotFound" class="text-danger mt-2">Siswa tidak ditemukan!</div>');
+                                }
+                            } else if (xhr.status === 422) {
+                                let msg = xhr.responseJSON && xhr.responseJSON.error ? xhr.responseJSON.error : 'Sudah lunas!';
+                                if ($('#siswaNotFound').length === 0) {
+                                    $('#wNIT').after('<div id="siswaNotFound" class="text-danger mt-2">' + msg + '</div>');
+                                } else {
+                                    $('#siswaNotFound').text(msg);
+                                }
+                            } else {
+                                $('#siswaNotFound').remove();
+                            }
+                        }
+                    });
+                } else {
+                    $('#siswaNotFound').remove();
+                }
+            }
+
+            $('#wNIT, #wjenisPembayaran').on('change input', fetchSiswaInfo);
+        });
+    </script>
 @endsection

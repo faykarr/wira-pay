@@ -52,15 +52,15 @@
                     </a>
                     <ul aria-expanded="false" class="collapse first-level">
                         <li class="sidebar-item">
-                            <a href="{{ route('payments.create') }}" class="sidebar-link">
-                                <span class="sidebar-icon"></span>
-                                <span class="hide-menu">Transaksi Baru</span>
-                            </a>
-                        </li>
-                        <li class="sidebar-item">
                             <a href="{{ route('payments.index') }}" class="sidebar-link">
                                 <span class="sidebar-icon"></span>
                                 <span class="hide-menu">Riwayat Transaksi</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="{{ route('payments.create') }}" class="sidebar-link">
+                                <span class="sidebar-icon"></span>
+                                <span class="hide-menu">Transaksi Baru</span>
                             </a>
                         </li>
                     </ul>

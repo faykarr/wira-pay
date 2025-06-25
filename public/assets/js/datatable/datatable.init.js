@@ -173,7 +173,7 @@ $(function () {
                                 </span>`;
         }
       },
-      { data: 'created_at', name: 'created_at', orderable: true, searchable: false },
+      { data: 'tanggal_transaksi', name: 'tanggal_transaksi', orderable: true, searchable: false },
       { data: 'action', name: 'action', orderable: false, searchable: false }
     ]
   });

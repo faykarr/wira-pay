@@ -9,11 +9,12 @@ class Payments extends Model
     protected $table = 'payments';
     protected $primaryKey = 'id';
     protected $fillable = [
-        'transaction_code',
         'siswa_id',
+        'kode_transaksi',
         'jenis_pembayaran',
-        'angsuran_ke',
+        'angsuran',
         'nominal',
+        'tanggal_transaksi',
     ];
 
     public function siswa()

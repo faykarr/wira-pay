@@ -25,5 +25,6 @@ Route::resource('akademik', AkademikController::class);
 Route::get('pembayaran/data', [PembayaranController::class, 'data'])->name('pembayaran.data');
 Route::resource('pembayaran', PembayaranController::class);
 // Payments Management
+Route::get('payments/fetch-info', [PaymentsController::class, 'fetchInfo'])->name('payments.fetch-info');
 Route::get('payments/data', [PaymentsController::class, 'data'])->name('payments.data');
 Route::resource('payments', PaymentsController::class);

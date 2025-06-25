@@ -121,7 +121,7 @@
                             </div>
                             <ul class="g-2 my-4">
                                 <li class="mb-2 align-middle">
-                                    @if($siswa->paymentsSummary->status_registrasi === 'Lunas')
+                                    @if($siswa->paymentsSummary->status_registration === 'Lunas')
                                         <i class="ti ti-circle-check fs-5 me-1 text-success"></i>
                                         {{ $siswa->paymentsSummary->angsuran_registration}}x Angsuran
                                     @else
