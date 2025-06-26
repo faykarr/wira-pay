@@ -13,14 +13,34 @@ $(".validation-wizard").steps({
     finish: "Submit",
   },
   onStepChanging: function (event, currentIndex, newIndex) {
+    // Cek khusus saat dari Step 1 ke Step 2
+    if (currentIndex === 1 && newIndex > currentIndex) {
+      let status = $('#hidden_status').val();
+      if (status == 'Lunas') {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops!',
+          text: 'Siswa ini sudah lunas. Tidak bisa melanjutkan ke step berikutnya.'
+        });
+        return false;
+      } else if (status == 'Not Found') {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops!',
+          text: 'Siswa tidak ditemukan. Silakan periksa NIT siswa.'
+        });
+        return false;
+      }
+    }
+
     return (
       currentIndex > newIndex ||
       (!(3 === newIndex && Number($("#age-2").val()) < 18) &&
         (currentIndex < newIndex &&
           (form.find(".body:eq(" + newIndex + ") label.error").remove(),
-            form.find(".body:eq(" + newIndex + ") .error").removeClass("error")),
-          (form.validate().settings.ignore = ":disabled,:hidden"),
-          form.valid()))
+            form.find(".body:eq(" + newIndex + ") .error").removeClass("error"))),
+        (form.validate().settings.ignore = ":disabled,:hidden"),
+        form.valid())
     );
   },
   onFinishing: function (event, currentIndex) {
@@ -33,7 +53,7 @@ $(".validation-wizard").steps({
   },
 }),
   $(".validation-wizard").validate({
-    ignore: "input[type=hidden]",
+    ignore: "",
     errorClass: "text-danger",
     successClass: "text-success",
     highlight: function (element, errorClass) {

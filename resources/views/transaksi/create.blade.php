@@ -72,12 +72,14 @@
                 <div class="row justify-content-center">
                     <div class="col-md-6">
                         <div class="mb-3">
-                            <label class="form-label" for="wNIT"> NIT Siswa : <span class="text-danger">*</span>
+                            <label class="form-label" for="wnit"> NIT Siswa : <span class="text-danger">*</span>
                             </label>
                             <input type="text" class="form-control @error('nit') is-invalid @enderror required"
-                                id="wNIT" name="nit" placeholder="Contoh : 22.24.785" value="{{ old('nit') }}"
-                                autofocus />
+                                id="wnit" name="nit" placeholder="Contoh : 22.24.785" value="{{ old('nit') }}" autofocus
+                                data-url="{{ route('payments.fetch-info') }}" />
+                            <span id="nitLoading" class="spinner-border spinner-border-sm ms-2 mt-2 d-none"></span>
                             <input type="hidden" name="siswa_id" id="siswa_id">
+                            <input type="hidden" id="hidden_status">
                             @error('nit')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -251,103 +253,5 @@
     <script src="{{ asset('assets/libs/inputmask/dist/jquery.inputmask.min.js') }}"></script>
     <script src="{{ asset('assets/libs/jquery-validation/dist/jquery.validate.min.js') }}"></script>
     <script src="{{ asset('assets/js/forms/form-wizard.js') }}"></script>
-    <script>
-        $(document).ready(function () {
-            // Format input nominal as Rupiah
-            $('#wnominalPembayaran').inputmask('numeric', {
-                radixPoint: ',',
-                groupSeparator: '.',
-                digits: 0,
-                autoGroup: true,
-                rightAlign: false,
-                removeMaskOnSubmit: true,
-                placeholder: '0'
-            });
-
-            // Update rekap section on input change
-            $('#wkodeTransaksi').on('input', function () {
-                $('#rekapKodeTransaksi').text($(this).val());
-            });
-            $('#wNIT').on('input', function () {
-                $('#rekapNIT').text($(this).val());
-            });
-            $('#wfullName').on('input', function () {
-                $('#rekapNama').text($(this).val());
-            });
-            $('#wtahunAkademik').on('input', function () {
-                $('#rekapTahunAkademik').text($(this).val());
-            });
-            $('#wtanggalTransaksi').on('change', function () {
-                $('#rekapTanggalTransaksi').text($(this).val());
-            });
-            $('#wjenisPembayaran').on('change', function () {
-                $('#rekapJenisPembayaran').text($(this).val());
-            });
-            $('#wnominalPembayaran').on('input', function () {
-                var value = $(this).val();
-                var formatted = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-                $('#rekapNominalPembayaran').text('Rp ' + formatted);
-            });
-            $('#wangsuranKe').on('input', function () {
-                $('#rekapAngsuranKe').text($(this).val());
-            });
-
-            function fetchSiswaInfo() {
-                var nit = $('#wNIT').val();
-                var jenis = $('#wjenisPembayaran').val();
-                if (nit && jenis) {
-                    $.ajax({
-                        url: '{{ route('payments.fetch-info') }}',
-                        data: { nit: nit, jenis_pembayaran: jenis },
-                        success: function (res) {
-                            $('#siswa_id').val(res.siswa_id);
-                            $('#wfullName').val(res.nama_lengkap);
-                            $('#wtahunAkademik').val(res.tahun_akademik);
-                            $('#wstatusPembayaran').val(res.status_pembayaran);
-                            $('.wkodeTransaksi').val(res.kode_transaksi);
-                            $('.wangsuranKe').val(res.angsuran_ke);
-                            $('#wremaining').val(res.remaining);
-
-                            // Update rekap
-                            $('#rekapNama').text(res.nama_lengkap);
-                            $('#rekapTahunAkademik').text(res.tahun_akademik);
-                            $('#rekapKodeTransaksi').text(res.kode_transaksi);
-                            $('#rekapAngsuranKe').text(res.angsuran_ke);
-
-                            // Sembunyikan pesan error jika ada
-                            $('#siswaNotFound').remove();
-                        },
-                        error: function (xhr) {
-                            $('#wfullName').val('');
-                            $('#wtahunAkademik').val('');
-                            $('#wstatusPembayaran').val('');
-                            $('#wremaining').val('');
-                            $('.wkodeTransaksi').val('');
-                            $('.wangsuranKe').val('');
-                            $('#siswa_id').val('');
-                            // Tampilkan pesan error jika 404 atau 422
-                            if (xhr.status === 404) {
-                                if ($('#siswaNotFound').length === 0) {
-                                    $('#wNIT').after('<div id="siswaNotFound" class="text-danger mt-2">Siswa tidak ditemukan!</div>');
-                                }
-                            } else if (xhr.status === 422) {
-                                let msg = xhr.responseJSON && xhr.responseJSON.error ? xhr.responseJSON.error : 'Sudah lunas!';
-                                if ($('#siswaNotFound').length === 0) {
-                                    $('#wNIT').after('<div id="siswaNotFound" class="text-danger mt-2">' + msg + '</div>');
-                                } else {
-                                    $('#siswaNotFound').text(msg);
-                                }
-                            } else {
-                                $('#siswaNotFound').remove();
-                            }
-                        }
-                    });
-                } else {
-                    $('#siswaNotFound').remove();
-                }
-            }
-
-            $('#wNIT, #wjenisPembayaran').on('change input', fetchSiswaInfo);
-        });
-    </script>
+    <script src="{{ asset('assets/js/custom-trans-validation.js') }}"></script>
 @endsection
