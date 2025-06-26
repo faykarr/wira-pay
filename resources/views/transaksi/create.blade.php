@@ -203,15 +203,15 @@
                                 </tr>
                                 <tr>
                                     <th>NIT Siswa</th>
-                                    <td id="rekapNIT">22.240.265</td>
+                                    <td id="rekapNIT"></td>
                                 </tr>
                                 <tr>
                                     <th>Nama Siswa</th>
-                                    <td id="rekapNama">Nasyath Faykar</td>
+                                    <td id="rekapNama"></td>
                                 </tr>
                                 <tr>
                                     <th>Tahun Akademik</th>
-                                    <td id="rekapTahunAkademik">2022/2023</td>
+                                    <td id="rekapTahunAkademik"></td>
                                 </tr>
                                 <tr>
                                     <th>Tanggal Transaksi</th>

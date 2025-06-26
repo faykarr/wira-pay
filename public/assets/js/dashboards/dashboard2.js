@@ -1,15 +1,36 @@
 // =====================================
 // Profit Start
 // =====================================
+// Inisialisasi array dari Juli (7) sampai Juni (6)
+let urutanBulanAkademik = [7, 8, 9, 10, 11, 12, 1, 2, 3, 4, 5, 6];
+let spiData = Array(12).fill(0);
+let registrasiData = Array(12).fill(0);
+
+// Mapping data sesuai urutan bulan akademik
+pemasukanBulanan.forEach(item => {
+  let bulanAsli = item.bulan; // ex: 7, 1, dst
+  let index = urutanBulanAkademik.indexOf(bulanAsli);
+  if (index === -1) return;
+
+  const total = parseInt(item.total);
+
+  if (item.jenis_pembayaran === "SPI") {
+    spiData[index] = total;
+  } else if (item.jenis_pembayaran === "Registrasi") {
+    registrasiData[index] = total;
+  }
+});
+
+
 var profit = {
   series: [
     {
       name: "SPI",
-      data: [1000000, 1200000, 800000, 500000, 1000000, 900000, 1500000, 1200000, 1800000, 2000000, 1700000, 2500000],
+      data: spiData,
     },
     {
       name: "Registrasi",
-      data: [2700000, 2500000, 1500000, 700000, 1700000, 1400000, 2800000, 2500000, 3000000, 3200000, 2800000, 3500000],
+      data: registrasiData,
     },
   ],
   colors: ["var(--bs-primary)", "#fb977d"],
@@ -21,10 +42,9 @@ var profit = {
     height: 300,
     stacked: true,
     toolbar: {
-      show: !1,
+      show: false,
     },
   },
-
   plotOptions: {
     bar: {
       horizontal: false,
@@ -35,7 +55,6 @@ var profit = {
   dataLabels: {
     enabled: false,
   },
-
   grid: {
     borderColor: "var(--bs-border-color)",
     padding: { top: 0, bottom: -8, left: 20, right: 20 },
@@ -48,17 +67,10 @@ var profit = {
       },
     },
   },
-  toolbar: {
-    show: false,
-  },
   xaxis: {
-    categories: ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Des"],
-    axisBorder: {
-      show: false,
-    },
-    axisTicks: {
-      show: false,
-    },
+    categories: ["Jul", "Aug", "Sep", "Okt", "Nov", "Des", "Jan", "Feb", "Mar", "Apr", "Mei", "Jun"],
+    axisBorder: { show: false },
+    axisTicks: { show: false },
   },
   legend: {
     show: false,
@@ -69,7 +81,6 @@ var profit = {
   yaxis: {
     labels: {
       formatter: function (val) {
-        // Show in millions with "Jt" suffix
         return "Rp " + (val / 1000000).toLocaleString("id-ID", { maximumFractionDigits: 1 }) + " Jt";
       },
     },
@@ -79,6 +90,7 @@ var profit = {
 var chart = new ApexCharts(document.querySelector("#profit"), profit);
 chart.render();
 
+
 // =====================================
 // Profit End
 // =====================================
@@ -86,20 +98,37 @@ chart.render();
 // =====================================
 // Test Start
 // =====================================
+// Inisialisasi
+let categories = [];
+let registrasiSeries = [];
+let spiSeries = [];
 
-// Generate last 5 years including current year
-var currentYear = new Date().getFullYear();
-var categories = [];
-for (var i = 4; i >= 0; i--) {
-  categories.push((currentYear - i).toString());
-}
+pemasukanTahunan.forEach(group => {
+  // group = array dengan item jenis_pembayaran dan total
+  if (group.length > 0) {
+    const tahunAkademik = group[0].tahun_akademik;
+    categories.push(tahunAkademik);
+
+    // Cari total per jenis pembayaran
+    const registrasi = group.find(item => item.jenis_pembayaran === 'Registrasi');
+    const spi = group.find(item => item.jenis_pembayaran === 'SPI');
+
+    registrasiSeries.push(registrasi ? parseInt(registrasi.total) : 0);
+    spiSeries.push(spi ? parseInt(spi.total) : 0);
+  }
+});
 
 var test = {
   series: [
     {
+      name: "Registrasi",
+      data: registrasiSeries,
       color: "var(--bs-primary)",
-      name: "Total",
-      data: [87000000, 15000000, 90000000, 170000000, 160000000],
+    },
+    {
+      name: "SPI",
+      data: spiSeries,
+      color: "#fb977d",
     },
   ],
   chart: {
@@ -141,17 +170,11 @@ var test = {
   },
   xaxis: {
     categories: categories,
-    axisBorder: {
-      show: false,
-    },
-    axisTicks: {
-      show: false,
-    },
+    axisBorder: { show: false },
+    axisTicks: { show: false },
   },
   yaxis: {
-    labels: {
-      show: false
-    }
+    labels: { show: false },
   },
   tooltip: {
     theme: "dark",
@@ -173,7 +196,10 @@ chart.render();
 // Grade End
 // =====================================
 var grade = {
-  series: [100, 150],
+  series: [
+    parseFloat(persentaseSiswa.belum_lunas),
+    parseFloat(persentaseSiswa.lunas)
+  ],
   labels: ["Belum Lunas", "Sudah Lunas"],
   chart: {
     height: 250,
@@ -182,17 +208,17 @@ var grade = {
     foreColor: "#c6d1e9",
     offsetX: -15,
   },
-
   tooltip: {
     theme: "dark",
     fillSeriesColor: false,
   },
-
   colors: ["#fb977d", "var(--bs-primary)"],
   dataLabels: {
     enabled: true,
+    formatter: function (val, opts) {
+      return val.toFixed(2) + "%";
+    }
   },
-
   grid: {
     padding: {
       top: 0,
@@ -201,15 +227,12 @@ var grade = {
       left: 0,
     },
   },
-
   legend: {
     show: false,
   },
-
   stroke: {
     show: false,
   },
-
   plotOptions: {
     pie: {
       donut: {
@@ -220,12 +243,10 @@ var grade = {
           name: {
             show: true,
             fontSize: "18px",
-            color: undefined,
             offsetY: 5,
           },
           value: {
             show: false,
-            color: "#98aab4",
           },
         },
       },
@@ -235,3 +256,4 @@ var grade = {
 
 var chart = new ApexCharts(document.querySelector("#grade"), grade);
 chart.render();
+

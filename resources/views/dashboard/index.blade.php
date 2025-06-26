@@ -10,10 +10,10 @@
                         <div>
                             <h5 class="mb-1 fw-bold">Welcome Admin Wira Bahari!</h5>
                             <p class="fs-3 mb-3 pb-1">Klik tombol dibawah, cara cepat <br> membuat transaksi baru.</p>
-                            <button class="btn btn-primary rounded-pill" type="button">
+                            <a href="{{ route('payments.create') }}" class="btn btn-primary rounded-pill">
                                 <i class="ti ti-currency-dollar fs-5"></i>
                                 Transaksi Baru
-                            </button>
+                            </a>
                         </div>
                         <div class="school-img d-none d-sm-block">
                             <img src="{{ asset('assets/images/backgrounds/school.png') }}" class="img-fluid" alt="" />
@@ -35,7 +35,7 @@
                                     <i class="ti ti-brand-producthunt fs-8 fw-lighter"></i>
                                 </div>
                                 <h5 class="text-white fw-bold fs-14 text-nowrap">
-                                    250 <span class="fs-2 fw-light">Siswa</span>
+                                    {{ $data['siswa_belum_lunas'] }} <span class="fs-2 fw-light">Siswa</span>
                                 </h5>
                                 <p class="opacity-50 mb-0 ">Siswa Belum Lunas</p>
                             </div>
@@ -48,10 +48,11 @@
                                 <div class="mb-7">
                                     <i class="ti ti-report-money fs-8 fw-lighter"></i>
                                 </div>
-                                <h5 class="text-white fw-bold fs-14">
-                                    Rp 235.8JT
+                                <h5 class="text-white fw-bold fs-14 rupiah-singkat"
+                                    data-value="{{ $data['total_pembayaran']->total_spi ?? 0 }}">
+                                    Rp {{ $data['total_pembayaran']->total_spi ?? 0 }}
                                 </h5>
-                                <p class="opacity-50 mb-0">SPI Tahun Ini</p>
+                                <p class="opacity-50 mb-0">Total SPI Tahun Ini</p>
                             </div>
                         </div>
                     </div>
@@ -62,10 +63,11 @@
                                 <div class="mb-7">
                                     <i class="ti ti-currency-dollar fs-8 fw-lighter"></i>
                                 </div>
-                                <h5 class="text-white fw-bold fs-14">
-                                    Rp 235.8JT
+                                <h5 class="text-white fw-bold fs-14 rupiah-singkat"
+                                    data-value="{{ $data['total_pembayaran']->total_registration ?? 0 }}">
+                                    Rp {{ $data['total_pembayaran']->total_registration ?? 0 }}
                                 </h5>
-                                <p class="opacity-50 mb-0">Registrasi Tahun Ini</p>
+                                <p class="opacity-50 mb-0">Total Registrasi Tahun Ini</p>
                             </div>
                         </div>
                     </div>
@@ -82,7 +84,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex mb-4 justify-content-between align-items-center">
-                            <h5 class="mb-0 fw-bold">Grafik Pemasukan Pembayaran Tahun 2025</h5>
+                            <h5 class="mb-0 fw-bold">Grafik Pemasukan Tahun Akademik {{ $data['current_akademik'] }}</h5>
                         </div>
                         <div class="row align-items-center">
                             <div class="col-md-7 d-flex flex-column">
@@ -98,7 +100,9 @@
                                         </div>
 
                                         <div>
-                                            <h5 class="fs-5 mb-0 fw-bold">Rp 87.000.000</h5>
+                                            <h5 class="fs-5 mb-0 fw-bold">Rp
+                                                {{ number_format($data['total_pembayaran']->total_registration, 0, ',', '.') }}
+                                            </h5>
                                             <p class="fs-3 mb-0">Pemasukan Registrasi</p>
                                         </div>
                                     </div>
@@ -111,7 +115,8 @@
 
                                         <div>
                                             <h5 class="fs-5 mb-0 fw-bold">
-                                                Rp 24.500.000
+                                                Rp
+                                                {{ number_format($data['total_pembayaran']->total_spi, 0, ',', '.') }}
                                             </h5>
                                             <p class="fs-3 mb-0">Pemasukan SPI</p>
                                         </div>
@@ -124,15 +129,17 @@
                                         </div>
 
                                         <div>
-                                            <h5 class="fs-5 mb-0 fw-bold">Rp 104.500.000</h5>
+                                            <h5 class="fs-5 mb-0 fw-bold">Rp
+                                                {{ number_format(($data['total_pembayaran']->total_registration + $data['total_pembayaran']->total_spi), 0, ',', '.') }}
+                                            </h5>
                                             <p class="fs-3 mb-0">Semua Pemasukan</p>
                                         </div>
                                     </div>
 
                                     <div>
-                                        <button class="btn btn-primary rounded-pill">
+                                        <a href="{{ route('payments.index') }}" class="btn btn-primary rounded-pill">
                                             Lihat Riwayat Transaksi
-                                        </button>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -145,7 +152,7 @@
                 <div class="card w-100">
                     <div class="card-body">
                         <div class="d-flex mb-4 justify-content-between align-items-center">
-                            <h5 class="mb-0 fw-bold">Pemasukan Per Tahun</h5>
+                            <h5 class="mb-0 fw-bold">Pemasukan Per Tahun Akademik</h5>
                         </div>
                         <div>
                             <div id="test"></div>
@@ -159,7 +166,7 @@
                             </div>
                             <div>
                                 <div class="d-flex align-items-center">
-                                    <h5 class="mb-0 fs-4">750 Transaksi</h5>
+                                    <h5 class="mb-0 fs-4">{{ $data['count_transactions'] }} Transaksi</h5>
                                 </div>
                                 <p class="mb-0">Total Transaksi Tahun Ini</p>
                             </div>
@@ -179,7 +186,9 @@
                 <div class="card w-100">
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center">
-                            <h5 class="mb-0 fw-bold">Grafik Pembayaran Siswa - Tahun Akademik 2025/2026</h5>
+                            <h5 class="mb-0 fw-bold">Grafik Pembayaran Siswa - Tahun Akademik
+                                {{ $data['current_akademik'] }}
+                            </h5>
                         </div>
                         <div class="d-flex align-items-center mt-5">
                             <div class="d-sm-flex d-block align-items-center justify-content-center">
@@ -192,8 +201,9 @@
                                         </div>
 
                                         <div>
-                                            <p class="fs-5 fw-bold mb-0 text-dark">150 Siswa</p>
-                                            <p class="fs-3 mb-0">Sudah Lunas</p>
+                                            <p class="fs-5 fw-bold mb-0 text-dark">{{ $data['count_siswa']['lunas'] }} Siswa
+                                            </p>
+                                            <p class="fs-3 mb-0">Sudah Lunas <br> Registrasi & SPI</p>
                                         </div>
                                     </div>
                                     <div class="d-flex align-items-baseline mb-4">
@@ -202,8 +212,9 @@
                                         </div>
 
                                         <div>
-                                            <p class="fs-5 fw-bold mb-0 text-dark">100 Siswa</p>
-                                            <p class="fs-3 mb-0">Belum Lunas</p>
+                                            <p class="fs-5 fw-bold mb-0 text-dark">{{ $data['count_siswa']['belum_lunas'] }}
+                                                Siswa</p>
+                                            <p class="fs-3 mb-0">Belum Lunas <br> Registrasi / SPI</p>
                                         </div>
                                     </div>
                                     <div class="d-flex align-items-baseline">
@@ -212,7 +223,8 @@
                                         </div>
 
                                         <div>
-                                            <p class="fs-5 fw-bold mb-0 text-dark">250 Siswa</p>
+                                            <p class="fs-5 fw-bold mb-0 text-dark">{{ $data['count_siswa']['total_siswa'] }}
+                                                Siswa</p>
                                             <p class="fs-3 mb-0">Total Siswa</p>
                                         </div>
                                     </div>
@@ -236,11 +248,22 @@
                                 </div>
                                 <div class="d-flex align-items-center justify-content-between mb-3">
                                     <h5 class="fs-4 mb-0 fw-bold">Persentase</h5>
-                                    <p class="text-primary fw-normal fs-3 mb-0">83% Lunas</p>
+                                    <p class="text-primary fw-normal fs-3 mb-0">
+                                        {{ $data['persentase_lunas']['persentase'] }}% Lunas
+                                    </p>
                                 </div>
                                 <div class="progress">
-                                    <div class="progress-bar bg-primary rounded" style="width: 75%" role="progressbar"
-                                        aria-valuenow="83" aria-valuemin="0" aria-valuemax="100"></div>
+                                    <div class="progress-bar bg-primary rounded"
+                                        style="width: {{ $data['persentase_lunas']['persentase'] ?? 0 }}%"
+                                        role="progressbar"
+                                        aria-valuenow="{{ $data['persentase_lunas']['persentase'] ?? 0 }}" aria-valuemin="0"
+                                        aria-valuemax="100">
+                                    </div>
+                                </div>
+                                <div class="mt-4">
+                                    <p class="fs-2 mb-0 fw-bolder">{{ $data['persentase_lunas']['jumlah_lunas'] }} dari
+                                        {{ $data['persentase_lunas']['total_siswa'] }} Siswa
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -312,7 +335,7 @@
                             <h5 class="mb-0 fw-bold">Riwayat Pembayaran Terakhir</h5>
 
                             {{-- Add button to show all employees --}}
-                            <a href="#">
+                            <a href="{{ route('payments.index') }}">
                                 <button class="btn btn-primary rounded-pill">
                                     Show All
                                 </button>
@@ -321,10 +344,11 @@
 
                         <hr>
 
-                        <div class="table-responsive" data-simplebar>
+                        <div class="table-responsive">
                             <table class="table table-borderless align-middle text-nowrap">
                                 <thead class="text-center">
                                     <tr>
+                                        <th scope="col">#</th>
                                         <th scope="col">Siswa</th>
                                         <th scope="col">Tahun Akademik</th>
                                         <th scope="col">Jenis Pembayaran</th>
@@ -333,203 +357,53 @@
                                     </tr>
                                 </thead>
                                 <tbody class="text-center">
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <div class="me-4">
-                                                    <img src="{{ asset('assets/images/profile/user-7.jpg') }}" width="50"
-                                                        class="rounded-circle" alt="" />
+                                    @foreach ($data['latest_transactions'] as $row)
+                                        <tr>
+                                            <td>
+                                                {{ $loop->iteration }}
+                                            </td>
+                                            <td>
+                                                <div class="d-flex justify-content-center align-items-center">
+                                                    <div>
+                                                        <h6 class="mb-1 fw-bolder">
+                                                            {{ ucwords(strtolower($row->siswa->nama_lengkap)) }}
+                                                        </h6>
+                                                        <p class="fs-3 mb-0">{{ $row->siswa->nit }}</p>
+                                                    </div>
                                                 </div>
-
-                                                <div>
-                                                    <h6 class="mb-1 fw-bolder">Nasyath Faykar</h6>
-                                                    <p class="fs-3 mb-0">22.24.252</p>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <p class="fs-3 fw-normal mb-0">2025/2026</p>
-                                        </td>
-                                        <td>
-                                            <span
-                                                class="badge bg-warning-subtle rounded-pill text-warning border-warning border fs-2">
-                                                Pembayaran SPI
-                                            </span>
-                                        </td>
-                                        <td>
-                                            <span
-                                                class="badge bg-success-subtle rounded-pill text-success border-success border fs-2">Rp
-                                                300.000</span>
-                                        </td>
-                                        <td>
-                                            <p class="fs-3 mb-0">
+                                            </td>
+                                            <td>
+                                                <p class="fs-3 fw-normal mb-0">{{ $row->siswa->akademik->tahun_akademik }}</p>
+                                            </td>
+                                            <td>
+                                                @if ($row->jenis_pembayaran == 'Registrasi')
+                                                    <span
+                                                        class="badge bg-danger-subtle rounded-pill text-danger border-danger border fs-2">
+                                                        Pembayaran Registrasi
+                                                    </span>
+                                                @else
+                                                    <span
+                                                        class="badge bg-warning-subtle rounded-pill text-warning border-warning border fs-2">
+                                                        Pembayaran SPI
+                                                    </span>
+                                                @endif
+                                            </td>
+                                            <td>
                                                 <span
-                                                    class="badge bg-primary-subtle rounded-pill text-primary border-primary border fs-2">
-                                                    12 Juni 2025
+                                                    class="badge bg-success-subtle rounded-pill text-success border-success border fs-2">
+                                                    Rp {{ number_format($row->nominal, 0, ',', '.') }}
                                                 </span>
-                                            </p>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <div class="me-4">
-                                                    <img src="{{ asset('assets/images/profile/user-7.jpg') }}" width="50"
-                                                        class="rounded-circle" alt="" />
-                                                </div>
-
-                                                <div>
-                                                    <h6 class="mb-1 fw-bolder">Nasyath Faykar</h6>
-                                                    <p class="fs-3 mb-0">22.24.252</p>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <p class="fs-3 fw-normal mb-0">2025/2026</p>
-                                        </td>
-                                        <td>
-                                            <p class="fs-3 mb-0">
-                                                <span
-                                                    class="badge bg-danger-subtle rounded-pill text-danger border-danger border fs-2">
-                                                    Pembayaran Registrasi
-                                                </span>
-                                            </p>
-                                        </td>
-                                        <td>
-                                            <span
-                                                class="badge bg-success-subtle rounded-pill text-success border-success border fs-2">Rp
-                                                300.000</span>
-                                        </td>
-                                        <td>
-                                            <p class="fs-3 mb-0">
-                                                <span
-                                                    class="badge bg-primary-subtle rounded-pill text-primary border-primary border fs-2">
-                                                    12 Juni 2025
-                                                </span>
-                                            </p>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <div class="me-4">
-                                                    <img src="{{ asset('assets/images/profile/user-7.jpg') }}" width="50"
-                                                        class="rounded-circle" alt="" />
-                                                </div>
-
-                                                <div>
-                                                    <h6 class="mb-1 fw-bolder">Nasyath Faykar</h6>
-                                                    <p class="fs-3 mb-0">22.24.252</p>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <p class="fs-3 fw-normal mb-0">2025/2026</p>
-                                        </td>
-                                        <td>
-                                            <p class="fs-3 mb-0">
-                                                <span
-                                                    class="badge bg-warning-subtle rounded-pill text-warning border-warning border fs-2">
-                                                    Pembayaran SPI
-                                                </span>
-                                            </p>
-                                        </td>
-                                        <td>
-                                            <span
-                                                class="badge bg-success-subtle rounded-pill text-success border-success border fs-2">Rp
-                                                300.000</span>
-                                        </td>
-                                        <td>
-                                            <p class="fs-3 mb-0">
-                                                <span
-                                                    class="badge bg-primary-subtle rounded-pill text-primary border-primary border fs-2">
-                                                    12 Juni 2025
-                                                </span>
-                                            </p>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <div class="me-4">
-                                                    <img src="{{ asset('assets/images/profile/user-7.jpg') }}" width="50"
-                                                        class="rounded-circle" alt="" />
-                                                </div>
-
-                                                <div>
-                                                    <h6 class="mb-1 fw-bolder">Nasyath Faykar</h6>
-                                                    <p class="fs-3 mb-0">22.24.252</p>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <p class="fs-3 fw-normal mb-0">2025/2026</p>
-                                        </td>
-                                        <td>
-                                            <p class="fs-3 mb-0">
-                                                <span
-                                                    class="badge bg-danger-subtle rounded-pill text-danger border-danger border fs-2">
-                                                    Pembayaran Registrasi
-                                                </span>
-                                            </p>
-                                        </td>
-                                        <td>
-                                            <span
-                                                class="badge bg-success-subtle rounded-pill text-success border-success border fs-2">Rp
-                                                300.000</span>
-                                        </td>
-                                        <td>
-                                            <p class="fs-3 mb-0">
-                                                <span
-                                                    class="badge bg-primary-subtle rounded-pill text-primary border-primary border fs-2">
-                                                    12 Juni 2025
-                                                </span>
-                                            </p>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <div class="me-4">
-                                                    <img src="{{ asset('assets/images/profile/user-7.jpg') }}" width="50"
-                                                        class="rounded-circle" alt="" />
-                                                </div>
-
-                                                <div>
-                                                    <h6 class="mb-1 fw-bolder">Nasyath Faykar</h6>
-                                                    <p class="fs-3 mb-0">22.24.252</p>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <p class="fs-3 fw-normal mb-0">2025/2026</p>
-                                        </td>
-                                        <td>
-                                            <p class="fs-3 mb-0">
-                                                <span
-                                                    class="badge bg-danger-subtle rounded-pill text-danger border-danger border fs-2">
-                                                    Pembayaran Registrasi
-                                                </span>
-                                            </p>
-                                        </td>
-                                        <td>
-                                            <span
-                                                class="badge bg-success-subtle rounded-pill text-success border-success border fs-2">Rp
-                                                300.000</span>
-                                        </td>
-                                        <td>
-                                            <p class="fs-3 mb-0">
-                                                <span
-                                                    class="badge bg-primary-subtle rounded-pill text-primary border-primary border fs-2">
-                                                    12 Juni 2025
-                                                </span>
-                                            </p>
-                                        </td>
-                                    </tr>
+                                            </td>
+                                            <td>
+                                                <p class="fs-3 mb-0">
+                                                    <span
+                                                        class="badge bg-primary-subtle rounded-pill text-primary border-primary border fs-2">
+                                                        {{ Carbon\Carbon::parse($row->tanggal_transaksi)->locale('id')->isoFormat('D MMMM Y') }}
+                                                    </span>
+                                                </p>
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -542,6 +416,31 @@
 
 @section('js-links')
     {{-- Charts & Pages Script --}}
-    <script src="../assets/libs/apexcharts/dist/apexcharts.min.js"></script>
+    <script src="{{ asset('assets/libs/apexcharts/dist/apexcharts.min.js') }}"></script>
+    <script>
+        const pemasukanTahunan = @json($data['pemasukan_tahun']);
+        const pemasukanBulanan = @json($data['pemasukan_bulan']);
+        const persentaseSiswa = @json($data['persentase_siswa']);
+    </script>
     <script src="{{ asset('assets/js/dashboards/dashboard2.js') }}"></script>
+    <script>
+        function formatRupiahSingkat(angka) {
+            angka = Number(angka) || 0;
+            if (isNaN(angka)) return 0;
+            if (angka >= 1_000_000_000) {
+                return 'Rp ' + (angka / 1_000_000_000).toFixed(1).replace('.', ',') + 'M';
+            } else if (angka >= 1_000_000) {
+                return 'Rp ' + (angka / 1_000_000).toFixed(1).replace('.', ',') + 'jt';
+            } else if (angka >= 1_000) {
+                return 'Rp ' + Math.floor(angka / 1_000) + 'rb';
+            }
+            return angka.toLocaleString('id-ID');
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('.rupiah-singkat').forEach(function (el) {
+                el.textContent = formatRupiahSingkat(el.dataset.value);
+            });
+        });
+    </script>
 @endsection
