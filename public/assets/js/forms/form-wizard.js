@@ -33,6 +33,18 @@ $(".validation-wizard").steps({
       }
     }
 
+    if (currentIndex === 2 && newIndex > currentIndex) {
+      let status = $('#hidden_status').val();
+      if (status == 'Lebih') {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops!',
+          text: 'Nominal Pembayaran Tidak Valid. Tidak bisa melanjutkan ke step berikutnya.'
+        });
+        return false;
+      }
+    }
+
     return (
       currentIndex > newIndex ||
       (!(3 === newIndex && Number($("#age-2").val()) < 18) &&

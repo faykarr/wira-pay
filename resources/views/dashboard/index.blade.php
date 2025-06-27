@@ -52,7 +52,7 @@
                                     data-value="{{ $data['total_pembayaran']->total_spi ?? 0 }}">
                                     Rp {{ $data['total_pembayaran']->total_spi ?? 0 }}
                                 </h5>
-                                <p class="opacity-50 mb-0">Total SPI Tahun Ini</p>
+                                <p class="opacity-50 mb-0">Total SPI TA {{ $data['current_akademik'] }}</p>
                             </div>
                         </div>
                     </div>
@@ -67,7 +67,7 @@
                                     data-value="{{ $data['total_pembayaran']->total_registration ?? 0 }}">
                                     Rp {{ $data['total_pembayaran']->total_registration ?? 0 }}
                                 </h5>
-                                <p class="opacity-50 mb-0">Total Registrasi Tahun Ini</p>
+                                <p class="opacity-50 mb-0">Total Registrasi TA {{ $data['current_akademik'] }}</p>
                             </div>
                         </div>
                     </div>
@@ -168,7 +168,7 @@
                                 <div class="d-flex align-items-center">
                                     <h5 class="mb-0 fs-4">{{ $data['count_transactions'] }} Transaksi</h5>
                                 </div>
-                                <p class="mb-0">Total Transaksi Tahun Ini</p>
+                                <p class="mb-0">Total Transaksi TA {{ $data['current_akademik'] }}</p>
                             </div>
                         </div>
 
@@ -423,24 +423,4 @@
         const persentaseSiswa = @json($data['persentase_siswa']);
     </script>
     <script src="{{ asset('assets/js/dashboards/dashboard2.js') }}"></script>
-    <script>
-        function formatRupiahSingkat(angka) {
-            angka = Number(angka) || 0;
-            if (isNaN(angka)) return 0;
-            if (angka >= 1_000_000_000) {
-                return 'Rp ' + (angka / 1_000_000_000).toFixed(1).replace('.', ',') + 'M';
-            } else if (angka >= 1_000_000) {
-                return 'Rp ' + (angka / 1_000_000).toFixed(1).replace('.', ',') + 'jt';
-            } else if (angka >= 1_000) {
-                return 'Rp ' + Math.floor(angka / 1_000) + 'rb';
-            }
-            return angka.toLocaleString('id-ID');
-        }
-
-        document.addEventListener('DOMContentLoaded', function () {
-            document.querySelectorAll('.rupiah-singkat').forEach(function (el) {
-                el.textContent = formatRupiahSingkat(el.dataset.value);
-            });
-        });
-    </script>
 @endsection

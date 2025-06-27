@@ -112,7 +112,6 @@ class PaymentsController extends Controller
                 $cetakUrl = route('payments.show', $payments->id);
                 return '
                 <div class="btn-group">
-                <a href="' . $cetakUrl . '" class="btn btn-sm btn-danger text-white"><i class="ti ti-printer fs-4"></i></a>
                 <a href="' . $lihatUrl . '" class="btn btn-sm btn-primary text-white"><i class="ti ti-eye fs-4 me-1"></i>Siswa</a>
                 </div>
             ';

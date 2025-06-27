@@ -65,7 +65,12 @@ class DashboardController extends Controller
 
     public function getCountTransactionsTahunIni()
     {
-        return Payments::whereYear('tanggal_transaksi', date('Y'))
+        $tahun = date('n') <= 6 ? date('Y') - 1 : date('Y');
+        $tahun_akademik = "{$tahun}/" . ($tahun + 1);
+
+        return Payments::whereHas('siswa.akademik', function ($query) use ($tahun_akademik) {
+            $query->where('tahun_akademik', $tahun_akademik);
+        })
             ->count();
     }
 

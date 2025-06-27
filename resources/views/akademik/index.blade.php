@@ -34,11 +34,19 @@
                     data-url="{{ route('akademik.data') }}">
                     <thead class="align-middle text-center">
                         <tr>
-                            <th scope="col" class="text-center">#</th>
-                            <th scope="col" class="text-center">Tahun Akademik</th>
-                            <th scope="col" class="text-center">Jumlah Siswa</th>
-                            <th scope="col" class="text-center">Status Pembayaran</th>
-                            <th scope="col" class="text-center">Action</th>
+                            <th scope="col" rowspan="2" class="text-center">#</th>
+                            <th scope="col" rowspan="2" class="text-center">Tahun Akademik</th>
+                            <th scope="col" rowspan="2" class="text-center">Jumlah Siswa</th>
+                            <th scope="colgroup" colspan="2" class="text-center">Status Pembayaran</th>
+                            <th scope="col" rowspan="2" class="text-center">Action</th>
+                        </tr>
+                        <tr>
+                            <th scope="col" class="text-center">
+                                Registrasi
+                            </th>
+                            <th scope="col" class="text-center">
+                                SPI
+                            </th>
                         </tr>
                     </thead>
                     <tbody class="text-center"></tbody>

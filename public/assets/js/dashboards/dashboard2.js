@@ -1,4 +1,27 @@
 // =====================================
+// Format Rupiah Singkat
+// =====================================
+function formatRupiahSingkat(angka) {
+  angka = Number(angka) || 0;
+  if (isNaN(angka)) return 0;
+  if (angka >= 1_000_000_000) {
+    return 'Rp ' + (angka / 1_000_000_000).toFixed(1).replace('.', ',') + 'M';
+  } else if (angka >= 1_000_000) {
+    return 'Rp ' + (angka / 1_000_000).toFixed(1).replace('.', ',') + 'jt';
+  } else if (angka >= 1_000) {
+    return 'Rp ' + Math.floor(angka / 1_000) + 'rb';
+  }
+  return angka.toLocaleString('id-ID');
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+  document.querySelectorAll('.rupiah-singkat').forEach(function (el) {
+    el.textContent = formatRupiahSingkat(el.dataset.value);
+  });
+});
+
+
+// =====================================
 // Profit Start
 // =====================================
 // Inisialisasi array dari Juli (7) sampai Juni (6)

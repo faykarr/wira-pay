@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Akademik\StoreAkademikRequest;
 use App\Http\Requests\Akademik\UpdateAkademikRequest;
 use App\Models\Akademik;
+use App\Models\PaymentsSummary;
 use App\Models\Pembayaran;
 use Illuminate\Http\Request;
 
@@ -88,23 +89,38 @@ class AkademikController extends Controller
     public function data(Akademik $akademik)
     {
         $data = $akademik->orderBy('tahun_akademik')->withCount('siswa')->get();
+
         return datatables()->of($data)
             ->addIndexColumn()
             ->addColumn('jumlah_siswa', fn($row) => $row->siswa_count . ' Siswa')
-            ->addColumn('status_pembayaran', fn($row) => '<span class="badge bg-success">Sudah Lunas Semua</span>')
+            ->addColumn('registrasi', function ($row) {
+                $total = PaymentsSummary::where('tahun_akademik', $row->tahun_akademik)->count();
+                $sudah = PaymentsSummary::where('tahun_akademik', $row->tahun_akademik)->where('status_registration', 'Lunas')->count();
+                $belum = $total - $sudah;
+
+                return '<span class="badge bg-danger">' . $belum . ' Belum Lunas</span> <span class="badge bg-success">' . $sudah . ' Sudah Lunas</span>';
+            })
+            ->addColumn('spi', function ($row) {
+                $total = PaymentsSummary::where('tahun_akademik', $row->tahun_akademik)->count();
+                $sudah = PaymentsSummary::where('tahun_akademik', $row->tahun_akademik)->where('status_spi', 'Lunas')->count();
+                $belum = $total - $sudah;
+
+                return '<span class="badge bg-danger">' . $belum . ' Belum Lunas</span> <span class="badge bg-success">' . $sudah . ' Sudah Lunas</span>';
+            })
             ->addColumn('action', function ($row) {
                 $editUrl = route('akademik.edit', $row->id);
                 $showUrl = route('akademik.show', $row->id);
                 $deleteUrl = route('akademik.destroy', $row->id);
                 return '
-                <div class="btn-group">
-                    <a href="' . $showUrl . '" class="btn btn-sm btn-primary"><i class="ti ti-eye fs-4 me-1"></i>Lihat</a>
-                    <a href="' . $editUrl . '" class="btn btn-sm btn-success text-white"><i class="ti ti-pencil fs-4 me-1"></i>Edit</a>
-                    <button class="btn btn-sm btn-danger btn-delete" data-url="' . $deleteUrl . '"><i class="ti ti-trash fs-4 me-1"></i>Hapus</button>
-                </div>
-            ';
+            <div class="btn-group">
+                <a href="' . $showUrl . '" class="btn btn-sm btn-primary"><i class="ti ti-eye fs-4"></i></a>
+                <a href="' . $editUrl . '" class="btn btn-sm btn-success text-white"><i class="ti ti-pencil fs-4"></i></a>
+                <button class="btn btn-sm btn-danger btn-delete" data-url="' . $deleteUrl . '"><i class="ti ti-trash fs-4"></i></button>
+            </div>
+        ';
             })
-            ->rawColumns(['status_pembayaran', 'action'])
+            ->rawColumns(['registrasi', 'spi', 'action'])
             ->make(true);
     }
+
 }

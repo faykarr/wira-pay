@@ -34,6 +34,29 @@ $(document).ready(function () {
         var formatted = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
         $('#rekapNominalPembayaran').text('Rp ' + formatted);
     });
+    // Validasi nominal pembayaran tidak boleh lebih dari kekurangan pembayaran
+    $('#wnominalPembayaran').on('input', function () {
+        // Ambil nilai nominal yang diinput (hilangkan titik pemisah ribuan)
+        var nominal = parseInt($(this).val().replace(/\./g, '')) || 0;
+        // Ambil nilai kekurangan pembayaran (hilangkan "Rp", titik, dan spasi)
+        var remaining = $('#wremaining').val().replace(/[^0-9]/g, '');
+        remaining = parseInt(remaining) || 0;
+
+        // Jika nominal melebihi kekurangan pembayaran
+        if (nominal > remaining && remaining > 0) {
+            $(this)[0].setCustomValidity('Nominal pembayaran tidak boleh lebih dari kekurangan pembayaran!');
+            $(this).addClass('is-invalid');
+            if ($('#nominalError').length === 0) {
+                $(this).after('<div id="nominalError" class="invalid-feedback d-block">Nominal pembayaran tidak boleh lebih dari kekurangan pembayaran!</div>');
+                $('#hidden_status').val('Lebih');
+            }
+        } else {
+            $(this)[0].setCustomValidity('');
+            $(this).removeClass('is-invalid');
+            $('#nominalError').remove();
+            $('#hidden_status').val('');
+        }
+    });
     $('#wangsuranKe').on('input', function () {
         $('#rekapAngsuranKe').text($(this).val());
     });

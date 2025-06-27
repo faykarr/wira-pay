@@ -106,7 +106,8 @@ $(function () {
       { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: true, searchable: false },
       { data: 'tahun_akademik', name: 'tahun_akademik' },
       { data: 'jumlah_siswa', name: 'jumlah_siswa', searchable: false },
-      { data: 'status_pembayaran', name: 'status_pembayaran', searchable: false },
+      { data: 'registrasi', name: 'registrasi', orderable: false, searchable: false },
+      { data: 'spi', name: 'spi', orderable: false, searchable: false },
       { data: 'action', name: 'action', orderable: false, searchable: false }
     ]
   });
