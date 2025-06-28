@@ -240,4 +240,20 @@ class SiswaController extends Controller
         // dd($data);
         return view("siswa.transactions.registrasi", compact('data'));
     }
+
+    // Function to show history transaction of spi siswa
+    public function historySPI(Siswa $siswa)
+    {
+        // Load only payments with jenis_pembayaran 'Registrasi'
+        $data = [
+            'siswa_id' => $siswa->id,
+            'siswa' => $siswa->load([
+                'payments' => function ($query) {
+                    $query->where('jenis_pembayaran', 'SPI');
+                }
+            ]),
+        ];
+        // dd($data);
+        return view("siswa.transactions.spi", compact('data'));
+    }
 }
