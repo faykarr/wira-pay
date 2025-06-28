@@ -224,4 +224,20 @@ class SiswaController extends Controller
 
         return response()->json(['data' => $rows]);
     }
+
+    // Function to show history transaction of registrasi siswa
+    public function historyRegistrasi(Siswa $siswa)
+    {
+        // Load only payments with jenis_pembayaran 'Registrasi'
+        $data = [
+            'siswa_id' => $siswa->id,
+            'siswa' => $siswa->load([
+                'payments' => function ($query) {
+                    $query->where('jenis_pembayaran', 'Registrasi');
+                }
+            ]),
+        ];
+        // dd($data);
+        return view("siswa.transactions.registrasi", compact('data'));
+    }
 }

@@ -24,4 +24,9 @@ class Siswa extends Model
     {
         return $this->hasOne(PaymentsSummary::class, 'siswa_id');
     }
+
+    public function payments()
+    {
+        return $this->hasMany(Payments::class, 'siswa_id');
+    }
 }

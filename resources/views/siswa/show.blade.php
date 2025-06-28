@@ -145,10 +145,10 @@
                             <span>Rp.
                                 {{ number_format($siswa->paymentsSummary->remaining_registration, 0, ',', '.')}}</span>
                             <div class="d-grid w-100 mt-4 pt-2">
-                                <button class="btn btn-primary" data-bs-target="#upgradePlanModal" data-bs-toggle="modal">
+                                <a href="{{ route('siswa.transactions.registrasi', $siswa->id) }}" class="btn btn-primary">
                                     <i class="ti ti-archive fs-5 me-2"></i>
                                     Lihat Riwayat Pembayaran
-                                </button>
+                                </a>
                             </div>
                         </div>
                         <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
