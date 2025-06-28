@@ -143,13 +143,28 @@ class DashboardController extends Controller
 
     public function getPersentaseLunasSemuaTahun()
     {
-        $totalSiswa = DB::table('payments_summary')->count();
+        // Ambil tahun sekarang
+        $tahunSekarang = (int) (date('n') <= 6 ? date('Y') - 1 : date('Y'));
 
+        // Buat array tahun akademik 3 tahun terakhir
+        $tahunAkademik = collect(range(0, 2))->map(function ($i) use ($tahunSekarang) {
+            $start = $tahunSekarang - $i;
+            return $start . '/' . ($start + 1);
+        })->toArray();
+
+        // Hitung total siswa dari tahun akademik tersebut
+        $totalSiswa = DB::table('payments_summary')
+            ->whereIn('tahun_akademik', $tahunAkademik)
+            ->count();
+
+        // Hitung siswa yang LUNAS (SPI dan Registrasi)
         $lunas = DB::table('payments_summary')
+            ->whereIn('tahun_akademik', $tahunAkademik)
             ->where('status_spi', 'Lunas')
             ->where('status_registration', 'Lunas')
             ->count();
 
+        // Hitung persentase
         $persentase = $totalSiswa > 0 ? round(($lunas / $totalSiswa) * 100, 2) : 0;
 
         return [
@@ -158,6 +173,7 @@ class DashboardController extends Controller
             'total_siswa' => $totalSiswa,
         ];
     }
+
 
     public function getLatestTransactions()
     {
