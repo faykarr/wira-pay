@@ -3401,14 +3401,14 @@ progress {
 }
 
 .form-control::-moz-placeholder {
-  /* color: #111c2d; */
-  color: #fff;
+  color: #111c2d;
+  /* color: #fff; */
   opacity: 1;
 }
 
 .form-control::placeholder {
-  /* color: #111c2d; */
-  color: #fff;
+  color: #111c2d;
+  /* color: #fff; */
   opacity: 1;
 }
 
@@ -19958,8 +19958,8 @@ html[data-layout="horizontal"] .body-wrapper>.container-xxl {
   top: 0px;
   position: fixed;
   z-index: 99999;
-  background: #111c2d;
-  /* background: #fff; */
+  /* background: #111c2d; */
+  background: #fff;
 }
 
 .lds-ripple {
