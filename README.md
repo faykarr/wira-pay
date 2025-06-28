@@ -16,13 +16,14 @@ Wira Pay is a comprehensive payment system designed for SMK Wira Bahari, facilit
 - **Frontend**: HTML, CSS, JavaScript
 - **Database**: MySQL with Laragon
 - **Version Control**: Git
+- **Template Frontend**: [SpikeAdmin Template](https://www.wrappixel.com/templates/spike-bootstrap-admin-dashboard/?srsltid=AfmBOopUbBMcjr_dQQ8qdOk9_9ItjTqlRUgxkVU-qwFm3ln6kwJ84BOi)
 
 ## Installation
 
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/yourusername/wira-pay.git
+   git clone https://github.com/faykarr/wira-pay.git
    ```
 
 2. Navigate to the project directory:
@@ -75,10 +76,12 @@ Contributions are welcome! Please submit a pull request or open an issue for any
 
 ## Screenshots
 
-![Dashboard](https://example.com/screenshot0.png)
-![Payment Summary](https://example.com/screenshot1.png)
-![Data Export](https://example.com/screenshot2.png)
-![Student Management](https://example.com/screenshot3.png)
+![Dashboard](./public/assets/docs/imgs/dashboard.png)
+![Payment Summary](./public/assets/docs/imgs/payment-history.png)
+![Data Export](./public/assets/docs/imgs/export-payments.png)
+![Export List](./public/assets/docs/imgs/export-excel.png)
+![Student Management](./public/assets/docs/imgs/students-list.png)
+![Student Import](./public/assets/docs/imgs/import-students.png)
 
 ## License
 
