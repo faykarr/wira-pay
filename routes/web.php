@@ -18,6 +18,8 @@ Route::post('siswa/import/preview', [SiswaController::class, 'importPreview'])->
 Route::get('siswa/transactions/registrasi/{siswa}', [SiswaController::class, 'historyRegistrasi'])->name('siswa.transactions.registrasi');
 Route::get('siswa/transactions/spi/{siswa}', [SiswaController::class, 'historySPI'])->name('siswa.transactions.spi');
 Route::get('siswa/data', [SiswaController::class, 'data'])->name('siswa.data');
+Route::get('siswa/export', [SiswaController::class, 'export'])->name('siswa.export');
+Route::post('siswa/export/preview', [SiswaController::class, 'exportPreview'])->name('siswa.export.preview');
 Route::resource('siswa', SiswaController::class);
 // Akademik Management
 Route::get('akademik/data', [AkademikController::class, 'data'])->name('akademik.data');

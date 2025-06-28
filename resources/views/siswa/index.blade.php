@@ -20,11 +20,11 @@
                     <i class="ti ti-download fs-4 me-2"></i>
                     Import
                 </a>
-                <button type="button"
+                <a href="{{ route('siswa.export') }}"
                     class="justify-content-center w-100 btn btn-sm btn-rounded btn-secondary d-flex align-items-center">
                     <i class="ti ti-upload fs-4 me-2"></i>
                     Export
-                </button>
+                </a>
                 <a href="{{ asset('assets/docs/Format Daftar NIT - Sistem Pembayaran Wira Bahari.xlsx') }}"
                     class="justify-content-center w-100 btn btn-sm btn-rounded btn-primary d-flex align-items-center"
                     download="Format Daftar NIT - Sistem Pembayaran Wira Bahari.xlsx">

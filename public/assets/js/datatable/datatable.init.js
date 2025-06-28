@@ -102,6 +102,75 @@ $(function () {
     });
   });
 
+  // Initialize DataTable for export student
+  const exportTable = $('#export-student').DataTable({
+    searching: false,
+    lengthChange: false,
+    columns: [
+      { title: "#" },
+      { title: "NIT" },
+      { title: "Nama Siswa" },
+      { title: "Tahun Akademik" }
+    ]
+  });
+
+  $('#wakademik').on('change', function () {
+    const akademik = $(this).val();
+    const urlExport = $('#export-student').data('url');
+
+    if (!akademik) {
+      exportTable.clear().draw();
+      return;
+    }
+
+    // Show loading
+    const $tbody = $('#export-student tbody');
+    $tbody.html(`
+      <tr id="export-loading">
+        <td colspan="4" class="text-center py-4">
+          <span class="spinner-border spinner-border-sm me-2"></span>
+          Memuat data preview...
+        </td>
+      </tr>
+    `);
+
+    const formData = new FormData();
+    formData.append('akademik', akademik);
+    formData.append('_token', $('meta[name="csrf-token"]').attr('content'));
+
+    $.ajax({
+      url: urlExport,
+      method: 'POST',
+      data: formData,
+      contentType: false,
+      processData: false,
+      success: function (res) {
+        exportTable.clear().draw();
+
+        res.data.forEach((row, i) => {
+          exportTable.row.add([
+            i + 1,
+            row.nit,
+            row.nama_lengkap,
+            row.tahun_akademik
+          ]).draw(false);
+        });
+      },
+      error: function (err) {
+        $tbody.html(`
+          <tr>
+            <td colspan="4" class="text-center text-danger py-4">
+              Gagal memuat data preview.
+            </td>
+          </tr>
+        `);
+      },
+      complete: function () {
+        $('#export-loading').remove();
+      }
+    });
+  });
+
   // Initialize DataTable for all akademik
   const urlAkademik = $('#all-akademik').data('url');
 

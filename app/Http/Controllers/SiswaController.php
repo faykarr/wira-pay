@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Siswa\StoreSiswaRequest;
 use App\Http\Requests\Siswa\UpdateSiswaRequest;
 use App\Models\Akademik;
+use App\Models\PaymentsSummary;
 use App\Models\Pembayaran;
 use App\Models\Siswa;
 use Illuminate\Http\Request;
@@ -242,6 +243,40 @@ class SiswaController extends Controller
                 'nit' => $row[0],
                 'nama_lengkap' => ucwords(strtolower($row[1])),
                 'tahun_akademik' => $request->akademik,
+            ];
+        }
+
+        return response()->json(['data' => $rows]);
+    }
+
+    // Function to show export view
+    public function export(Akademik $akademik)
+    {
+        $data = [
+            'akademik' => $akademik->orderBy('tahun_akademik', 'desc')->get(),
+        ];
+        // Go to view siswa.export and send the data from model.
+        return view("siswa.export", compact('data'));
+    }
+
+    // Function to preview export data siswa in datatable
+    public function exportPreview(Request $request)
+    {
+        $akademikId = $request->akademik;
+
+        // Join through siswa table to get the correct data
+        $siswa = PaymentsSummary::whereHas('siswa', function ($query) use ($akademikId) {
+            $query->where('akademik_id', $akademikId);
+        })
+            ->orderBy('nit', 'asc')
+            ->get();
+
+        $rows = [];
+        foreach ($siswa as $index => $row) {
+            $rows[] = [
+                'nit' => $row->nit,
+                'nama_lengkap' => ucwords(strtolower($row->nama_lengkap)),
+                'tahun_akademik' => $row->tahun_akademik,
             ];
         }
 
