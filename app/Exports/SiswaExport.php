@@ -25,7 +25,7 @@ class SiswaExport implements FromView, WithTitle, WithEvents, ShouldAutoSize
         return 'Data Siswa';
     }
 
-    public function __construct($siswa, $akademik, $registrasi_fee, $spi_fee, $maxAngsuranRegistrasi = null)
+    public function __construct($siswa, $akademik, $registrasi_fee, $spi_fee, $maxAngsuranRegistrasi = null, $maxAngsuranSPI = null)
     {
         $this->siswa = $siswa;
         $this->akademik = $akademik;
@@ -33,6 +33,9 @@ class SiswaExport implements FromView, WithTitle, WithEvents, ShouldAutoSize
         $this->spi_fee = $spi_fee;
         $this->maxAngsuranRegistrasi = $maxAngsuranRegistrasi ?? $siswa->max(function ($item) {
             return $item->paymentsSummary->angsuran_registration ?? 0;
+        });
+        $this->maxAngsuranSPI = $maxAngsuranSPI ?? $siswa->max(function ($item) {
+            return $item->paymentsSummary->angsuran_spi ?? 0;
         });
     }
 
@@ -44,6 +47,7 @@ class SiswaExport implements FromView, WithTitle, WithEvents, ShouldAutoSize
             'registrasi_fee' => $this->registrasi_fee,
             'spi_fee' => $this->spi_fee,
             'maxAngsuranRegistrasi' => $this->maxAngsuranRegistrasi,
+            'maxAngsuranSPI' => $this->maxAngsuranSPI,
         ]);
     }
 
@@ -56,8 +60,9 @@ class SiswaExport implements FromView, WithTitle, WithEvents, ShouldAutoSize
                 // Hitung baris terakhir
                 $rowCount = count($this->siswa) + 5; // 5 baris pertama buat header
     
-                // Hitung kolom terakhir (misal sampai kolom T -> ubah sesuai kebutuhanmu)
-                $colCount = 3 + $this->maxAngsuranRegistrasi + 1 + 5 + 2;
+                // Hitung kolom terakhir dengan memperhitungkan maxAngsuranRegistrasi dan maxAngsuranSPI
+                // Misal: 3 kolom awal + maxAngsuranRegistrasi + 1 kolom total registrasi + maxAngsuranSPI + 1 kolom total SPI + 2 kolom tambahan
+                $colCount = 3 + $this->maxAngsuranRegistrasi + 1 + $this->maxAngsuranSPI + 1 + 2;
                 $lastCol = Coordinate::stringFromColumnIndex($colCount);
 
                 // Apply border
