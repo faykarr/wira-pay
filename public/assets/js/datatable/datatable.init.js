@@ -5,10 +5,17 @@ $(function () {
     return str.toLowerCase().replace(/\b\w/g, function (l) { return l.toUpperCase(); });
   }
 
-  $("#all-student").DataTable({
+  let tableSiswa = $("#all-student").DataTable({
     processing: true,
     serverSide: true,
-    ajax: urlSiswa,
+    ajax: {
+      url: urlSiswa,
+      data: function (d) {
+        d.tahun_akademik = getCheckedTahunAkademik();
+        d.status_registrasi = $('input[name="filter-registrasi"]:checked').attr('id');
+        d.status_spi = $('input[name="filter-spi"]:checked').attr('id');
+      }
+    },
     columns: [
       { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: true, searchable: false },
       { data: 'nit', name: 'nit' },
@@ -188,7 +195,7 @@ $(function () {
     ]
   });
 
-  // Filter Transaksi
+  // Filter Logic
   function getCheckedTahunAkademik() {
     let checked = [];
     $('input.form-check-input[type="checkbox"]').each(function () {
@@ -198,7 +205,8 @@ $(function () {
     });
     return checked;
   }
-  // Tahun Akademik Checkbox
+
+  // Tahun Akademik Checkbox On Transaksi
   $('input.form-check-input[type="checkbox"]').on('change', function () {
     if ($(this).attr('id') === 'all-filter-akademik') {
       // Kalau klik "All", uncheck semua
@@ -225,5 +233,26 @@ $(function () {
       tableTransaksi.ajax.reload();
     }
   });
+
+  // Tahun Akademik Checkbox On Siswa
+  $('input.form-check-input[type="checkbox"]').on('change', function () {
+    if ($(this).attr('id') === 'all-filter-akademik') {
+      $('input.form-check-input[type="checkbox"]').not(this).prop('checked', false);
+    } else {
+      $('#all-filter-akademik').prop('checked', false);
+    }
+    tableSiswa.ajax.reload();
+  });
+
+  // Status Registrasi
+  $('input[name="filter-registrasi"]').on('change', function () {
+    tableSiswa.ajax.reload();
+  });
+
+  // Status SPI
+  $('input[name="filter-spi"]').on('change', function () {
+    tableSiswa.ajax.reload();
+  });
+
 
 });

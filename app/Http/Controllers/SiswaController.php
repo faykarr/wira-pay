@@ -96,9 +96,33 @@ class SiswaController extends Controller
     }
 
     // Function to get data for datatables
-    public function data(Siswa $siswa)
+    public function data(Request $request)
     {
-        $data = $siswa->with(['paymentsSummary'])->orderBy('nit', 'desc')->get();
+        $query = Siswa::with(['paymentsSummary', 'akademik']);
+
+        // Filter Tahun Akademik
+        if ($request->filled('tahun_akademik')) {
+            $query->whereIn('akademik_id', $request->tahun_akademik);
+        }
+
+        // Filter Status Registrasi
+        if ($request->filled('status_registrasi') && $request->status_registrasi !== 'all-filter-registrasi') {
+            $status = $request->status_registrasi === 'filter-registrasi-lunas' ? 'Lunas' : 'Belum Lunas';
+            $query->whereHas('paymentsSummary', function ($q) use ($status) {
+                $q->where('status_registration', $status);
+            });
+        }
+
+        // Filter Status SPI
+        if ($request->filled('status_spi') && $request->status_spi !== 'all-filter-spi') {
+            $status = $request->status_spi === 'filter-spi-lunas' ? 'Lunas' : 'Belum Lunas';
+            $query->whereHas('paymentsSummary', function ($q) use ($status) {
+                $q->where('status_spi', $status);
+            });
+        }
+
+        $data = $query->orderBy('nit', 'desc')->get();
+
         return datatables()->of($data)
             ->addIndexColumn()
             ->addColumn('tahun_akademik', function ($row) {
@@ -121,12 +145,11 @@ class SiswaController extends Controller
                 $showUrl = route('siswa.show', $row->id);
                 $deleteUrl = route('siswa.destroy', $row->id);
                 return '
-                <div class="btn-group">
-                    <a href="' . $showUrl . '" class="btn btn-sm btn-primary"><i class="ti ti-eye fs-4"></i></a>
-                    <a href="' . $editUrl . '" class="btn btn-sm btn-success text-white"><i class="ti ti-pencil fs-4"></i></a>
-                    <button class="btn btn-sm btn-danger btn-delete" data-url="' . $deleteUrl . '"><i class="ti ti-trash fs-4"></i></button>
-                </div>
-            ';
+            <div class="btn-group">
+                <a href="' . $showUrl . '" class="btn btn-sm btn-primary"><i class="ti ti-eye fs-4"></i></a>
+                <a href="' . $editUrl . '" class="btn btn-sm btn-success text-white"><i class="ti ti-pencil fs-4"></i></a>
+                <button class="btn btn-sm btn-danger btn-delete" data-url="' . $deleteUrl . '"><i class="ti ti-trash fs-4"></i></button>
+            </div>';
             })
             ->rawColumns(['nit', 'nama_lengkap', 'status_registrasi', 'status_spi', 'action'])
             ->make(true);

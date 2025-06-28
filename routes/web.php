@@ -12,13 +12,12 @@ Route::get('/', [DashboardController::class, 'index'])->name('index');
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 // Siswa Management
-Route::get('siswa/data', [SiswaController::class, 'data'])->name('siswa.data');
-// Import Siswa
 Route::get('siswa/import', [SiswaController::class, 'import'])->name('siswa.import');
 Route::post('siswa/import', [SiswaController::class, 'importStore'])->name('siswa.import.store');
 Route::post('siswa/import/preview', [SiswaController::class, 'importPreview'])->name('siswa.import.preview');
 Route::get('siswa/transactions/registrasi/{siswa}', [SiswaController::class, 'historyRegistrasi'])->name('siswa.transactions.registrasi');
 Route::get('siswa/transactions/spi/{siswa}', [SiswaController::class, 'historySPI'])->name('siswa.transactions.spi');
+Route::get('siswa/data', [SiswaController::class, 'data'])->name('siswa.data');
 Route::resource('siswa', SiswaController::class);
 // Akademik Management
 Route::get('akademik/data', [AkademikController::class, 'data'])->name('akademik.data');
