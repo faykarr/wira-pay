@@ -36,7 +36,7 @@
             <br>
             <span class="text-danger">1 file excel untuk 1 tahun akademik.</span>
         </p>
-        <form action="{{ route('siswa.export') }}" method="post" class="validation-wizard wizard-circle mt-5"
+        <form action="{{ route('siswa.export.download') }}" method="post" class="validation-wizard wizard-circle mt-5"
             enctype="multipart/form-data">
             @csrf
             <!-- Step 1 -->

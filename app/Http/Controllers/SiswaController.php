@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\SiswaExport;
 use App\Http\Requests\Siswa\StoreSiswaRequest;
 use App\Http\Requests\Siswa\UpdateSiswaRequest;
 use App\Models\Akademik;
@@ -281,6 +282,29 @@ class SiswaController extends Controller
         }
 
         return response()->json(['data' => $rows]);
+    }
+
+    // Function to export data siswa to excel
+    public function exportDownload(Request $request)
+    {
+        $akademik_id = $request->akademik;
+        $akademik = Akademik::findOrFail($akademik_id);
+
+        $siswa = Siswa::with(['akademik', 'payments', 'paymentsSummary',])
+            ->where('akademik_id', $akademik_id)
+            ->orderBy('nit')
+            ->get();
+
+        $registrasi_fee = Pembayaran::where('akademik_id', $akademik_id)
+            ->value('registration_fee') ?? 0;
+
+        $spi_fee = Pembayaran::where('akademik_id', $akademik_id)
+            ->value('spi_fee') ?? 0;
+
+        return Excel::download(
+            new SiswaExport($siswa, $akademik, $registrasi_fee, $spi_fee),
+            'Export_Siswa_' . str_replace('/', '-', $akademik->tahun_akademik) . '.xlsx'
+        );
     }
 
     // Function to show history transaction of registrasi siswa

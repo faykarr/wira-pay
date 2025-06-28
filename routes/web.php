@@ -20,6 +20,7 @@ Route::get('siswa/transactions/spi/{siswa}', [SiswaController::class, 'historySP
 Route::get('siswa/data', [SiswaController::class, 'data'])->name('siswa.data');
 Route::get('siswa/export', [SiswaController::class, 'export'])->name('siswa.export');
 Route::post('siswa/export/preview', [SiswaController::class, 'exportPreview'])->name('siswa.export.preview');
+Route::post('siswa/export/download', [SiswaController::class, 'exportDownload'])->name('siswa.export.download');
 Route::resource('siswa', SiswaController::class);
 // Akademik Management
 Route::get('akademik/data', [AkademikController::class, 'data'])->name('akademik.data');
