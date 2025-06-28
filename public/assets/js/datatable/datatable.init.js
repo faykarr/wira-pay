@@ -131,10 +131,19 @@ $(function () {
 
   // Initialize DataTable for transaksi payments
   const urlTransaksi = $('#all-payments').data('url');
-  $("#all-payments").DataTable({
+  let tableTransaksi = $("#all-payments").DataTable({
     processing: true,
     serverSide: true,
-    ajax: urlTransaksi,
+    ajax: {
+      url: urlTransaksi,
+      data: function (d) {
+        d.tahun_akademik = getCheckedTahunAkademik(); // <- function kita buat
+        d.jenis_pembayaran = $('input[name="filter-jenis"]:checked').attr('id');
+        d.periode = $('input[name="filter-periode"]:checked').attr('id');
+        d.periode_start = $('#filter-periode-start').val();
+        d.periode_end = $('#filter-periode-end').val();
+      }
+    },
     columns: [
       { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: true, searchable: false },
       { data: 'kode_transaksi', name: 'kode_transaksi', orderable: true, searchable: true },
@@ -178,4 +187,43 @@ $(function () {
       { data: 'action', name: 'action', orderable: false, searchable: false }
     ]
   });
+
+  // Filter Transaksi
+  function getCheckedTahunAkademik() {
+    let checked = [];
+    $('input.form-check-input[type="checkbox"]').each(function () {
+      if ($(this).is(':checked') && $(this).attr('id') !== 'all-filter-akademik') {
+        checked.push($(this).val());
+      }
+    });
+    return checked;
+  }
+  // Tahun Akademik Checkbox
+  $('input.form-check-input[type="checkbox"]').on('change', function () {
+    if ($(this).attr('id') === 'all-filter-akademik') {
+      // Kalau klik "All", uncheck semua
+      $('input.form-check-input[type="checkbox"]').not(this).prop('checked', false);
+    } else {
+      $('#all-filter-akademik').prop('checked', false);
+    }
+    tableTransaksi.ajax.reload();
+  });
+
+  // Jenis Pembayaran
+  $('input[name="filter-jenis"]').on('change', function () {
+    tableTransaksi.ajax.reload();
+  });
+
+  // Periode
+  $('input[name="filter-periode"]').on('change', function () {
+    tableTransaksi.ajax.reload();
+  });
+
+  // Kustom date range
+  $('#filter-periode-start, #filter-periode-end').on('change', function () {
+    if ($('#filter-periode-5').is(':checked')) {
+      tableTransaksi.ajax.reload();
+    }
+  });
+
 });

@@ -88,33 +88,62 @@ class PaymentsController extends Controller
      */
     public function data(Request $request)
     {
-        $payments = Payments::with(['siswa'])->orderBy('tanggal_transaksi', 'desc')->get();
+        $query = Payments::with(['siswa']);
+
+        // Filter Tahun Akademik
+        if ($request->filled('tahun_akademik')) {
+            $query->whereHas('siswa.akademik', function ($q) use ($request) {
+                $q->whereIn('id', $request->tahun_akademik);
+            });
+        }
+
+        // Filter Jenis Pembayaran
+        if ($request->filled('jenis_pembayaran') && $request->jenis_pembayaran !== 'all-filter-jenis') {
+            $jenis = str_replace('filter-jenis-', '', $request->jenis_pembayaran); // spi / registrasi
+            $query->where('jenis_pembayaran', strtoupper($jenis));
+        }
+
+        // Filter Periode
+        if ($request->filled('periode')) {
+            switch ($request->periode) {
+                case 'filter-periode-1': // bulan ini
+                    $query->whereMonth('tanggal_transaksi', now()->month)
+                        ->whereYear('tanggal_transaksi', now()->year);
+                    break;
+                case 'filter-periode-2': // bulan lalu
+                    $query->whereMonth('tanggal_transaksi', now()->subMonth()->month)
+                        ->whereYear('tanggal_transaksi', now()->subMonth()->year);
+                    break;
+                case 'filter-periode-3': // tahun ini
+                    $query->whereYear('tanggal_transaksi', now()->year);
+                    break;
+                case 'filter-periode-4': // tahun lalu
+                    $query->whereYear('tanggal_transaksi', now()->subYear()->year);
+                    break;
+                case 'filter-periode-5': // kustom
+                    if ($request->filled('periode_start') && $request->filled('periode_end')) {
+                        $query->whereBetween('tanggal_transaksi', [
+                            Carbon::parse($request->periode_start)->startOfDay(),
+                            Carbon::parse($request->periode_end)->endOfDay()
+                        ]);
+                    }
+                    break;
+            }
+        }
+
+        $payments = $query->orderBy('tanggal_transaksi', 'desc')->get();
+
         return datatables()
             ->of($payments)
             ->addIndexColumn()
-            ->editColumn('kode_transaksi', function ($payment) {
-                return '<span class="badge bg-success-subtle text-success border-success border fs-2">' . $payment->kode_transaksi . '</span>';
-            })
-            ->editColumn('siswa.nit', function ($payment) {
-                return '<h6 class="mb-1 fw-bolder">' . ucwords(strtolower($payment->siswa->nit)) . '</h6>';
-            })
-            ->editColumn('siswa.nama_lengkap', function ($payment) {
-                return '<h6 class="mb-1 fw-bolder">' . ucwords(strtolower($payment->siswa->nama_lengkap)) . '</h6>';
-            })
-            ->editColumn('nominal', function ($payment) {
-                return '<span class="badge bg-success-subtle rounded-pill text-success border-success border fs-2">Rp ' . number_format($payment->nominal, 0, ',', '.') . '</span>';
-            })
-            ->editColumn('tanggal_transaksi', function ($payment) {
-                return '<span class="badge bg-primary-subtle rounded-pill text-primary border-primary border fs-2">' . Carbon::parse($payment->tanggal_transaksi)->locale('id')->isoFormat('D MMMM Y') . '</span>';
-            })
-            ->addColumn('action', function ($payments) {
-                $lihatUrl = route('siswa.show', $payments->siswa_id);
-                $cetakUrl = route('payments.show', $payments->id);
-                return '
-                <div class="btn-group">
-                <a href="' . $lihatUrl . '" class="btn btn-sm btn-primary text-white"><i class="ti ti-eye fs-4 me-1"></i>Siswa</a>
-                </div>
-            ';
+            ->editColumn('kode_transaksi', fn($p) => '<span class="badge bg-success-subtle text-success border-success border fs-2">' . $p->kode_transaksi . '</span>')
+            ->editColumn('siswa.nit', fn($p) => '<h6 class="mb-1 fw-bolder">' . ucwords(strtolower($p->siswa->nit)) . '</h6>')
+            ->editColumn('siswa.nama_lengkap', fn($p) => '<h6 class="mb-1 fw-bolder">' . ucwords(strtolower($p->siswa->nama_lengkap)) . '</h6>')
+            ->editColumn('nominal', fn($p) => '<span class="badge bg-success-subtle rounded-pill text-success border-success border fs-2">Rp ' . number_format($p->nominal, 0, ',', '.') . '</span>')
+            ->editColumn('tanggal_transaksi', fn($p) => '<span class="badge bg-primary-subtle rounded-pill text-primary border-primary border fs-2">' . Carbon::parse($p->tanggal_transaksi)->locale('id')->isoFormat('D MMMM Y') . '</span>')
+            ->addColumn('action', function ($p) {
+                $lihatUrl = route('siswa.show', $p->siswa_id);
+                return '<div class="btn-group"><a href="' . $lihatUrl . '" class="btn btn-sm btn-primary text-white"><i class="ti ti-eye fs-4 me-1"></i>Siswa</a></div>';
             })
             ->rawColumns(['kode_transaksi', 'siswa.nit', 'siswa.nama_lengkap', 'nominal', 'tanggal_transaksi', 'action'])
             ->make(true);
