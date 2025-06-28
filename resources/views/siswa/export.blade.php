@@ -89,13 +89,24 @@
         </div>
     </div>
 </div>
+
+<div id="loading-overlay"
+    style="display: none; position: fixed; z-index: 9999; background: rgba(255,255,255,0.7); top: 0; left: 0; width: 100%; height: 100%;">
+    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+        <p class="mt-2 fw-semibold text-primary text-center">Sedang menyiapkan file Excel...</p>
+    </div>
+</div>
+
 @endsection
 
 @section('js-links')
     <script src="{{ asset('assets/libs/jquery-steps/build/jquery.steps.min.js') }}"></script>
     <script src="{{ asset('assets/libs/inputmask/dist/jquery.inputmask.min.js') }}"></script>
     <script src="{{ asset('assets/libs/jquery-validation/dist/jquery.validate.min.js') }}"></script>
-    <script src="{{ asset('assets/js/forms/form-wizard.js') }}"></script>
+    <script src="{{ asset('assets/js/forms/export-wizard.js') }}"></script>
     <script src="{{ asset('assets/libs/datatables.net/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('assets/js/datatable/datatable.init.js') }}"></script>
 @endsection
