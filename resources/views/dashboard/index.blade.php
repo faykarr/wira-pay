@@ -262,7 +262,7 @@
                                 </div>
                                 <div class="mt-4">
                                     <p class="fs-2 mb-0 fw-bolder">{{ $data['persentase_lunas']['jumlah_lunas'] }} dari
-                                        {{ $data['persentase_lunas']['total_siswa'] }} Siswa
+                                        {{ $data['persentase_lunas']['total_siswa'] }} Siswa Aktif
                                     </p>
                                 </div>
                             </div>

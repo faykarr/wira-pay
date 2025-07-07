@@ -158,5 +158,25 @@
                 </td>
             </tr>
         @endforeach
+        <tr>
+            <td colspan="{{ 3 + $maxAngsuranRegistrasi }}"
+                style="text-align: center; font-weight: bold; background-color: #D9E1F2;">
+                TOTAL REGISTRASI
+            </td>
+            <td style="text-align: right; font-weight: bold; background-color: #D9E1F2;"
+                data-format="[$Rp-421]* #,##0_ ;[Red]\-[$Rp-421]* #,##0_ ">
+                {{$siswa->sum('paymentsSummary.paid_registration') }}
+            </td>
+            <td colspan="{{ $maxAngsuranSPI }}"
+                style="text-align: center; font-weight: bold; background-color: #C6E0B4;">
+                TOTAL SPI
+            </td>
+            <td style="text-align: right; font-weight: bold; background-color: #C6E0B4;"
+                data-format="[$Rp-421]* #,##0_ ;[Red]\-[$Rp-421]* #,##0_ ">
+                {{$siswa->sum('paymentsSummary.paid_spi') }}
+            </td>
+            <td colspan="2" style="text-align: center; font-weight: bold; background-color: #C6E0B4;">
+            </td>
+        </tr>
     </tbody>
 </table>

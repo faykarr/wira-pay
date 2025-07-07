@@ -19,6 +19,7 @@ class SiswaExport implements FromView, WithTitle, WithEvents, ShouldAutoSize
     public $registrasi_fee;
     public $spi_fee;
     public $maxAngsuranRegistrasi;
+    public $maxAngsuranSPI;
 
     public function title(): string
     {
