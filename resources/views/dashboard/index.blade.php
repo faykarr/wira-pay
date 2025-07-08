@@ -33,19 +33,6 @@
                                                 {{ $data['selected_akademik'] }}
                                             </p>
                                         </div>
-                                        @if($data['selected_akademik'] != $data['current_akademik'])
-                                            <div>
-                                                <span class="badge bg-warning fs-3 px-3 py-2">
-                                                    <i class="ti ti-history me-1"></i>Data Historis
-                                                </span>
-                                            </div>
-                                        @else
-                                            <div>
-                                                <span class="badge bg-success fs-3 px-3 py-2">
-                                                    <i class="ti ti-check me-1"></i>Data Terkini
-                                                </span>
-                                            </div>
-                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -139,9 +126,6 @@
                     <div class="card-body">
                         <div class="d-flex mb-4 justify-content-between align-items-center">
                             <h5 class="mb-0 fw-bold">Grafik Pemasukan 6 Semester dari TA {{ $data['selected_akademik'] }}</h5>
-                            @if($data['selected_akademik'] != $data['current_akademik'])
-                                <span class="badge bg-info">Historis</span>
-                            @endif
                         </div>
                         <div class="row align-items-center">
                             <div class="col-md-7 d-flex flex-column">
@@ -246,9 +230,6 @@
                             <h5 class="mb-0 fw-bold">Grafik Pembayaran Siswa - Tahun Akademik
                                 {{ $data['selected_akademik'] }}
                             </h5>
-                            @if($data['selected_akademik'] != $data['current_akademik'])
-                                <span class="badge bg-info">Historis</span>
-                            @endif
                         </div>
                         <div class="d-flex align-items-center mt-5">
                             <div class="d-sm-flex d-block align-items-center justify-content-center">
@@ -524,8 +505,8 @@
 
                 // Create loading overlay
                 const overlay = document.createElement('div');
-                overlay.className = 'position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center';
-                overlay.style.backgroundColor = 'rgba(255, 255, 255, 0.95)';
+                overlay.className = 'position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center text-white';
+                overlay.style.backgroundColor = 'rgba(17, 28, 45, 1)';
                 overlay.style.zIndex = '9999';
                 overlay.innerHTML = `
                                         <div class="text-center">

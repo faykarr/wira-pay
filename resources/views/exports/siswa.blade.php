@@ -99,7 +99,7 @@
                 {{-- Jumlah Registrasi --}}
                 @php
                     $style = $row->paymentsSummary->status_registration == 'Lunas'
-                        ? 'background-color: #FCE4D6;'
+                        ? 'background-color: #D6D85D;'
                         : '';
                 @endphp
                 <td style="text-align: right; {{ $style }}" data-format="Rp #,##0">
@@ -120,7 +120,7 @@
                 {{-- Jumlah SPI --}}
                 @php
                     $style = $row->paymentsSummary->status_spi == 'Lunas'
-                        ? 'background-color: #C6E0B4;'
+                        ? 'background-color: #A4DD00;'
                         : '';
                 @endphp
                 <td style="text-align: right; {{ $style }}" data-format="Rp #,##0">
@@ -130,7 +130,7 @@
                 {{-- Kurang Registrasi --}}
                 @php
                     $style = $row->paymentsSummary->status_registration == 'Lunas'
-                        ? 'background-color: #FCE4D6;'
+                        ? 'background-color: #D6D85D;'
                         : '';
 
                     // Check if Lunas then show LUNAS REG.
@@ -145,7 +145,7 @@
                 {{-- Kurang SPI --}}
                 @php
                     $style = $row->paymentsSummary->status_spi == 'Lunas'
-                        ? 'background-color: #C6E0B4;'
+                        ? 'background-color: #A4DD00;'
                         : '';
 
                     // Check if Lunas then show LUNAS SPI.
