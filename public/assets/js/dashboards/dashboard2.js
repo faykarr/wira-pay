@@ -22,39 +22,37 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 // =====================================
-// Profit Start
+// Profit Start - Grafik Semester
 // =====================================
-// Inisialisasi array dari Juli (7) sampai Juni (6)
-let urutanBulanAkademik = [7, 8, 9, 10, 11, 12, 1, 2, 3, 4, 5, 6];
-let spiData = Array(12).fill(0);
-let registrasiData = Array(12).fill(0);
+// Persiapan data untuk grafik semester dari data historis
+let periodeLabels = [];
+let spiValues = [];
+let registrasiValues = [];
 
-// Mapping data sesuai urutan bulan akademik
-pemasukanBulanan.forEach(item => {
-  let bulanAsli = item.bulan; // ex: 7, 1, dst
-  let index = urutanBulanAkademik.indexOf(bulanAsli);
-  if (index === -1) return;
-
-  const total = parseInt(item.total);
-
-  if (item.jenis_pembayaran === "SPI") {
-    spiData[index] = total;
-  } else if (item.jenis_pembayaran === "Registrasi") {
-    registrasiData[index] = total;
-  }
-});
-
+// Ambil data dari variable global pemasukanSemesterHistoris
+if (typeof pemasukanSemesterHistoris !== 'undefined' && pemasukanSemesterHistoris.length > 0) {
+  pemasukanSemesterHistoris.forEach(item => {
+    periodeLabels.push(item.period);
+    spiValues.push(item.spi);
+    registrasiValues.push(item.registrasi);
+  });
+} else {
+  // Fallback jika tidak ada data
+  periodeLabels = ['Jul-Des 2019', 'Jan-Jun 2020', 'Jul-Des 2020', 'Jan-Jun 2021', 'Jul-Des 2021', 'Jan-Jun 2022'];
+  spiValues = Array(6).fill(0);
+  registrasiValues = Array(6).fill(0);
+}
 
 var profit = {
   series: [
     {
       name: "SPI",
-      data: spiData,
+      data: spiValues,
     },
     {
-      name: "Registrasi",
-      data: registrasiData,
-    },
+      name: "Registrasi", 
+      data: registrasiValues,
+    }
   ],
   colors: ["var(--bs-primary)", "#fb977d"],
   chart: {
@@ -71,7 +69,7 @@ var profit = {
   plotOptions: {
     bar: {
       horizontal: false,
-      columnWidth: "27%",
+      columnWidth: "45%",
       borderRadius: 6,
     },
   },
@@ -91,12 +89,21 @@ var profit = {
     },
   },
   xaxis: {
-    categories: ["Jul", "Aug", "Sep", "Okt", "Nov", "Des", "Jan", "Feb", "Mar", "Apr", "Mei", "Jun"],
+    categories: periodeLabels,
     axisBorder: { show: false },
     axisTicks: { show: false },
+    labels: {
+      rotate: -45,
+      style: {
+        fontSize: '10px'
+      }
+    }
   },
   legend: {
-    show: false,
+    show: true,
+    position: 'top',
+    horizontalAlign: 'left',
+    offsetY: -10
   },
   fill: {
     opacity: 1,
@@ -104,7 +111,12 @@ var profit = {
   yaxis: {
     labels: {
       formatter: function (val) {
-        return "Rp " + (val / 1000000).toLocaleString("id-ID", { maximumFractionDigits: 1 }) + " Jt";
+        if (val >= 1000000) {
+          return "Rp " + (val / 1000000).toLocaleString("id-ID", { maximumFractionDigits: 1 }) + " Jt";
+        } else if (val >= 1000) {
+          return "Rp " + (val / 1000).toLocaleString("id-ID", { maximumFractionDigits: 0 }) + " rb";
+        }
+        return "Rp " + val.toLocaleString("id-ID");
       },
     },
   },
@@ -115,7 +127,7 @@ chart.render();
 
 
 // =====================================
-// Profit End
+// Profit End - Grafik Semester
 // =====================================
 
 // =====================================

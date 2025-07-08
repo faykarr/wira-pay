@@ -138,7 +138,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex mb-4 justify-content-between align-items-center">
-                            <h5 class="mb-0 fw-bold">Grafik Pemasukan Tahun Akademik {{ $data['selected_akademik'] }}</h5>
+                            <h5 class="mb-0 fw-bold">Grafik Pemasukan 6 Semester dari TA {{ $data['selected_akademik'] }}</h5>
                             @if($data['selected_akademik'] != $data['current_akademik'])
                                 <span class="badge bg-info">Historis</span>
                             @endif
@@ -550,7 +550,8 @@
 
         // Data untuk JavaScript
         const pemasukanTahunan = @json($data['pemasukan_tahun']);
-        const pemasukanBulanan = @json($data['pemasukan_bulan']);
+        const pemasukanSemester = @json($data['pemasukan_semester']);
+        const pemasukanSemesterHistoris = @json($data['pemasukan_semester_historis']);
         const persentaseSiswa = @json($data['persentase_siswa']);
     </script>
     <script src="{{ asset('assets/js/dashboards/dashboard2.js') }}"></script>
