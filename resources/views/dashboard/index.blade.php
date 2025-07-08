@@ -2,6 +2,60 @@
 
 @section('title', 'Dashboard')
 @section('main-content')
+    <!-- Filter Tahun Akademik -->
+    <section class="filter-section mb-1">
+        <div class="row">
+            <div class="col-12">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body">
+                        <form method="GET" action="{{ route('dashboard') }}" id="filterForm">
+                            <div class="row align-items-center">
+                                <div class="col-lg-4 col-md-6 mb-3 mb-lg-0">
+                                    <label for="tahun_akademik" class="form-label fw-bold">
+                                        <i class="ti ti-calendar-stats me-2"></i>Filter Tahun Akademik:
+                                    </label>
+
+                                    <select name="tahun_akademik" id="tahun_akademik" class="form-select form-select-lg">
+                                         @forelse($data['akademik_list'] as $value => $label)
+                                            <option value="{{ $value }}" {{ $data['selected_akademik'] == $value ? 'selected' : '' }}>
+                                                {{ $label }}
+                                            </option>
+                                        @empty
+                                            <option value="">Tidak ada data tahun akademik</option>
+                                        @endforelse
+                                    </select>
+                                </div>
+                                <div class="col-lg-8 col-md-6">
+                                    <div class="d-flex align-items-center flex-wrap">
+                                        <div class="me-3 mb-2 mb-md-0">
+                                            <small class="text-muted">Data yang ditampilkan untuk:</small>
+                                            <p class="mb-0 fw-bold text-primary fs-5">Tahun Akademik
+                                                {{ $data['selected_akademik'] }}
+                                            </p>
+                                        </div>
+                                        @if($data['selected_akademik'] != $data['current_akademik'])
+                                            <div>
+                                                <span class="badge bg-warning fs-3 px-3 py-2">
+                                                    <i class="ti ti-history me-1"></i>Data Historis
+                                                </span>
+                                            </div>
+                                        @else
+                                            <div>
+                                                <span class="badge bg-success fs-3 px-3 py-2">
+                                                    <i class="ti ti-check me-1"></i>Data Terkini
+                                                </span>
+                                            </div>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section class="welcome">
         <div class="row">
             <div class="col-lg-12 col-xl-6 d-flex align-items-strech">
@@ -52,7 +106,7 @@
                                     data-value="{{ $data['total_pembayaran']->total_spi ?? 0 }}">
                                     Rp {{ $data['total_pembayaran']->total_spi ?? 0 }}
                                 </h5>
-                                <p class="opacity-50 mb-0">Total SPI TA {{ $data['current_akademik'] }}</p>
+                                <p class="opacity-50 mb-0">Total SPI TA {{ $data['selected_akademik'] }}</p>
                             </div>
                         </div>
                     </div>
@@ -67,7 +121,7 @@
                                     data-value="{{ $data['total_pembayaran']->total_registration ?? 0 }}">
                                     Rp {{ $data['total_pembayaran']->total_registration ?? 0 }}
                                 </h5>
-                                <p class="opacity-50 mb-0">Total Registrasi TA {{ $data['current_akademik'] }}</p>
+                                <p class="opacity-50 mb-0">Total Registrasi TA {{ $data['selected_akademik'] }}</p>
                             </div>
                         </div>
                     </div>
@@ -84,7 +138,10 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex mb-4 justify-content-between align-items-center">
-                            <h5 class="mb-0 fw-bold">Grafik Pemasukan Tahun Akademik {{ $data['current_akademik'] }}</h5>
+                            <h5 class="mb-0 fw-bold">Grafik Pemasukan Tahun Akademik {{ $data['selected_akademik'] }}</h5>
+                            @if($data['selected_akademik'] != $data['current_akademik'])
+                                <span class="badge bg-info">Historis</span>
+                            @endif
                         </div>
                         <div class="row align-items-center">
                             <div class="col-md-7 d-flex flex-column">
@@ -168,7 +225,7 @@
                                 <div class="d-flex align-items-center">
                                     <h5 class="mb-0 fs-4">{{ $data['count_transactions'] }} Transaksi</h5>
                                 </div>
-                                <p class="mb-0">Total Transaksi TA {{ $data['current_akademik'] }}</p>
+                                <p class="mb-0">Total Transaksi TA {{ $data['selected_akademik'] }}</p>
                             </div>
                         </div>
 
@@ -187,8 +244,11 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center">
                             <h5 class="mb-0 fw-bold">Grafik Pembayaran Siswa - Tahun Akademik
-                                {{ $data['current_akademik'] }}
+                                {{ $data['selected_akademik'] }}
                             </h5>
+                            @if($data['selected_akademik'] != $data['current_akademik'])
+                                <span class="badge bg-info">Historis</span>
+                            @endif
                         </div>
                         <div class="d-flex align-items-center mt-5">
                             <div class="d-sm-flex d-block align-items-center justify-content-center">
@@ -418,6 +478,77 @@
     {{-- Charts & Pages Script --}}
     <script src="{{ asset('assets/libs/apexcharts/dist/apexcharts.min.js') }}"></script>
     <script>
+        // Wait for DOM to be ready
+        document.addEventListener('DOMContentLoaded', function () {
+            const selectElement = document.getElementById('tahun_akademik');
+            const formElement = document.getElementById('filterForm');
+
+            if (!selectElement || !formElement) {
+                console.error('Select element or form element not found!');
+                return;
+            }
+
+            let isTransitioning = false;
+
+            // Prevent form default submission
+            formElement.addEventListener('submit', function (e) {
+                if (!isTransitioning) {
+                    e.preventDefault();
+                }
+            });
+
+            // Loading state untuk dropdown filter
+            selectElement.addEventListener('change', function (e) {
+                if (isTransitioning) {
+                    return;
+                }
+
+                isTransitioning = true;
+                const selectedValue = this.value;
+
+                // Cek apakah value kosong
+                if (!selectedValue || selectedValue === '') {
+                    isTransitioning = false;
+                    alert('Pilihan tahun akademik tidak valid!');
+                    return false;
+                }
+
+                // Cek apakah value sama dengan yang sekarang
+                if (selectedValue === @json($data['selected_akademik'])) {
+                    isTransitioning = false;
+                    return false;
+                }
+
+                // Disable select dan tampilkan loading
+                this.disabled = true;
+
+                // Create loading overlay
+                const overlay = document.createElement('div');
+                overlay.className = 'position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center';
+                overlay.style.backgroundColor = 'rgba(255, 255, 255, 0.95)';
+                overlay.style.zIndex = '9999';
+                overlay.innerHTML = `
+                                        <div class="text-center">
+                                            <div class="spinner-border text-primary mb-3" role="status">
+                                                <span class="visually-hidden">Loading...</span>
+                                            </div>
+                                            <p class="fw-bold">Memuat data tahun akademik ${selectedValue}...</p>
+                                            <small class="text-muted">Mohon tunggu sebentar</small>
+                                        </div>
+                                    `;
+
+                document.body.appendChild(overlay);
+
+                // Redirect ke URL dengan parameter tahun akademik
+                const targetUrl = `{{ route('dashboard') }}?tahun_akademik=${encodeURIComponent(selectedValue)}`;
+
+                setTimeout(function () {
+                    window.location.href = targetUrl;
+                }, 300);
+            });
+        });
+
+        // Data untuk JavaScript
         const pemasukanTahunan = @json($data['pemasukan_tahun']);
         const pemasukanBulanan = @json($data['pemasukan_bulan']);
         const persentaseSiswa = @json($data['persentase_siswa']);

@@ -3,31 +3,50 @@
 namespace App\Http\Controllers;
 
 use App\Models\Payments;
+use App\Models\Akademik;
 use DB;
+use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        // Get selected tahun akademik from request, default to current
+        $selectedTahunAkademik = $request->get('tahun_akademik', 
+            date('n') <= 6 ? (date('Y') - 1) . '/' . date('Y') : date('Y') . '/' . (date('Y') + 1)
+        );
+
         $data = [
             'current_akademik' => date('n') <= 6 ? (date('Y') - 1) . '/' . date('Y') : date('Y') . '/' . (date('Y') + 1),
+            'selected_akademik' => $selectedTahunAkademik,
+            'akademik_list' => $this->getAkademikList(),
             'latest_transactions' => $this->getLatestTransactions(),
-            'siswa_belum_lunas' => $this->getCountSiswaBelumLunas(),
-            'total_pembayaran' => $this->getTotalPembayaranTahunIni(),
+            'siswa_belum_lunas' => $this->getCountSiswaBelumLunas($selectedTahunAkademik),
+            'total_pembayaran' => $this->getTotalPembayaranByTahun($selectedTahunAkademik),
             'pemasukan_tahun' => $this->getGrafikPemasukanLimaTahun(),
-            'count_transactions' => $this->getCountTransactionsTahunIni(),
-            'pemasukan_bulan' => $this->getPemasukanPerBulan(),
-            'persentase_siswa' => $this->getPersentaseLunasDanBelumLunasSemuaTahun(),
-            'count_siswa' => $this->getCountSiswaLunasDanBelumLunasBerdasarkanTahun(),
+            'count_transactions' => $this->getCountTransactionsByTahun($selectedTahunAkademik),
+            'pemasukan_bulan' => $this->getPemasukanPerBulan($selectedTahunAkademik),
+            'persentase_siswa' => $this->getPersentaseLunasDanBelumLunasByTahun($selectedTahunAkademik),
+            'count_siswa' => $this->getCountSiswaLunasDanBelumLunasBerdasarkanTahun($selectedTahunAkademik),
             'persentase_lunas' => $this->getPersentaseLunasSemuaTahun(),
         ];
         // dd($data['count_siswa']);
         return view('dashboard.index', compact('data'));
     }
 
-    public function getCountSiswaBelumLunas()
+    public function getAkademikList()
     {
+        return Akademik::orderBy('tahun_akademik', 'desc')->pluck('tahun_akademik', 'tahun_akademik');
+    }
+
+    public function getCountSiswaBelumLunas($tahunAkademik = null)
+    {
+        if (!$tahunAkademik) {
+            $tahunAkademik = date('n') <= 6 ? (date('Y') - 1) . '/' . date('Y') : date('Y') . '/' . (date('Y') + 1);
+        }
+
         return DB::table('payments_summary')
+            ->where('tahun_akademik', $tahunAkademik)
             ->where(function ($q) {
                 $q->where('status_registration', '!=', 'Lunas')
                     ->orWhere('status_spi', '!=', 'Lunas');
@@ -35,14 +54,24 @@ class DashboardController extends Controller
             ->count();
     }
 
-    public function getTotalPembayaranTahunIni()
+    public function getTotalPembayaranByTahun($tahunAkademik)
     {
-        $tahunAkademik = date('n') <= 6 ? (date('Y') - 1) . '/' . date('Y') : date('Y') . '/' . (date('Y') + 1);
-
-        return DB::table('payments_summary')
+        $result = DB::table('payments_summary')
             ->where('tahun_akademik', $tahunAkademik)
             ->selectRaw('SUM(paid_spi) AS total_spi, SUM(paid_registration) AS total_registration')
             ->first();
+
+        // Ensure we return 0 instead of null if no data found
+        return (object) [
+            'total_spi' => $result->total_spi ?? 0,
+            'total_registration' => $result->total_registration ?? 0,
+        ];
+    }
+
+    public function getTotalPembayaranTahunIni()
+    {
+        $tahunAkademik = date('n') <= 6 ? (date('Y') - 1) . '/' . date('Y') : date('Y') . '/' . (date('Y') + 1);
+        return $this->getTotalPembayaranByTahun($tahunAkademik);
     }
 
     public function getGrafikPemasukanLimaTahun()
@@ -63,36 +92,40 @@ class DashboardController extends Controller
             ->values();
     }
 
-    public function getCountTransactionsTahunIni()
+    public function getCountTransactionsByTahun($tahunAkademik)
     {
-        $tahun = date('n') <= 6 ? date('Y') - 1 : date('Y');
-        $tahun_akademik = "{$tahun}/" . ($tahun + 1);
-
-        return Payments::whereHas('siswa.akademik', function ($query) use ($tahun_akademik) {
-            $query->where('tahun_akademik', $tahun_akademik);
+        return Payments::whereHas('siswa.akademik', function ($query) use ($tahunAkademik) {
+            $query->where('tahun_akademik', $tahunAkademik);
         })
             ->count();
     }
 
-    public function getPemasukanPerBulan()
+    public function getCountTransactionsTahunIni()
     {
         $tahun = date('n') <= 6 ? date('Y') - 1 : date('Y');
         $tahun_akademik = "{$tahun}/" . ($tahun + 1);
+        return $this->getCountTransactionsByTahun($tahun_akademik);
+    }
+
+    public function getPemasukanPerBulan($tahunAkademik = null)
+    {
+        if (!$tahunAkademik) {
+            $tahun = date('n') <= 6 ? date('Y') - 1 : date('Y');
+            $tahunAkademik = "{$tahun}/" . ($tahun + 1);
+        }
 
         return DB::table('payments')
             ->selectRaw('MONTH(payments.tanggal_transaksi) as bulan, payments.jenis_pembayaran, SUM(payments.nominal) as total')
             ->join('siswa', 'siswa.id', '=', 'payments.siswa_id')
             ->join('akademik', 'akademik.id', '=', 'siswa.akademik_id')
-            ->where('akademik.tahun_akademik', $tahun_akademik)
+            ->where('akademik.tahun_akademik', $tahunAkademik)
             ->whereIn('payments.jenis_pembayaran', ['SPI', 'Registrasi'])
             ->groupByRaw('MONTH(payments.tanggal_transaksi), payments.jenis_pembayaran')
             ->get();
     }
 
-    public function getPersentaseLunasDanBelumLunasSemuaTahun()
+    public function getPersentaseLunasDanBelumLunasByTahun($tahunAkademik)
     {
-        $tahunAkademik = date('n') <= 6 ? (date('Y') - 1) . '/' . date('Y') : date('Y') . '/' . (date('Y') + 1);
-
         $totalSiswa = DB::table('payments_summary')
             ->where('tahun_akademik', $tahunAkademik)
             ->count();
@@ -114,9 +147,17 @@ class DashboardController extends Controller
         ];
     }
 
-    public function getCountSiswaLunasDanBelumLunasBerdasarkanTahun()
+    public function getPersentaseLunasDanBelumLunasSemuaTahun()
     {
         $tahunAkademik = date('n') <= 6 ? (date('Y') - 1) . '/' . date('Y') : date('Y') . '/' . (date('Y') + 1);
+        return $this->getPersentaseLunasDanBelumLunasByTahun($tahunAkademik);
+    }
+
+    public function getCountSiswaLunasDanBelumLunasBerdasarkanTahun($tahunAkademik = null)
+    {
+        if (!$tahunAkademik) {
+            $tahunAkademik = date('n') <= 6 ? (date('Y') - 1) . '/' . date('Y') : date('Y') . '/' . (date('Y') + 1);
+        }
 
         // Jumlah siswa yang sudah lunas (SPI dan Registrasi)
         $lunas = DB::table('payments_summary')
