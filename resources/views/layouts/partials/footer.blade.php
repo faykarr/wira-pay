@@ -8,8 +8,10 @@
 <script src="{{ asset('assets/js/theme/sidebarmenu.js') }}"></script>
 <script src="{{ asset('assets/js/theme/feather.min.js') }}"></script>
 <script src="{{ asset('assets/libs/sweetalert2/dist/sweetalert2.min.js') }}"></script>
-<!-- solar icons -->
-<script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
+<!-- iconify solar icons -->
+<script src="{{ asset('assets/js/iconify-icon/iconify-icon.min.js') }}"></script>
+
+{{-- Custom CSS --}}
 
 {{-- Custom Scripts --}}
 <script src="{{ asset('assets/js/custom-settings.js') }}"></script>

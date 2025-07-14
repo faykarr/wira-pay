@@ -5,7 +5,7 @@
 @include('layouts.partials.head')
 
 <body>
-    @include('layouts.partials.preloader')
+    {{-- @include('layouts.partials.preloader') --}}
     <div id="main-wrapper">
         @include('layouts.partials.sidebar')
         <div class="page-wrapper">
@@ -19,8 +19,8 @@
                     {{-- Main Content End --}}
                     {{-- Footer Start --}}
                     <div class="text-center text-md-start">
-                        <p>Made with ❤ by <a href="https://faykarr.vercel.app" target="_blank"
-                                class="text-primary">faykarr</a></p>
+                        <code>Made with ❤ by <a href="https://faykarr.vercel.app" target="_blank"
+                                class="text-primary">faykarr</a></code>
                     </div>
                     {{-- Footer End --}}
                 </div>

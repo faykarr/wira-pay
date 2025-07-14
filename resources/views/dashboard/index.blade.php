@@ -10,7 +10,7 @@
                     <div class="card-body">
                         <form method="GET" action="{{ route('dashboard') }}" id="filterForm">
                             <div class="row align-items-center">
-                                <div class="col-lg-4 col-md-6 mb-3 mb-lg-0">
+                                <div class="col-lg-6 col-md-6 mb-3 mb-lg-0">
                                     <label for="tahun_akademik" class="form-label fw-bold">
                                         <i class="ti ti-calendar-stats me-2"></i>Filter Tahun Akademik:
                                     </label>
@@ -25,7 +25,7 @@
                                         @endforelse
                                     </select>
                                 </div>
-                                <div class="col-lg-8 col-md-6">
+                                <div class="col-lg-6 col-md-6">
                                     <div class="d-flex align-items-center flex-wrap">
                                         <div class="me-3 mb-2 mb-md-0">
                                             <small class="text-muted">Data yang ditampilkan untuk:</small>
